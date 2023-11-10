@@ -1,5 +1,5 @@
 const User = require('./User');
-const Inventory = require('./Inventory');
+const Inventory = require('./Event');
 const Product = require('./Product');
 
 

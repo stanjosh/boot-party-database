@@ -8,94 +8,80 @@ const typeDefs = gql`
     eventLoadinTime: String!
     eventTime: String!
     eventDisplay: String
-    eventSignups: [Customer!]
+    eventSignups: [Customer]
     eventLocation: String
     eventNotes: String!
     eventPartyType: String!
-    eventVan: Number?
+    eventVan: Int
     eventTransferOrder: String!
     eventHelpers: [String]
   }
 
   input EventInput {
-    eventTitle: String 
-    eventLeadEmployee: [Employee]
-    eventContact: Customer
-    eventLoadinTime: String
-    eventTime: String
-    eventDisplay: String
-    eventSignups: [Customer]
-    eventLocation: String
-    eventNotes: String
-    eventTransferOrder: String
-    eventHelpers: [String]
+    eventContact: [CustomerInput]
+    eventTime: String!
+    eventLocation: String!
   }
 
+  type BootProduct {
+    sku: String!
+    name: String
+    size: Int
+    color: String
+    quantity: Int
+  }
+
+
   type Customer {
-    firstName: String
-    lastName: String
-    email: String
-    shoeSize: Number
+    firstName: String!
+    lastName: String!
+    email: String!
+    phone: String
+    shoeSize: Int
   }
 
   input CustomerInput {
     firstName: String
     lastName: String
     email: String
-    shoeSize: Number
+    shoeSize: Int
   }
 
   type Employee {
-    firstName: String
-    lastName: String
-    email: String
-    phone: String
+    name: String!
   }
 
   input EmployeeInput {
-    firstName: String
-    lastName: String
-    email: String
-    phone: String
-  }
+    name: String!
 
-  type User {
-    _id: ID!
-    username: String!
-    email: String!
-    password: String!
-  }
-
-
-
-  type Auth {
-    token: ID!
-    user: User
   }
 
   type Query {
-    me: User
-    searchAllProduct: [Product]
-    searchProductUPC: [Product]
-    searchProductName: [Product]
-    searchUser(id: ID!): User
-    searchUserByName(username: String!): User
+    findEventByDate(date: String!): [Event]
+    findCustomerByFirstName(firstName: String!): [Customer]
+    findCustomerByLastName(lastName: String!): [Customer]
+    findCustomerByEmail(email: String!): [Customer]
+    findCustomerByPhone(phone: String!): [Customer]
+    findCustomerByShoeSize(shoeSize: Int!): [Customer]
+    findEmployeeByName(name: String!): [Employee]
+    findEventByEventTitle(eventTitle: String!): [Event]
+    findEventByEventLeadEmployee(eventLeadEmployee: String!): [Event]
+    findEventByEventContact(eventContact: String!): [Event]
+    findEventByEventLoadinTime(eventLoadinTime: String!): [Event]
+    findEventByEventTime(eventTime: String!): [Event]
+    findEventByEventLocation(eventLocation: String!): [Event]
+    findEventByEventTransferOrder(eventTransferOrder: String!): [Event]
+
+
   }
 
   type Mutation {
-
-    loginUser(email: String!, password: String!): Auth
-    saveUser(username: String!, email: String!, password: String!): Auth
-    createNewProduct(productInput: ProductInput): User
-    createNewInventory(inventoryName: String!): User
-    removeInventory(inventoryId: ID!): User
-    addInventoryToUser(inventoryId: ID!, userId: ID!): User
-    removeInventoryFromUser(_id: ID!, inventoryId: ID!): User
-    addProductToInventory(inventoryId: ID!, productInput: ProductInput!): Inventory
-    addProductQuantity(inventoryId: ID!, productId: ID!): Inventory
-    removeProductFromInventory(inventoryId: ID!, productId: ID!, quantity: Int): Inventory
+    createEvent(eventInput: EventInput): Event
+    createCustomer(customerInput: CustomerInput): Customer
+    createEmployee(employeeInput: EmployeeInput): Employee
     
   }
+
 `;
 
 module.exports = typeDefs;
