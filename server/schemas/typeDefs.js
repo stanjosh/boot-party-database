@@ -13,14 +13,19 @@ const typeDefs = gql`
     eventNotes: String!
     eventPartyType: String!
     eventVan: Int
-    eventTransferOrder: String!
+    eventTransferOrder: String
     eventHelpers: [String]
   }
 
   input EventInput {
-    eventContact: [CustomerInput]
+    eventContact: CustomerInput
     eventTime: String!
     eventLocation: String!
+    eventLoadinTime: String!
+    eventTitle: String!
+    eventNotes: String!
+    eventPartyType: String!
+    eventSignups: [CustomerInput]
   }
 
   type BootProduct {

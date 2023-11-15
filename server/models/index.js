@@ -1,6 +1,6 @@
 const User = require('./User');
-const Inventory = require('./Event');
+const Event = require('./Event');
 const Product = require('./Product');
 
 
-module.exports = { User, Inventory, Product };
+module.exports = { User, Event, Product };
