@@ -44,8 +44,9 @@ const resolvers = {
 
   Mutation: {
     createEvent: async (parent, { eventInput }, context) => {
-      const event = await Event.create({ eventInput: eventInput });
-  
+      console.log( eventInput );
+      const event = await Event.create( eventInput );
+      console.log(event);
       return event;
     }
   }
