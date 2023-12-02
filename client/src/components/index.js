@@ -1,5 +1,5 @@
-import SavedInventories from './inventories/SavedInventories.component'
+import Admin from './Admin.component'
+import LandingPage from './LandingPage.component'
 
 
-
-export { SavedInventories }
+export { Admin, LandingPage }

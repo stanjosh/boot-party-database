@@ -1,11 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz:wght@500&display=swap');
+
+:root {
+    --alviesBlue: #009ceb;
+}
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-image: url("background.png");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
+    max-width: 100%;
 }
 header {
     background-color: #333;
@@ -13,10 +16,7 @@ header {
     text-align: cover;
     padding: 10px;
 }
-#shopping-list {
-    max-width: 400px;
-    margin: 0 auto;
-}
+
 ul {
     list-style: none;
     padding: 0;
@@ -28,26 +28,179 @@ li {
     border-bottom: 1px solid #ccc;
     padding: 8px 0;
 }
-button {
-    background-color: #f4a83665;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-}
+
+
 
 footer {
-    background-color: rgba(148, 179, 91, 0.731);
-    color: black;
+    background-color: #009ceb;
+    color: rgb(255, 255, 255);
     text-align: center;
     padding: 10px;
+    
+    width: 100%;
+    margin-top: 20px;
+
 }
+
+main {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    background-image: url(https://alvies-test.imgix.net/gsmith_20220611_0285-1.jpg?auto=compress%2Cformat&dm=1665771107&fit=clip&ixlib=php-3.1.0&w=2100);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.landingPageBox {
+    display: flex;
+    flex-direction: column;
+    margin-right: auto 15px;
+    margin-left: auto 15px;
+    align-items: center;
+    text-align: center;
+    min-height: 100cqh;
+    padding: 10px;
+    max-width: 500px;
+    width: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+;
+}
+
 
 h1 {
-    text-align: center;
-    margin: 20px;
-    color: darkgreen;
+
+    font-size: 8cqb;
+    font-weight: 600;
+    font-family: 'Yanone Kaffeesatz', sans-serif;
+    letter-spacing: .5cqw;
+    color: aliceblue;
+    filter: drop-shadow(0px 0px 3px black) drop-shadow(2px 2px 3px black) drop-shadow(-2px -2px 3px black);
 }
 
-  
-  
+ h2, h3 {
+    color: var(--alviesBlue);;
+    font-size: 10cqb;
+    font-family: 'Yanone Kaffeesatz', sans-serif;
+    letter-spacing: .5cqw;
+    padding: 10px;
+    width: 100%;
+}
+
+h4 {
+    color: aliceblue;;
+    font-size: 5cqb;
+    font-family: 'Yanone Kaffeesatz', sans-serif;
+    letter-spacing: .5cqw;
+    padding: 10px;
+    width: 100%;
+}
+
+.landingPageBox h3 {
+    font-size: 5cqb;
+}
+
+
+
+.navbar-header {
+    background-color: var(--alviesBlue);
+    color: white;
+   
+}
+
+.landingPageButton {
+    background-color: var(--alviesBlue);
+    font-family: 'Yanone Kaffeesatz', sans-serif;
+    letter-spacing: 0;
+    color: white;
+    border: none;
+    padding: 15px 10px;
+    cursor: pointer;
+    margin: 10px;
+    border-radius: 0px;
+    width: 100%;
+    max-width: 90%;
+    font-size: 5cqh;
+    border: 3px solid aliceblue;
+    filter: drop-shadow(2px 2px 3px black) drop-shadow(-2px -2px 3px var(--alviesBlue));
+}
+
+.landingPageButton:hover {
+    background-color: #f4a836;
+}
+
+
+
+.landingPageImgBox {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 100cqh;
+    width: 50%;
+    min-width: 50%;
+    background-color: var(--alviesBlue);
+
+    
+}
+
+
+
+.pblock {
+    background-color: var(--alviesBlue);;
+    font-family: "work-sans", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 2cqh;
+    letter-spacing: .1cqw;
+    color: aliceblue;
+    text-align: right;
+    padding: 2cqb;
+    width: 100%;
+    max-width: 50cqw;
+    margin: 100px 10px 0px 0px;
+}
+
+.pblock a {
+    color: aliceblue;
+    text-decoration: none;
+
+}
+
+
+.imageBG {
+
+
+    background-position: right;
+    background-size: fill;    
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+
+}
+
+@media screen and (max-width: 900px) {
+
+    .pblock {
+        text-align: center;
+        padding: 10px;
+        margin: 0;
+        width: 100%;
+        max-width: 100%;
+        margin-top: 15cqh;
+    }
+
+    .imageBG {
+        padding: 0;
+        height: 100cqh;
+        background-position: 25%;
+    }
+    .smallHide {
+        display: none;
+    }
+    
+}
