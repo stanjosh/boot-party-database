@@ -1,26 +1,29 @@
 const { Schema, model } = require('mongoose');
 
 
-
 const eventSchema = new Schema({
-    eventTitle: {
-        type: String,
-        required: true,
-        trim: true
-    },
-    eventLeadEmployee: {
-        type: [Schema.Types.ObjectId],
-        ref: 'Employee'
-    },
     eventContact: {
         type: Schema.Types.ObjectId,
         ref: 'Customer'
     },
-    eventLoadinTime: {
+
+    eventTitle: {
         type: String,
-        required: true,
+        required: false,
         trim: true
     },
+
+    eventLeadEmployee: {
+        type: [Schema.Types.ObjectId],
+        ref: 'Employee'
+    },
+
+    eventLoadinTime: {
+        type: String,
+        required: false,
+        trim: true
+    },
+    
     eventTime: {
         type: String,
         required: true,

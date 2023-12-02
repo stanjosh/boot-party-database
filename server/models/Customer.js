@@ -4,16 +4,16 @@ const { Schema, model } = require('mongoose');
 
 const customerSchema = new Schema({
     shoeSize: {
-        type: String,
-        required: true,
+        type: Number,
+        required: false,
         trim: true
     },
-    firstName: {
+    phone : {
         type: String,
-        required: true,
+        required: false,
         trim: true
     },
-    lastName: {
+    name: {
         type: String,
         required: true,
         trim: true
@@ -29,7 +29,7 @@ const customerSchema = new Schema({
 
 
 
-const Customer = model('Event', customerSchema);
+const Customer = model('Customer', customerSchema);
 
 
 

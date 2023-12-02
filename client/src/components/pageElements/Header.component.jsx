@@ -77,7 +77,7 @@ const Header = () => {
         </Navbar>
       ))}
 
-      {/* set modal data up */}
+      
       <Modal
         size='lg'
         show={showModal}

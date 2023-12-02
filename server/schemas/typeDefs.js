@@ -2,30 +2,27 @@ const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
   type Event {
-    eventTitle: String! 
-    eventLeadEmployee: [Employee!]
-    eventContact: Customer!
-    eventLoadinTime: String!
+    eventLocation: String!
     eventTime: String!
+    eventContact: Customer!
+
+    eventTitle: String 
+    eventLeadEmployee: [Employee!]
+    eventLoadinTime: String
     eventDisplay: String
     eventSignups: [Customer]
-    eventLocation: String
-    eventNotes: String!
-    eventPartyType: String!
+    eventNotes: String
+    eventPartyType: String
     eventVan: Int
     eventTransferOrder: String
     eventHelpers: [String]
   }
 
   input EventInput {
-    eventContact: CustomerInput
-    eventTime: String!
     eventLocation: String!
-    eventLoadinTime: String!
-    eventTitle: String!
-    eventNotes: String!
-    eventPartyType: String!
-    eventSignups: [CustomerInput]
+    eventTime: String!
+    eventContact: String!
+
   }
 
   type BootProduct {
@@ -38,17 +35,16 @@ const typeDefs = gql`
 
 
   type Customer {
-    firstName: String!
-    lastName: String!
+    name: String!
     email: String!
     phone: String
     shoeSize: Int
   }
 
   input CustomerInput {
-    firstName: String
-    lastName: String
-    email: String
+    name: String!
+    email: String!
+    phone: String
     shoeSize: Int
   }
 
@@ -62,6 +58,8 @@ const typeDefs = gql`
   }
 
   type Query {
+    findCustomerByID(uuid: ID!): Customer
+    findEventByID(uuid: ID!): Event
     findEventByDate(date: String!): [Event]
     findCustomerByFirstName(firstName: String!): [Customer]
     findCustomerByLastName(lastName: String!): [Customer]

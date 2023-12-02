@@ -1,9 +1,20 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { Event } = require('../models');
+const { Event, Customer } = require('../models');
 
 
 const resolvers = {
   Query: {
+    findCustomerByID: async (uuid) => {
+      return await Customer.findOne(uuid);
+    },
+    findCustomerByEmail: async (parent, { email }, context) => {
+      return await Customer.findOne({ email: email });
+    },
+
+    findEventByID: async (parent, { _id }, context) => {
+      return await Event.findOne({ _id: _id });
+    },
+
     findEventByDate: async (parent, { date }, context) => {
       return await Event.find({ date: date })
 
@@ -43,11 +54,19 @@ const resolvers = {
   },
 
   Mutation: {
+    createCustomer: async (parent, { customerInput }, context) => {
+      console.log( customerInput );
+      const customer = await Customer.create( customerInput );
+      console.log(customer);
+      return customer;
+    },
+
     createEvent: async (parent, { eventInput }, context) => {
       console.log( eventInput );
-      const event = await Event.create( eventInput );
+      const event = await Event.create( eventInput )
+      
       console.log(event);
-      return event;
+      return event.populate('eventContact');
     }
   }
 

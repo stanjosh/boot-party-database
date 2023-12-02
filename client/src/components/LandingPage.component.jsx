@@ -18,7 +18,7 @@ const LandingPage = () => {
             <h3 className="landingPageTitle">WE&apos;LL COME TO YOU</h3>
             <p style={{fontFamily: '"work-sans",sans-serif', fontWeight: "600", letterSpacing: ".15cqw", fontSize: "2cqh" }}>
               We want to provide the best customer experience in all of footwear. Because if you can’t have fun trying on boots, you’re doing it wrong. We will literally drive a van-full of boots to you for a personal boot-fitting, wherever you are. Your couch? Cool. Work, no problemo. Got a favorite park bench? Drop us a pin. We want you to feel comfortable trying on our boots, and pulling them off. We’ll bring a few sizes and styles of your choice, for you (and whoever else may be joining) to find the perfect pair, and answer all your boot-wearin’ questions with trusted expertise.</p>
-            <Button href="/admin" className="landingPageButton">LET&apos;S PARTY</Button>
+            <Button href="/book" className="landingPageButton">LET&apos;S PARTY</Button>
             </div>
         </div>
         <div className="landingPageBox imageBG" style={{marginTop: "0", minWidth: "100%", backgroundImage: "url(https://alvies-test.imgix.net/gsmith_20220611_0019.jpg?ar=1%3A1&auto=compress%2Cformat&dm=1656514717&fit=crop&ixlib=php-3.1.0&w=1500"}}>
