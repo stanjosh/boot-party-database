@@ -105,3 +105,69 @@ mutation CreateEvent($eventInput: EventInput) {
   }
 }
 `;
+
+export const UPDATE_EVENT = gql`
+mutation UpdateEvent($eventInput: EventInput) {
+  updateEvent(eventInput: $eventInput) {
+    _id
+    eventLocation
+    eventTime
+    eventContact {
+      email
+      name
+      phone
+      shoeSize
+    }
+    eventTitle
+    eventLeadEmployee {
+      name
+    }
+    eventLoadinTime
+    eventDisplay
+    eventSignups {
+      name
+      email
+      phone
+      shoeSize
+    }
+    eventNotes
+    eventPartyType
+    eventVan
+    eventTransferOrder
+    eventHelpers
+  }
+}
+`;
+
+export const EVENT_ADD_SIGNUP = gql`
+mutation EventAddSignup($_id: ID!, $customerInput: CustomerInput!) {
+  eventAddSignup(_id: $_id, customerInput: $customerInput) {
+    _id
+    eventLocation
+    eventTime
+    eventContact {
+      email
+      name
+      phone
+      shoeSize
+    }
+    eventTitle
+    eventLeadEmployee {
+      name
+    }
+    eventLoadinTime
+    eventDisplay
+    eventSignups {
+      name
+      email
+      phone
+      shoeSize
+    }
+    eventNotes
+    eventPartyType
+    eventVan
+    eventTransferOrder
+    eventHelpers
+  }
+}
+`;

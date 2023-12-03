@@ -58,7 +58,7 @@ const Header = () => {
     
       <>
       
-      {[false].map((expand) => (
+      {['sm'].map((expand) => (
         <Navbar key={expand} expand={expand} style={{zIndex: "100"}} className="bg-body-tertiary mb-3">
           <Container fluid>
             <Navbar.Brand href="#"><img src='/boot-party-blue.png' height={'70cqb'} /></Navbar.Brand>

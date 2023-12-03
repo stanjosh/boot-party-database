@@ -4,7 +4,9 @@ const { Schema, model } = require('mongoose');
 const eventSchema = new Schema({
     eventContact: {
         type: Schema.Types.ObjectId,
-        ref: 'Customer'
+        ref: 'Customer',
+        autopopulate: true,
+
     },
 
     eventTitle: {
@@ -34,7 +36,9 @@ const eventSchema = new Schema({
     },
     eventSignups: {
         type: [Schema.Types.ObjectId],
-        ref: 'Customer'
+        ref: 'Customer',
+        autopopulate: true,
+        
     },
     eventLocation: {
         type: String,
@@ -59,9 +63,10 @@ const eventSchema = new Schema({
         type: [String],
         trim: true
     }
+    
 });
 
-
+eventSchema.plugin(require('mongoose-autopopulate'));
 
 
 const Event = model('Event', eventSchema);

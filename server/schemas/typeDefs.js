@@ -92,7 +92,7 @@ const typeDefs = gql`
   type Mutation {
     createEvent(eventInput: EventInput): Event
     editEvent(_id: ID!, eventInfo: EventInput): Event
-    eventAddSignups(_id: ID!, customerInput: CustomerInput!): Event
+    eventAddSignup(_id: ID!, customerInput: CustomerInput!): Event
     createCustomer(customerInput: CustomerInput): Customer
     createEmployee(employeeInput: EmployeeInput): Employee
     

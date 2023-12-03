@@ -9,6 +9,7 @@ const EventDisplay = ( { eventData } ) => {
     const eventTimeRaw = new Date(event.eventTime * 1);
 
     return (
+        <>
         <Card>
             <Card.Body>
                 <Card.Title><h3 style={{ fontSize: '5cqb' }}>Event Details</h3></Card.Title>
@@ -16,6 +17,7 @@ const EventDisplay = ( { eventData } ) => {
                     {console.log(eventData)}
                     <strong>Location:</strong> {event.eventLocation}<br />
                     <strong>Time:</strong> {eventTimeRaw.toLocaleString()}<br />
+                    <strong>Guests:</strong> {event.eventSignups.length}<br />
                     <strong>Contact:</strong> {event.eventContact.name}<br />
                     <strong>Email:</strong> {event.eventContact.email}<br />
                     <strong>Phone:</strong> {event.eventContact.phone}<br />
@@ -23,6 +25,7 @@ const EventDisplay = ( { eventData } ) => {
             </Card.Body>
         </Card>
 
+        </>
     );
 };
 

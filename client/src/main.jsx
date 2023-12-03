@@ -9,7 +9,7 @@ import {
   createHttpLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import { Admin, LandingPage, Booking, ShareParty } from './components/'
+import { Admin, LandingPage, Booking, ShareParty, JoinParty } from './components/'
 
 const host = 'http://localhost:3001/graphql'
 
@@ -54,6 +54,10 @@ const router = createBrowserRouter([
       {
         path: "/party/:eventId",
         element: <ShareParty />
+      },
+      {
+        path: "/join/:eventId",
+        element: <JoinParty />
       },
       {
         path: "*",
