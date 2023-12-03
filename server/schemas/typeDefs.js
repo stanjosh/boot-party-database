@@ -1,6 +1,14 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
+  type me {
+    _id: ID!
+    username: String!
+    email: String!
+    password: String!
+   
+  }
+
   type Event {
     _id: ID!
     eventLocation: String!
@@ -60,6 +68,7 @@ const typeDefs = gql`
   }
 
   type Query {
+    me(uuid: ID!): me
     findCustomerByID(uuid: ID!): Customer
     findEventByID(uuid: ID!): Event
     findEventByDate(date: String!): [Event]
@@ -82,6 +91,8 @@ const typeDefs = gql`
 
   type Mutation {
     createEvent(eventInput: EventInput): Event
+    editEvent(_id: ID!, eventInfo: EventInput): Event
+    eventAddSignups(_id: ID!, customerInput: CustomerInput!): Event
     createCustomer(customerInput: CustomerInput): Customer
     createEmployee(employeeInput: EmployeeInput): Employee
     

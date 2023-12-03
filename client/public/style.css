@@ -2,6 +2,7 @@
 
 :root {
     --alviesBlue: #009ceb;
+    --alviesDarkBlue: #002952;
 }
 
 body {
@@ -32,7 +33,7 @@ li {
 
 
 footer {
-    background-color: #009ceb;
+    background-color: var(--alviesDarkBlue);
     color: rgb(255, 255, 255);
     text-align: center;
     padding: 10px;

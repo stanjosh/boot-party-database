@@ -2,7 +2,6 @@ import React from 'react';
 import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App.jsx'
-import './index.css'
 import {
   ApolloClient,
   InMemoryCache,
@@ -10,7 +9,7 @@ import {
   createHttpLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import { Admin, LandingPage, Booking } from './components/'
+import { Admin, LandingPage, Booking, ShareParty } from './components/'
 
 const host = 'http://localhost:3001/graphql'
 
@@ -53,8 +52,8 @@ const router = createBrowserRouter([
         element: <Booking />
       },
       {
-        path: "/book/:id",
-        element: <Booking id />
+        path: "/party/:eventId",
+        element: <ShareParty />
       },
       {
         path: "*",

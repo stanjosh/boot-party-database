@@ -4,6 +4,13 @@ const { Event, Customer } = require('../models');
 
 const resolvers = {
   Query: {
+    me: async (parent, args, context) => {
+      if (context.user) {
+        return await User.findOne({ _id: context.user._id });
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+
     findCustomerByID: async (uuid) => {
       return await Customer.findOne(uuid);
     },
@@ -11,8 +18,10 @@ const resolvers = {
       return await Customer.findOne({ email: email });
     },
 
-    findEventByID: async (parent, { _id }, context) => {
-      return await Event.findOne({ _id: _id });
+    findEventByID: async (parent, { uuid }, context) => {
+      return await Event.findOne({ _id: uuid })
+      .populate('eventSignups')
+      .populate('eventContact');
     },
 
     findEventByDate: async (parent, { date }, context) => {
@@ -51,6 +60,8 @@ const resolvers = {
       return await Event.find({ eventTransferOrder: eventTransferOrder })
     },
 
+
+
   },
 
   Mutation: {
@@ -63,11 +74,27 @@ const resolvers = {
 
     createEvent: async (parent, { eventInput }, context) => {
       const event = await Event.create( eventInput )
-      return event.populate('eventContact');
+      return event.populate('eventSignups')
+      .populate('eventContact');
+    },
+
+
+    editEvent: async (parent, { _id, eventInput }, context) => {
+      const event = await Event.findOneAndUpdate({ _id: _id, eventInput: eventInput});
+      return event.populate('eventSignups')
+      .populate('eventContact');
+    },
+
+    eventAddSignups: async (parent, { _id, customerInput }, context) => {
+      const event = await Event.findOneAndUpdate({ _id: _id },
+        {
+          $push: {
+            eventSignups: customerInput
+          }       
+        });
+        return event.populate('eventSignups');
     }
   }
-
-
 };
 
 module.exports = resolvers;

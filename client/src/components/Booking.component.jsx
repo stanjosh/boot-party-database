@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Container } from 'react-bootstrap';
 import { CustomerForm, EventForm, EventDetailsForm } from '../components/forms';
 
 
@@ -24,10 +25,13 @@ const CreateEventPage = () => {
 }
 
   return (
-    <div>
-      <h1>Book a Boot Party</h1>
-      {getCurrentStep()}
-    </div>
+    <>
+      <h1 style={{fontSize: '12cqw'}}>BOOK A BOOT PARTY</h1>
+      <Container fluid style={{ height: '70cqh'}}>
+        
+        {getCurrentStep()}
+      </Container>
+    </>
   );
 };
 

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Alert } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { useMutation } from '@apollo/client';
@@ -8,7 +8,6 @@ import { CREATE_EVENT } from '../../util/mutations';
 
 const EventDetailsForm = ({ setCurrentStep }) => {
     const [eventForm, setEventFormData] = useState('');
-    const [eventTime, setEventTime] = useState(new Date());
     const [createEvent, { loading, error }] = useMutation(CREATE_EVENT);
 
     const handleSubmit = async (e) => {
@@ -41,29 +40,25 @@ const EventDetailsForm = ({ setCurrentStep }) => {
         console.log(eventForm);
     }
 
-    const handleTimeInputChange = (e) => {
-        setEventTime(e);
-        setEventFormData({ ...eventForm, eventTime: eventTime.toString() });
-        console.log(eventForm);
-    }
-
   return (
     <Form onSubmit={handleSubmit}>
     <Form.Group className="mb-3" controlId="formEventInfo">
         <Form.Control
-            type="text"
-            placeholder="Event Address"
-            name="eventLocation"
-            value={eventForm.eventLocation}
+            as="textarea"
+            rows={4}
+            placeholder="Notes for us?"
+            name="eventNotes"
+            value={eventForm.eventNotes}
             onChange={handleEventInputChange}
         />
      
     </Form.Group>
     <Form.Group className="mb-3" controlId="formSubmit">
       <Button type="submit" disabled={loading}>
-        next: more details
+        next: share your boot party
       </Button>
-      {error && <p>Error creating event</p>}
+      
+      {error && <Alert>Error creating event</Alert>}
       </Form.Group>
     </Form>
   );

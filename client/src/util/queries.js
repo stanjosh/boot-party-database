@@ -27,3 +27,38 @@ query Me {
   }
 }
 `;
+
+export const QUERY_EVENT = gql`
+query FindEventByID($uuid: ID!) {
+  findEventByID(uuid: $uuid) {
+    _id
+    eventLocation
+    eventTime
+    eventContact {
+      _id
+      name
+      email
+      phone
+      shoeSize
+    }
+    eventTitle
+    eventLeadEmployee {
+      name
+    }
+    eventLoadinTime
+    eventDisplay
+    eventSignups {
+      _id
+      name
+      email
+      phone
+      shoeSize
+    }
+    eventNotes
+    eventPartyType
+    eventVan
+    eventTransferOrder
+    eventHelpers
+  }
+}
+`;
