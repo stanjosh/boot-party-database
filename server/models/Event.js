@@ -27,7 +27,6 @@ const eventSchema = new Schema({
     eventTime: {
         type: String,
         required: true,
-        trim: true
     },
     eventDisplay: {
         type: String,

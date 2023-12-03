@@ -62,10 +62,7 @@ const resolvers = {
     },
 
     createEvent: async (parent, { eventInput }, context) => {
-      console.log( eventInput );
       const event = await Event.create( eventInput )
-      
-      console.log(event);
       return event.populate('eventContact');
     }
   }

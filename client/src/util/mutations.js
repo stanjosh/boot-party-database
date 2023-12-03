@@ -61,10 +61,47 @@ export const LOGIN_USER = gql`
 }
 `;
 
-export const CREATE_EVENT = gql`
-  mutation CreateEvent($eventInput: EventInput!) {
-    createEvent(eventInput: $eventInput) {
-      
-    }
+export const CREATE_CUSTOMER = gql`
+mutation CreateCustomer($customerInput: CustomerInput) {
+  createCustomer(customerInput: $customerInput) {
+    _id
+    name
+    email
+    phone
+    shoeSize
   }
+}
+`;
+
+export const CREATE_EVENT = gql`
+mutation CreateEvent($eventInput: EventInput) {
+  createEvent(eventInput: $eventInput) {
+    _id
+    eventLocation
+    eventTime
+    eventContact {
+      email
+      name
+      phone
+      shoeSize
+    }
+    eventTitle
+    eventLeadEmployee {
+      name
+    }
+    eventLoadinTime
+    eventDisplay
+    eventSignups {
+      name
+      email
+      phone
+      shoeSize
+    }
+    eventNotes
+    eventPartyType
+    eventVan
+    eventTransferOrder
+    eventHelpers
+  }
+}
 `;

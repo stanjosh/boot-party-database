@@ -10,7 +10,7 @@ import {
   createHttpLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import { Admin, LandingPage, CreateEventPage } from './components/'
+import { Admin, LandingPage, Booking } from './components/'
 
 const host = 'http://localhost:3001/graphql'
 
@@ -50,7 +50,15 @@ const router = createBrowserRouter([
       },
       {
         path: "/book",
-        element: <CreateEventPage />
+        element: <Booking />
+      },
+      {
+        path: "/book/:id",
+        element: <Booking id />
+      },
+      {
+        path: "*",
+        element: <h1>404</h1>
       }
     ]
   }
