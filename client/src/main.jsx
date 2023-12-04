@@ -10,6 +10,7 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { Admin, LandingPage, Booking, ShareParty, JoinParty } from './components/'
+import BootCarousel from './components/pageElements/bootCarousel.component.jsx';
 
 const host = 'http://localhost:3001/graphql'
 
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
       {
         path: "/join/:eventId",
         element: <JoinParty />
+      },
+      {
+        path: "/test",
+        element: <BootCarousel />
       },
       {
         path: "*",

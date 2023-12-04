@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Form, Button, Alert } from 'react-bootstrap';
+import { Form, Button, Alert, Container } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { useMutation } from '@apollo/client';
@@ -41,6 +41,7 @@ const EventDetailsForm = ({ setCurrentStep }) => {
     }
 
   return (
+
     <Form onSubmit={handleSubmit}>
     <Form.Group className="mb-3" controlId="formEventInfo">
         <Form.Control
@@ -61,6 +62,7 @@ const EventDetailsForm = ({ setCurrentStep }) => {
       {error && <Alert>Error creating event</Alert>}
       </Form.Group>
     </Form>
+
   );
 };
 

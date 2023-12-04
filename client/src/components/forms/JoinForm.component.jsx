@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Form, Button, Alert } from 'react-bootstrap';
+import { Form, Button, Alert, Container } from 'react-bootstrap';
 import { Link, useParams } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { EVENT_ADD_SIGNUP } from '../../util/mutations';
@@ -55,6 +55,7 @@ const JoinForm = () => {
 
 
   return (
+
     <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="formCustomerInfo">
         <Form.Control
@@ -88,7 +89,7 @@ const JoinForm = () => {
         {success && <Alert >Thanks for joining! <Link to={`/party/${eventId}`}>Back to the party!</Link></Alert>}
         {error && <Alert>Error joining! <Link to={'mailto:holler@alvies.com'}>get at us</Link></Alert>}
     </Form>
-    
+
   );
 };
 

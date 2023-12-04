@@ -24,7 +24,7 @@ const ShareParty = () => {
   return (
     <>
       <h1 style={{fontSize: '12cqw'}}>BOOT PARTY</h1>
-      <Container fluid style={{ height: '30cqh'}}>
+      
         
         {loading ? (
           <div>Loading...</div>
@@ -32,7 +32,7 @@ const ShareParty = () => {
           <EventDisplay eventData={data}/>
         )}
         
-      </Container>
+      
       
       <JoinForm/>
       

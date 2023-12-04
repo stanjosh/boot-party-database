@@ -6,7 +6,7 @@ const LandingPage = () => {
         <div className="landingPageBox" style={{marginTop: "30cqh"}}>
           <h1 className="landingPageTitle">BOOT FITTINGS ANYWHERE</h1>
           
-          <Button href="/admin" className="landingPageButton">BOOK A PARTY</Button>
+          <Button href="/book" className="landingPageButton">BOOK A PARTY</Button>
         </div>
 
         <div className="landingPageBox" 
@@ -44,29 +44,29 @@ const LandingPage = () => {
               <h4>CHOOSE YOUR BOOT PARTY</h4>
               
                 
-                  <strong><a href="https://bootparty.com/book">Party of 1 (just you)</a></strong>
+                  <strong><a href="/book">Party of 1 (just you)</a></strong>
                   
                   <p>
                   It's kinda like the Uber of boots, with a personalized boot fitter that knows 
                   everything there is to know about boots, fit, and a good experience. One-time $50 
                   delivery fee.
                   </p>
-                  <strong><a href="https://bootparty.com/book">BFF aka - Boot Fitting Friend - (2 people)</a> </strong>
+                  <strong><a href="/book">BFF aka - Boot Fitting Friend - (2 people)</a> </strong>
                   <p>
                   This could be a couple, roommates, a best bud, a first date, or you and your Mom. Whose eye do you trust most? One-time $50 delivery fee.
                   </p>
-                  <strong><a href="https://bootparty.com/book">Boot Pachanga (3-5 people)</a></strong>
+                  <strong><a href="/book">Boot Pachanga (3-5 people)</a></strong>
                   <p>
                   Perfect for a few friends, groomsmen, family gift buying, and hippie communes. One-time $50 delivery fee.
                   </p>
 
-                  <strong><a href="https://bootparty.com/book">Bootenanny (5-15 people)</a></strong>
+                  <strong><a href="/book">Bootenanny (5-15 people)</a></strong>
                   
                   <p>            
                   We can come to your Christmas party, fantasy draft, happy hour, surprise party. And it’s FREE.
                   </p>
                   
-                  <strong><a href="https://bootparty.com/book">Boot-Spree (Corporate events, 15+ people parties)</a></strong>
+                  <strong><a href="/book">Boot-Spree (Corporate events, 15+ people parties)</a></strong>
                   <p>
                   What better way to celebrate with the folks who walk the walk with you? We can accommodate all sizes of companies — from mom &amp; pops and start-ups to inter-galactic tech companies.
                   </p>

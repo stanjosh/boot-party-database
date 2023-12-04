@@ -16,7 +16,7 @@ const ShareParty = () => {
   
   return (
     <>
-      <Container fluid style={{ minHeight: '50cqh' }}>
+      <Container fluid style={{ minHeight: '70cqh' }}>
         
         {loading ? (
           <div>Loading...</div>

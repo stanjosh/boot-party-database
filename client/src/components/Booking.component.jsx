@@ -25,13 +25,12 @@ const CreateEventPage = () => {
 }
 
   return (
-    <>
+    <Container fluid style={{ minHeight: '90cqh', textAlign: "center"}}>
       <h1 style={{fontSize: '12cqw'}}>BOOK A BOOT PARTY</h1>
-      <Container fluid style={{ height: '70cqh'}}>
-        
+
         {getCurrentStep()}
-      </Container>
-    </>
+
+    </Container>
   );
 };
 
