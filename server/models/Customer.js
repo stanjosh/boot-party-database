@@ -8,6 +8,11 @@ const customerSchema = new Schema({
         required: false,
         trim: true
     },
+    boot: {
+        type: String,
+        required: false,
+        trim: true
+    },
     phone : {
         type: String,
         required: false,

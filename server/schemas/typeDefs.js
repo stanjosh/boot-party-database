@@ -49,6 +49,7 @@ const typeDefs = gql`
     email: String!
     phone: String
     shoeSize: Int
+    boot: String
   }
 
   input CustomerInput {
@@ -56,6 +57,7 @@ const typeDefs = gql`
     email: String!
     phone: String
     shoeSize: Int
+    boot: String
   }
 
   type Employee {

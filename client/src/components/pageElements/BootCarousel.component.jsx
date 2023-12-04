@@ -9,6 +9,7 @@ const shoeSizes = [5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 1
 const BootCarousel = ({ handleCustomerInputChange, customerForm }) => {
     const [bootData, setBootData] = useState([]);
     const [showBoots, setShowBoots] = useState(false);
+    const [selectedBoot, setSelectedBoot] = useState(null);
 
     useEffect(() => {
         fetch(bootDataURL)
@@ -27,17 +28,20 @@ const BootCarousel = ({ handleCustomerInputChange, customerForm }) => {
                 console.log(filteredBoots)
                 setBootData(filteredBoots);
             });
-    }, [customerForm.shoeSize, customerForm.shoeWidth]);
+    }, [handleCustomerInputChange, customerForm]);
 
     const handleCarouselChange = (e) => {
         handleCustomerInputChange(e);
         if (customerForm.shoeSize && customerForm.shoeWidth) {
-        setShowBoots(true);
-        } else if (customerForm.boot !== 'null' || !customerForm.shoeSize || !customerForm.shoeWidth) {
+            setShowBoots(true);
+        } else if (selectedBoot) {
+            customerForm.boot = e.target.value;
+            
             setShowBoots(false);
         } else {
             setShowBoots(false);
         }
+        console.log(customerForm)
     }
 
 
@@ -46,33 +50,33 @@ const BootCarousel = ({ handleCustomerInputChange, customerForm }) => {
     <Form.Group style={{display: "flex"}}>
     
     <Form.Select 
-            id="shoeSize" 
-            aria-label="Womens' Boot Sizes"
-            placeholder="Womens' Boot Sizes"
-            onChange={handleCarouselChange}
-            name="shoeSize"
-            value={customerForm.shoeSize}
-            style={{width: "50%"}}    
-        >
-            <option value={null}>Boot Size</option>
-            {shoeSizes.map((size) =>               
-                <option key={size}>{size}</option>
-            )}
-        </Form.Select>
-        <Form.Select 
-            id="shoeWidth" 
-            aria-label="Boot Width"
-            placeholder="Boot Width"
-            onChange={handleCarouselChange}
-            name="shoeWidth"
-            value={customerForm.shoeWidth}
-            style={{width: "50%"}}    
-        >
+        id="shoeSize" 
+        aria-label="Womens' Boot Sizes"
+        placeholder="Womens' Boot Sizes"
+        onChange={handleCarouselChange}
+        name="shoeSize"
+        value={customerForm.shoeSize}
+        style={{width: "50%"}}    
+    >
+        <option value={null}>Boot Size</option>
+        {shoeSizes.map((size) =>               
+            <option key={size}>{size}</option>
+        )}
+    </Form.Select>
+    <Form.Select 
+        id="shoeWidth" 
+        aria-label="Boot Width"
+        placeholder="Boot Width"
+        onChange={handleCarouselChange}
+        name="shoeWidth"
+        value={customerForm.shoeWidth}
+        style={{width: "50%"}}    
+    >
             <option value={null}>Boot Width</option>
             <option value="B">B (Women)</option>
             <option value="D">D (Men)</option>
             <option value="EE">EE (Men Wide)</option>
-        </Form.Select>
+    </Form.Select>
     </Form.Group>
     <Form.Group>
     <Form.Check
@@ -83,28 +87,36 @@ const BootCarousel = ({ handleCustomerInputChange, customerForm }) => {
         id="boot"
         max={1}
         required
-       
+        onChange={handleCarouselChange}
     >
       {bootData.map((boot) => (
-        <>
+        <div key={boot.id}>
         <Form.Check.Input 
             type="radio" 
-            key={boot.id} 
-            value={boot.id} 
-            autocomplete="off" 
+            value={boot.sku}
+            name="boot"
+            id={boot.id}
+            autoComplete="off" 
             style={{display: "none"}}
-            onSelect={handleCarouselChange} 
+            onClick={() => setSelectedBoot(boot.sku)}
         />
-        <Form.Check.Label className="btn btn-outline-primary" for={boot.id} style={{width: "100%", maxWidth: "400px"}}>
+        <Form.Check.Label  value={boot.sku} className="btn btn-outline-primary" htmlFor={boot.id} style={{width: "100%", maxWidth: "400px"}}>
             
             <h2 style={{fontSize: "3cqh"}}>{boot.alt} <br /> {boot.option3}</h2>
             <Image width={"100%"} src={boot.featured_image.src} alt={boot.title} />
             
         </Form.Check.Label>
-        </>
+        </div>
         ))}
     </Form.Check>
+    {customerForm.boot && !showBoots ? (
+        <Card>
+            <Card.Title><h2 style={{fontSize: "3cqh"}}>{bootData.find((boot) => boot.sku === customerForm.boot).alt} {bootData.find((boot) => boot.sku === customerForm.boot).option3}</h2></Card.Title>
+            <Card.Body><Image style={{width: "100%"}} src={bootData.find((boot) => boot.sku === customerForm.boot).featured_image.src} alt={bootData.find((boot) => boot.sku === customerForm.boot).title} /></Card.Body>
+        </Card>
+        ) : null}
     </Form.Group>
+
     </>
   );
 };
