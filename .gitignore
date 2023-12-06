@@ -1,9 +1,9 @@
 .env
 package-lock.json
+node_modules
 server/package-lock.json
 server/node_modules
 server/.env
-server/package-lock.json
 client/package-lock.json
 client/node_modules
 client/.env
