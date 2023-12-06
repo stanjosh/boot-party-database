@@ -34,15 +34,6 @@ const typeDefs = gql`
 
   }
 
-  type BootProduct {
-    sku: String!
-    name: String
-    size: Int
-    color: String
-    quantity: Int
-  }
-
-
   type Customer {
     _id: ID!
     name: String!
