@@ -60,14 +60,7 @@ const typeDefs = gql`
     boot: String
   }
 
-  type Employee {
-    name: String!
-  }
 
-  input EmployeeInput {
-    name: String!
-
-  }
 
   type Query {
     me(uuid: ID!): me
