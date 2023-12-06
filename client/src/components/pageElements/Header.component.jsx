@@ -5,7 +5,7 @@ import { QUERY_ME } from '../../util/queries';
 import { LOGIN_USER } from '../../util/mutations';
 
 import Form from 'react-bootstrap/Form';
-import Auth from '../../util/auth';
+import Auth from '../../util/Auth';
 
 const Header = () => {
   const { loading, data } = useQuery(QUERY_ME);
