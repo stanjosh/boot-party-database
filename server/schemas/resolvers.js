@@ -1,6 +1,6 @@
 const { AuthenticationError } = require('apollo-server-express');
 const { Event, Customer } = require('../models');
-const { populate } = require('../models/User');
+
 
 
 const resolvers = {
@@ -74,22 +74,18 @@ const resolvers = {
     },
 
     createEvent: async (parent, { eventInput }, context) => {
-      const event = await Event.create( eventInput )
-      return event.populate('eventSignups')
-      .populate('eventContact');
+      return await Event.create( eventInput )
     },
 
 
-    editEvent: async (parent, { _id, eventInput }, context) => {
-      const event = await Event.findOneAndUpdate({ _id: _id, eventInput: eventInput});
-      return event.populate('eventSignups')
-      .populate('eventContact');
+    updateEvent: async (parent, { eventId, updateEventInput }, context) => {
+      return await Event.findOneAndUpdate({ _id: eventId }, { ...updateEventInput}, { new: true });
     },
 
-    eventAddSignup: async (parent, { _id, customerInput }, context) => {
+    eventAddSignup: async (parent, { eventId, customerInput }, context) => {
       const customer = await Customer.create( customerInput );
 
-      const event = await Event.findOneAndUpdate({ _id: _id },
+      const event = await Event.findOneAndUpdate({ _id: eventId },
         {
           $push: {
             eventSignups: customer._id

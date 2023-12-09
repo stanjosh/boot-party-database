@@ -42,9 +42,7 @@ query FindEventByID($uuid: ID!) {
       shoeSize
     }
     eventTitle
-    eventLeadEmployee {
-      name
-    }
+    eventLeadEmployee
     eventLoadinTime
     eventDisplay
     eventSignups {
@@ -52,7 +50,7 @@ query FindEventByID($uuid: ID!) {
       name
       email
       phone
-      shoeSize
+      boot
     }
     eventNotes
     eventPartyType

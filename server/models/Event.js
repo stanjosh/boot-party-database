@@ -4,6 +4,7 @@ const { Schema, model } = require('mongoose');
 const eventSchema = new Schema({
     eventContact: {
         type: Schema.Types.ObjectId,
+        required: true,
         ref: 'Customer',
         autopopulate: true,
 
@@ -16,8 +17,8 @@ const eventSchema = new Schema({
     },
 
     eventLeadEmployee: {
-        type: [Schema.Types.ObjectId],
-        ref: 'Employee'
+        type: String,
+        trim: true
     },
 
     eventLoadinTime: {
@@ -42,6 +43,7 @@ const eventSchema = new Schema({
     },
     eventLocation: {
         type: String,
+        required: true,
         trim: true
     },
     eventNotes: {

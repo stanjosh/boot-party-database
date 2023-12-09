@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { Button, Navbar, Nav, Container, Modal, Alert, Offcanvas } from 'react-bootstrap';
 import { useQuery, useMutation } from '@apollo/client';
-import { QUERY_ME } from '../../util/queries';
+//import { QUERY_ME } from '../../util/queries';
 import { LOGIN_USER } from '../../util/mutations';
 
 import Form from 'react-bootstrap/Form';
 import Auth from '../../util/Auth';
 
 const Header = () => {
-  const { loading, data } = useQuery(QUERY_ME);
+  //const { loading, data } = useQuery(QUERY_ME);
   const [userData, setUserData] = useState({});
   // set modal display state
   const [showModal, setShowModal] = useState(false);
@@ -48,11 +48,11 @@ const Header = () => {
     });
   };
 
-  useEffect(() => { 
-    if (data?.me) {
-       setUserData(data?.me)
-    }
-  }  , [userData, data, loading])
+  // useEffect(() => { 
+  //   if (data?.me) {
+  //      setUserData(data?.me)
+  //   }
+  // }  , [userData, data, loading])
 
      return(   
     

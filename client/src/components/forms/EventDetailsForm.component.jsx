@@ -1,35 +1,30 @@
 import { useState } from 'react';
 import { Form, Button, Alert, Container } from 'react-bootstrap';
-import DatePicker from 'react-datepicker';
-import "react-datepicker/dist/react-datepicker.css";
 import { useMutation } from '@apollo/client';
-import { CREATE_EVENT } from '../../util/mutations';
+import { UPDATE_EVENT } from '../../util/mutations';
 
 
 const EventDetailsForm = ({ setCurrentStep }) => {
     const [eventForm, setEventFormData] = useState('');
-    const [createEvent, { loading, error }] = useMutation(CREATE_EVENT);
+    const [updateEvent, { loading, error }] = useMutation(UPDATE_EVENT);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(eventForm );
-        await createEvent({
+        await updateEvent({
             variables: {
-                eventInput: { ...eventForm, 
-                  eventTime: eventTime.toString(),
-                  eventContact: JSON.parse(localStorage.getItem('customer'))._id },
-
+                eventId: JSON.parse(localStorage.getItem('event'))._id,
+                updateEventInput: { ...eventForm },
             }
         })
         .then((res) => {
         // Handle success
-        console.log('Event created:', res.data);
-        localStorage.setItem('event', JSON.stringify(res.data.createEvent));
-        setCurrentStep('stepC');
+        localStorage.setItem('event', JSON.stringify(res.data.updateEvent));
+        window.location.assign(`/party/${JSON.parse(localStorage.getItem('event'))._id}`);
         })
         .catch((err) => {
         // Handle error
-        console.error('Error creating event:', err);
+        console.error('Error updating event:', err);
         });
 
 };
@@ -59,7 +54,7 @@ const EventDetailsForm = ({ setCurrentStep }) => {
         next: share your boot party
       </Button>
       
-      {error && <Alert>Error creating event</Alert>}
+      {error && <Alert>Error editing event</Alert>}
       </Form.Group>
     </Form>
 

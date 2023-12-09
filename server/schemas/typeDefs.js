@@ -16,7 +16,7 @@ const typeDefs = gql`
     eventContact: Customer!
 
     eventTitle: String 
-    eventLeadEmployee: [Employee!]
+    eventLeadEmployee: String
     eventLoadinTime: String
     eventDisplay: String
     eventSignups: [Customer]
@@ -32,6 +32,30 @@ const typeDefs = gql`
     eventTime: String!
     eventContact: String!
 
+    eventTitle: String 
+    eventLeadEmployee: String
+    eventLoadinTime: String
+    eventDisplay: String
+    eventNotes: String
+    eventPartyType: String
+    eventVan: Int
+    eventTransferOrder: String
+    eventHelpers: [String]
+  }
+
+  input UpdateEventInput {
+    eventLocation: String
+    eventTime: String
+    eventContact: String
+    eventTitle: String 
+    eventLeadEmployee: String
+    eventLoadinTime: String
+    eventDisplay: String
+    eventNotes: String
+    eventPartyType: String
+    eventVan: Int
+    eventTransferOrder: String
+    eventHelpers: [String]
   }
 
   type Customer {
@@ -39,7 +63,6 @@ const typeDefs = gql`
     name: String!
     email: String!
     phone: String
-    shoeSize: Int
     boot: String
   }
 
@@ -47,7 +70,6 @@ const typeDefs = gql`
     name: String!
     email: String!
     phone: String
-    shoeSize: Int
     boot: String
   }
 
@@ -63,7 +85,6 @@ const typeDefs = gql`
     findCustomerByEmail(email: String!): [Customer]
     findCustomerByPhone(phone: String!): [Customer]
     findCustomerByShoeSize(shoeSize: Int!): [Customer]
-    findEmployeeByName(name: String!): [Employee]
     findEventByEventTitle(eventTitle: String!): [Event]
     findEventByEventLeadEmployee(eventLeadEmployee: String!): [Event]
     findEventByEventContact(eventContact: String!): [Event]
@@ -77,10 +98,9 @@ const typeDefs = gql`
 
   type Mutation {
     createEvent(eventInput: EventInput): Event
-    editEvent(_id: ID!, eventInfo: EventInput): Event
-    eventAddSignup(_id: ID!, customerInput: CustomerInput!): Event
+    updateEvent(eventId: ID!, updateEventInput: UpdateEventInput  ): Event
+    eventAddSignup(eventId: ID!, customerInput: CustomerInput!): Event
     createCustomer(customerInput: CustomerInput): Customer
-    createEmployee(employeeInput: EmployeeInput): Employee
     
   }
 

@@ -68,7 +68,7 @@ mutation CreateCustomer($customerInput: CustomerInput) {
     name
     email
     phone
-    shoeSize
+    boot
   }
 }
 `;
@@ -83,19 +83,17 @@ mutation CreateEvent($eventInput: EventInput) {
       email
       name
       phone
-      shoeSize
+      boot
     }
     eventTitle
-    eventLeadEmployee {
-      name
-    }
+    eventLeadEmployee
     eventLoadinTime
     eventDisplay
     eventSignups {
       name
       email
       phone
-      shoeSize
+      boot
     }
     eventNotes
     eventPartyType
@@ -107,8 +105,8 @@ mutation CreateEvent($eventInput: EventInput) {
 `;
 
 export const UPDATE_EVENT = gql`
-mutation UpdateEvent($eventInput: EventInput) {
-  updateEvent(eventInput: $eventInput) {
+mutation UpdateEvent($eventId: ID!, $updateEventInput: UpdateEventInput) {
+  updateEvent(eventId: $eventId, updateEventInput: $updateEventInput) {
     _id
     eventLocation
     eventTime
@@ -116,19 +114,17 @@ mutation UpdateEvent($eventInput: EventInput) {
       email
       name
       phone
-      shoeSize
+      boot
     }
     eventTitle
-    eventLeadEmployee {
-      name
-    }
+    eventLeadEmployee
     eventLoadinTime
     eventDisplay
     eventSignups {
       name
       email
       phone
-      shoeSize
+      boot
     }
     eventNotes
     eventPartyType
@@ -140,8 +136,8 @@ mutation UpdateEvent($eventInput: EventInput) {
 `;
 
 export const EVENT_ADD_SIGNUP = gql`
-mutation EventAddSignup($_id: ID!, $customerInput: CustomerInput!) {
-  eventAddSignup(_id: $_id, customerInput: $customerInput) {
+mutation EventAddSignup($eventId: ID!, $customerInput: CustomerInput!) {
+  eventAddSignup(eventId: $eventId, customerInput: $customerInput) {
     _id
     eventLocation
     eventTime
@@ -149,19 +145,17 @@ mutation EventAddSignup($_id: ID!, $customerInput: CustomerInput!) {
       email
       name
       phone
-      shoeSize
+      boot
     }
     eventTitle
-    eventLeadEmployee {
-      name
-    }
+    eventLeadEmployee
     eventLoadinTime
     eventDisplay
     eventSignups {
       name
       email
       phone
-      shoeSize
+      boot
     }
     eventNotes
     eventPartyType

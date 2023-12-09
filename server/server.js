@@ -12,6 +12,7 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: authMiddleware,
+  cache: 'bounded'
 });
 
 app.use(express.urlencoded({ extended: false }));
@@ -25,19 +26,16 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/dist/index.html'));
 });
 
-
-// Create a new instance of an Apollo server with the GraphQL schema
 const startApolloServer = async () => {
   await server.start();
   server.applyMiddleware({ app });
-  
+
   db.once('open', () => {
     app.listen(PORT, () => {
-      console.log('database at ' + process.env.MONGODB_URI || 'localhost')
-     console.log(`Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`);
+      
+      console.log('Express listening on port ' + PORT + '!');
     })
   })
   };
   
-// Call the async function to start the server
   startApolloServer();

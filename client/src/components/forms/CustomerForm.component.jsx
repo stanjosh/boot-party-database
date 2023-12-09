@@ -13,6 +13,7 @@ const CustomerForm = ({ setCurrentStep }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log(customerForm);
         await createCustomer({
             variables: {
                 customerInput: { ...customerForm },           

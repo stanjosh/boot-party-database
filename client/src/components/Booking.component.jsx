@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { CustomerForm, EventForm, EventDetailsForm } from '../components/forms';
+import ShareParty from './ShareParty.component';
 
 
 const CreateEventPage = () => {
