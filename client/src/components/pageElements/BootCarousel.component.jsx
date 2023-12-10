@@ -133,7 +133,3 @@ const BootCarousel = ({ handleCustomerInputChange, customerForm }) => {
 export default BootCarousel;
 
 
-{/* <Card key={boot.id}>
-<Card.Title><h2 style={{fontSize: "3cqh"}}>{boot.alt} {boot.option3}</h2></Card.Title>
-<Card.Body><Image style={{width: "100%"}} src={boot.featured_image.src} alt={boot.title} /></Card.Body>
-</Card> */}
