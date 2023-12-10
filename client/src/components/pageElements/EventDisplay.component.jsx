@@ -5,7 +5,7 @@ import { Card } from 'react-bootstrap';
 
 const EventDisplay = ( { eventData } ) => {
     
-    const eventTimeRaw = new Date(eventData.eventTime * 1);
+    
 
     return (
         <>

@@ -29,7 +29,7 @@ const ShareParty = () => {
         {loading ? (
           <div>Loading...</div>
         ) : (
-          <EventDisplay eventData={data}/>
+          <EventDisplay eventData={data.findEventByID}/>
         )}
         
       
