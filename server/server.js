@@ -5,6 +5,8 @@ const { ApolloServer } = require('apollo-server-express');
 const { authMiddleware } = require('./utils/auth');
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
+const forever = require('forever-monitor')
+
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -38,4 +40,14 @@ const startApolloServer = async () => {
   })
   };
   
+  const child = new (forever.Monitor)('server.js', {
+    max: 3,
+    silent: true,
+    args: []
+  });
+  
+  child.on('exit', function () {
+    console.log('server.js has exited after 3 restarts');
+  });
   startApolloServer();
+

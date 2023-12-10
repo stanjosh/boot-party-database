@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "cd server && forever server.js",
+    "start": "cd server && node server.js",
     "develop": "concurrently \"cd server && npm run watch\" \"cd client && vite dev\"",
     "install": "cd server && npm i && cd ../client && npm i",
     "build": "cd client && npm run build"
