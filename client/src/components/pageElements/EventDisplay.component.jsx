@@ -3,10 +3,8 @@ import { Card } from 'react-bootstrap';
 
 
 const EventDisplay = ( { eventData } ) => {
-
-    const event = eventData.findEventByID;
-
-    const eventTimeRaw = new Date(event.eventTime * 1);
+    
+    const eventTimeRaw = new Date(eventData.eventTime * 1);
 
     return (
         <>
@@ -15,12 +13,13 @@ const EventDisplay = ( { eventData } ) => {
                 <Card.Title><h3 style={{ fontSize: '5cqb' }}>Event Details</h3></Card.Title>
                 <Card.Text>
                     {console.log(eventData)}
-                    <strong>Location:</strong> {event.eventLocation}<br />
+                    <strong>Location:</strong> {eventData.eventLocation}<br />
                     <strong>Time:</strong> {eventTimeRaw.toLocaleString()}<br />
-                    <strong>Guests:</strong> {event.eventSignups.length}<br />
-                    <strong>Contact:</strong> {event.eventContact.name}<br />
-                    <strong>Email:</strong> {event.eventContact.email}<br />
-                    <strong>Phone:</strong> {event.eventContact.phone}<br />
+                    <strong>Guests:</strong> {eventData.eventSignups.length}<br />
+                    <strong>Contact:</strong> {eventData.eventContact.name}<br />
+                    <strong>Email:</strong> {eventData.eventContact.email}<br />
+                    <strong>Phone:</strong> {eventData.eventContact.phone}<br />
+                    <strong>Notes:</strong> {eventData.eventNotes}<br />
                 </Card.Text>
             </Card.Body>
         </Card>

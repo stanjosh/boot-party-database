@@ -14,6 +14,7 @@ const ShareParty = () => {
   
   const partyURL = window.location.href.replace('party', 'join');
   
+  console.log(data)
   return (
     <>
       <Container fluid style={{ minHeight: '70cqh' }}>
@@ -22,8 +23,8 @@ const ShareParty = () => {
           <div>Loading...</div>
         ) : (
           <>
-            <EventDisplay eventData={data}/>
-            <GuestsDisplay eventData={data}/>
+            <EventDisplay eventData={data?.findEventByID}/>
+            <GuestsDisplay eventData={data?.findEventByID}/>
           </>
         )}
 

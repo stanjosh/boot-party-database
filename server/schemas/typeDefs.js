@@ -77,6 +77,7 @@ const typeDefs = gql`
 
   type Query {
     me(uuid: ID!): me
+    findAllEvents(date: String): [Event]
     findCustomerByID(uuid: ID!): Customer
     findEventByID(uuid: ID!): Event
     findEventByDate(date: String!): [Event]

@@ -42,9 +42,11 @@ const EventForm = ({ setCurrentStep }) => {
 
     const handleTimeInputChange = (e) => {
         setEventTime(e);
-        setEventFormData({ ...eventForm, eventTime: eventTime.getTime().toString() });
+        setEventFormData({ ...eventForm, eventTime: eventTime});
         console.log(eventForm);
     }
+
+    
 
   return (
 
@@ -60,6 +62,11 @@ const EventForm = ({ setCurrentStep }) => {
       <DatePicker
         selected={eventTime}
         onChange={handleTimeInputChange}
+        showTodayButton={false}
+        showIcon={true}
+        minDate={new Date()}
+        minTime={new Date().setHours(8,0,0,0)}
+        maxTime={new Date().setHours(20,0,0,0)}
         showTimeSelect
         dateFormat="Pp"
       />

@@ -3,14 +3,11 @@ import { Card } from 'react-bootstrap';
 
 
 const GuestsDisplay = ( { eventData } ) => {
-
-    const event = eventData.findEventByID;
-
-    
+   
 
     return (
         <>
-          {event.eventSignups.map((signup) => (
+          {eventData?.eventSignups.map((signup) => (
             <Card key={signup._id}>
                 <Card.Body>
                     <Card.Title><h3 style={{ fontSize: '5cqb' }}>Guest Details</h3></Card.Title>

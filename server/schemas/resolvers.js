@@ -12,6 +12,19 @@ const resolvers = {
       throw new AuthenticationError('You need to be logged in!');
     },
 
+    findAllEvents: async (date) => {
+  
+      return await Event.find({
+        eventTime: {
+          $gt: new Date().setDate(date) || Date.now()
+        }
+      }).sort({ date: -1 })
+  
+      },
+
+
+    
+
     findCustomerByID: async (uuid) => {
       return await Customer.findOne(uuid);
     },
@@ -21,8 +34,6 @@ const resolvers = {
 
     findEventByID: async (parent, { uuid }, context) => {
       return await Event.findOne({ _id: uuid })
-      .populate('eventSignups')
-      .populate('eventContact');
     },
 
     findEventByDate: async (parent, { date }, context) => {

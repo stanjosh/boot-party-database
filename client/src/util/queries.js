@@ -39,7 +39,40 @@ query FindEventByID($uuid: ID!) {
       name
       email
       phone
-      shoeSize
+      boot
+    }
+    eventTitle
+    eventLeadEmployee
+    eventLoadinTime
+    eventDisplay
+    eventSignups {
+      _id
+      name
+      email
+      phone
+      boot
+    }
+    eventNotes
+    eventPartyType
+    eventVan
+    eventTransferOrder
+    eventHelpers
+  }
+}
+`;
+
+export const QUERY_EVENTS = gql`
+query FindAllEvents($date: String) {
+  findAllEvents(date: $date) {
+    _id
+    eventLocation
+    eventTime
+    eventContact {
+      _id
+      name
+      email
+      phone
+      boot
     }
     eventTitle
     eventLeadEmployee
