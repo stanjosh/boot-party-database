@@ -1,4 +1,4 @@
-
+import { Link } from 'react-router-dom';
 import { EventDisplay } from './pageElements';
 import { useQuery } from '@apollo/client';
 import { QUERY_EVENTS } from '../util/queries';
@@ -11,12 +11,12 @@ const Admin = () => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
-
-  console.log(data)
   return (
     <div style={{backgroundColor: "var(--alviesBlue)", width: "100%"}}>
       {data?.findAllEvents.map(event => (
-        <EventDisplay eventData={event} key={event._id} />
+        <Link key={event._id} to={`/admin/${event._id}`} style={{ textDecoration: "none"}}>
+          <EventDisplay eventData={event}  />
+        </Link>
       ))}
     </div>
   );

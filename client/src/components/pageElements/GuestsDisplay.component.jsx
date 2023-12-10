@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card } from 'react-bootstrap';
+import { Card, Container } from 'react-bootstrap';
 
 
 const GuestsDisplay = ( { eventData } ) => {
@@ -7,10 +7,13 @@ const GuestsDisplay = ( { eventData } ) => {
 
     return (
         <>
+            
+            <Container fluid>
+            <Card><h3 style={{ fontSize: '5cqb' }}>Guests</h3></Card>
           {eventData?.eventSignups.map((signup) => (
             <Card key={signup._id}>
                 <Card.Body>
-                    <Card.Title><h3 style={{ fontSize: '5cqb' }}>Guest Details</h3></Card.Title>
+                    
                     <Card.Text>
                         <strong>Name:</strong> {signup.name}<br />
                         <strong>Email:</strong> {signup.email}<br />
@@ -19,6 +22,7 @@ const GuestsDisplay = ( { eventData } ) => {
                 </Card.Body>
             </Card>
         ))}
+        </Container>
         </>
     );
 };

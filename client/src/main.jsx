@@ -9,9 +9,9 @@ import {
   createHttpLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import { Admin, LandingPage, Booking, ShareParty, JoinParty } from './components/'
+import { Admin, LandingPage, Booking, ShareParty, JoinParty, AdminParty } from './components/'
 
-const host = 'http://localhost:3001/graphql'
+const host = '/graphql'
 
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
@@ -44,10 +44,6 @@ const router = createBrowserRouter([
         element: <LandingPage />
       },
       {
-        path: "/admin",
-        element: <Admin/>
-      },
-      {
         path: "/book",
         element: <Booking />
       },
@@ -58,6 +54,14 @@ const router = createBrowserRouter([
       {
         path: "/join/:eventId",
         element: <JoinParty />
+      },
+      {
+        path: "/admin/:eventId",
+        element: <AdminParty />
+      },
+      {
+        path: "/admin",
+        element: <Admin/>
       },
       {
         path: "*",

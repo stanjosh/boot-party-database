@@ -16,7 +16,7 @@ const JoinForm = () => {
         e.preventDefault();
         await joinParty({
             variables: {
-                _id: eventId,
+                eventId: eventId,
                 customerInput: { ...customerForm },           
                
             }
@@ -24,6 +24,7 @@ const JoinForm = () => {
         .then((res) => {
         // Handle success
         console.log('Event created:', res.data);
+        setCustomerFormData({ name: '', email: '', phone: '' });
         setSuccess(true);
         
         })
