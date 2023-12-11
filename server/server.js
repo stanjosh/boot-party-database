@@ -35,7 +35,7 @@ const startApolloServer = async () => {
   db.once('open', () => {
     app.listen(parseInt(PORT), () => {
       
-      console.log('Server ready at http://localhost:${PORT}${server.graphqlPath}');
+      console.log(`Server ready at http://localhost:${PORT}${server.graphqlPath}`);
     })
   })
   };
