@@ -17,7 +17,9 @@ const EventForm = ({ setCurrentStep }) => {
         await createEvent({
             variables: {
                 eventInput: { ...eventForm, 
-                  eventContact: JSON.parse(localStorage.getItem('customer'))._id },
+                  eventContact: JSON.parse(localStorage.getItem('customer'))._id,
+                  eventTime: eventTime.toJSON()
+                },
 
             }
         })
@@ -35,33 +37,30 @@ const EventForm = ({ setCurrentStep }) => {
 };
 
     const handleEventInputChange = (e) => {
-        const { name, value } = e.target;
-        setEventFormData({ ...eventForm, [name]: value });
-        console.log(eventForm);
+      const { name, value } = e.target;
+      setEventFormData({ ...eventForm, [name]: value });
+      console.log(eventForm);
+
     }
 
-    const handleTimeInputChange = (e) => {
-        setEventTime(e);
-        setEventFormData({ ...eventForm, eventTime: eventTime});
-        console.log(eventForm);
-    }
-
-    
+ 
 
   return (
 
     <Form onSubmit={handleSubmit}>
     <Form.Group className="mb-3" controlId="formEventInfo">
-        <Form.Control
-            type="text"
-            placeholder="Event Address"
-            name="eventLocation"
-            value={eventForm.eventLocation}
-            onChange={handleEventInputChange}
-        />
+      <Form.Control
+        type="text"
+        placeholder="Event Address"
+        name="eventLocation"
+        value={eventForm.eventLocation}
+        onChange={handleEventInputChange}
+      />
       <DatePicker
+        name='eventTime'
         selected={eventTime}
-        onChange={handleTimeInputChange}
+        onChange={setEventTime}
+        value={eventTime}
         showTodayButton={false}
         showIcon={true}
         minDate={new Date()}

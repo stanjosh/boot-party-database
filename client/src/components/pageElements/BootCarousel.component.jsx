@@ -10,38 +10,49 @@ const womenSizes = [5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 
 const BootCarousel = ({ handleCustomerInputChange, customerForm }) => {
     const [bootData, setBootData] = useState([]);
     const [showBoots, setShowBoots] = useState(false);
-    const [selectedBoot, setSelectedBoot] = useState(null);
+    const [selectedBootSku, setSelectedBootSku] = useState(null);
+    const [selectedBootName, setSelectedBootName] = useState(null);
+
+    const [shoeWidth, setShoeWidth] = useState(null);
+    const [shoeSize, setShoeSize] = useState(null);
 
     useEffect(() => {
-        const bootDataURL = customerForm.shoeWidth === "B" ? womenBootDataURL : menBootDataURL;
+        const bootDataURL = shoeWidth === "B" ? womenBootDataURL : menBootDataURL;
         fetch(bootDataURL)
             .then((response) => response.json())
             .then((data) => {
                 const filteredBoots = []
                 data.products?.filter((style) => 
                     style.variants.forEach((variant) => {
-                        if (variant.available === true && variant.option1 === customerForm.shoeSize && variant.option2 === customerForm.shoeWidth ) {
+                        if (variant.available === true && variant.option1 === shoeSize && variant.option2 === shoeWidth ) {
                             variant.alt = style.title
                             filteredBoots.push(variant)
                         }
                     }))
                 setBootData(filteredBoots);
             });
-    }, [handleCustomerInputChange, customerForm]);
+    }, [handleCustomerInputChange, customerForm, shoeSize, shoeWidth]);
 
     const handleCarouselChange = (e) => {
-        setSelectedBoot(e.target.value);
+        setSelectedBootSku(e.target.value);
+        setSelectedBootName(e.target.dataset.bootname);
         handleCustomerInputChange(e);
-        console.log(e.target.value)
-        if (customerForm.shoeSize && customerForm.shoeWidth) {
+        console.log(e.target.dataset.bootname)
+
+        if (e.target.name === "shoeWidth") {
+            setShoeWidth(e.target.value);
+        } else if (e.target.name === "shoeSize") {
+            setShoeSize(e.target.value);
+        }
+
+        if (shoeSize && shoeWidth) {
             setShowBoots(true);
-        } else if (selectedBoot) {
-            customerForm.boot = e.target.value;
+        } else if (selectedBootSku && selectedBootName) {
+            customerForm.bootSku = selectedBootSku;
+            customerForm.bootName = selectedBootName;
             
             setShowBoots(false);
-        } else {
-            setShowBoots(false);
-        }
+        } 
         console.log(customerForm)
     }
 
@@ -56,7 +67,7 @@ const BootCarousel = ({ handleCustomerInputChange, customerForm }) => {
         placeholder="Boot Width"
         onChange={handleCarouselChange}
         name="shoeWidth"
-        value={customerForm.shoeWidth}
+        value={shoeWidth}
         style={{width: "50%"}}    
     >
         <option value={null}>Boot Width</option>
@@ -70,11 +81,11 @@ const BootCarousel = ({ handleCustomerInputChange, customerForm }) => {
         placeholder="Womens' Boot Sizes"
         onChange={handleCarouselChange}
         name="shoeSize"
-        value={customerForm.shoeSize}
+        value={shoeSize}
         style={{width: "50%", overflowY: "scroll"}}    
     >
         <option value={null}>Boot Size</option>
-        {(customerForm.shoeWidth === "B" ? womenSizes : menSizes).map((size) =>               
+        {(shoeWidth === "B" ? womenSizes : menSizes).map((size) =>               
             <option value={size} key={size}>{size}</option>
         )}
     </Form.Select>
@@ -85,11 +96,12 @@ const BootCarousel = ({ handleCustomerInputChange, customerForm }) => {
         type='radio'
         aria-label="Default select example"
         style={{ display: "flex", flexWrap: "wrap", overflowY: "scroll", height: "50cqh", width: "100%", margin: "auto"}}
-        name="boot"
-        id="boot"
+        name="bootSku"
+        id="bootSku"
         max={1}
         required
-        onChange={handleCarouselChange}
+        value={selectedBootSku}
+        onClick={handleCustomerInputChange}
     >
       {bootData.map((boot) => (
 
@@ -97,10 +109,13 @@ const BootCarousel = ({ handleCustomerInputChange, customerForm }) => {
         <div key={boot.id}>
         <Form.Check 
             type="radio" 
-            value={customerForm.boot}
+            value={boot.sku}
+            name="bootSku"
             id={boot.id}
             autoComplete="off" 
             style={{display: "none"}}
+            alt={boot.alt}
+            data-bootname={boot.alt}
             onSelect={handleCarouselChange}
         />
         <Form.Check.Label  value={boot.sku} className="btn btn-outline-primary" htmlFor={boot.id} style={{width: "100%", maxWidth: "400px"}}>

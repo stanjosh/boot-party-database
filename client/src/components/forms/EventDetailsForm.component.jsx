@@ -39,14 +39,21 @@ const EventDetailsForm = ({ setCurrentStep }) => {
 
     <Form onSubmit={handleSubmit}>
     <Form.Group className="mb-3" controlId="formEventInfo">
-        <Form.Control
-            as="textarea"
-            rows={4}
-            placeholder="Notes for us?"
-            name="eventNotes"
-            value={eventForm.eventNotes}
-            onChange={handleEventInputChange}
-        />
+      <Form.Control
+          type="text"
+          placeholder="Title your event?"
+          name="eventTitle"
+          value={eventForm.eventTitle}
+          onChange={handleEventInputChange}
+      />
+      <Form.Control
+          as="textarea"
+          rows={4}
+          placeholder="Notes for us?"
+          name="eventNotes"
+          value={eventForm.eventNotes}
+          onChange={handleEventInputChange}
+      />
      
     </Form.Group>
     <Form.Group className="mb-3" controlId="formSubmit">

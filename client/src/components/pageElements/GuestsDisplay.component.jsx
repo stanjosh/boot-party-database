@@ -8,21 +8,26 @@ const GuestsDisplay = ( { eventData } ) => {
     return (
         <>
             
-            <Container fluid>
+        {eventData?.eventSignups.length > 0 ? (
+            <>
             <Card><h3 style={{ fontSize: '5cqb' }}>Guests</h3></Card>
           {eventData?.eventSignups.map((signup) => (
-            <Card key={signup._id}>
+            <Card key={signup._id} style={{marginTop: "5px"}}>
                 <Card.Body>
                     
                     <Card.Text>
                         <strong>Name:</strong> {signup.name}<br />
                         <strong>Email:</strong> {signup.email}<br />
                         <strong>Phone:</strong> {signup.phone}<br />
+                        <strong>Boot:</strong> {signup.boot}<br />
                     </Card.Text>
                 </Card.Body>
             </Card>
         ))}
-        </Container>
+        </>
+        ) : (
+          null
+        )}
         </>
     );
 };

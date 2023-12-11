@@ -62,6 +62,7 @@ const CustomerForm = ({ setCurrentStep }) => {
             name="name"
             value={customerForm.name}
             onChange={handleCustomerInputChange}
+            required
         />
         <Form.Control
             type="text"
@@ -69,6 +70,7 @@ const CustomerForm = ({ setCurrentStep }) => {
             name="email"
             value={customerForm.email}
             onChange={handleCustomerInputChange}
+            required
         />
         <Form.Control
             type="text"
