@@ -63,14 +63,20 @@ const typeDefs = gql`
     name: String!
     email: String!
     phone: String
-    boot: String
+    bootSku: String
+    bootName: String
+    shoeSize: String
+    shoeWidth: String
   }
 
   input CustomerInput {
     name: String!
     email: String!
     phone: String
-    boot: String
+    bootSku: String
+    bootName: String
+    shoeSize: String
+    shoeWidth: String
   }
 
 

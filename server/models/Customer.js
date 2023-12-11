@@ -8,7 +8,22 @@ const customerSchema = new Schema({
         required: false,
         trim: true
     },
-    boot: {
+    bootSku: {
+        type: String,
+        required: false,
+        trim: true
+    },
+    bootName: {
+        type: String,
+        required: false,
+        trim: true
+    },
+    shoeSize: {
+        type: Number,
+        required: false,
+        trim: true
+    },
+    shoeWidth: {
         type: String,
         required: false,
         trim: true

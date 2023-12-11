@@ -68,7 +68,8 @@ mutation CreateCustomer($customerInput: CustomerInput) {
     name
     email
     phone
-    boot
+    bootName
+    bootSku
   }
 }
 `;
@@ -83,7 +84,8 @@ mutation CreateEvent($eventInput: EventInput) {
       email
       name
       phone
-      boot
+      bootName
+      bootSku
     }
     eventTitle
     eventLeadEmployee
@@ -93,7 +95,8 @@ mutation CreateEvent($eventInput: EventInput) {
       name
       email
       phone
-      boot
+      bootName
+      bootSku
     }
     eventNotes
     eventPartyType
@@ -114,7 +117,8 @@ mutation UpdateEvent($eventId: ID!, $updateEventInput: UpdateEventInput) {
       email
       name
       phone
-      boot
+      bootName
+      bootSku
     }
     eventTitle
     eventLeadEmployee
@@ -124,7 +128,8 @@ mutation UpdateEvent($eventId: ID!, $updateEventInput: UpdateEventInput) {
       name
       email
       phone
-      boot
+      bootName
+      bootSku
     }
     eventNotes
     eventPartyType
@@ -145,7 +150,8 @@ mutation EventAddSignup($eventId: ID!, $customerInput: CustomerInput!) {
       email
       name
       phone
-      boot
+      bootName
+      bootSku
     }
     eventTitle
     eventLeadEmployee
@@ -155,7 +161,8 @@ mutation EventAddSignup($eventId: ID!, $customerInput: CustomerInput!) {
       name
       email
       phone
-      boot
+      bootName
+      bootSku
     }
     eventNotes
     eventPartyType

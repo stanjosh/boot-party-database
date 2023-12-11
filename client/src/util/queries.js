@@ -39,7 +39,8 @@ query FindEventByID($uuid: ID!) {
       name
       email
       phone
-      boot
+      bootName
+      bootSku
     }
     eventTitle
     eventLeadEmployee
@@ -50,7 +51,8 @@ query FindEventByID($uuid: ID!) {
       name
       email
       phone
-      boot
+      bootName
+      bootSku
     }
     eventNotes
     eventPartyType
@@ -72,7 +74,8 @@ query FindAllEvents($date: String) {
       name
       email
       phone
-      boot
+      bootName
+      bootSku
     }
     eventTitle
     eventLeadEmployee
@@ -83,7 +86,8 @@ query FindAllEvents($date: String) {
       name
       email
       phone
-      boot
+      bootName
+      bootSku
     }
     eventNotes
     eventPartyType
