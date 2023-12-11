@@ -2,6 +2,12 @@ import { defineConfig, transformWithEsbuild } from 'vite'
 import react from '@vitejs/plugin-react'
 
 export default defineConfig({
+  server: {
+    port: 3000,
+    proxy: {
+      '/graphql': 'http://localhost:3001/graphql',
+    },
+  },
   plugins: [
     {
       name: 'treat-js-files-as-jsx',
