@@ -33,7 +33,7 @@ const startApolloServer = async () => {
   server.applyMiddleware({ app });
 
   db.once('open', () => {
-    app.listen(PORT, () => {
+    app.listen(parseInt(PORT), () => {
       
       console.log('Express listening on port ' + PORT + '!');
     })
