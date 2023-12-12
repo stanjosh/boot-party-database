@@ -69,7 +69,7 @@ const Header = () => {
               </Offcanvas.Header>
               <Offcanvas.Body style={{backgroundColor: "var(--alviesBlue)" , color: "aliceblue"}}>
                 <Nav className="justify-content-end flex-grow-1 pe-3">
-                  <Nav.Link onClick={() => setShowModal(true)}>Login</Nav.Link>
+                  {/* <Nav.Link onClick={() => setShowModal(true)}>Login</Nav.Link> */}
                 </Nav>
               </Offcanvas.Body>
             </Navbar.Offcanvas>
