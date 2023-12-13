@@ -4,7 +4,7 @@ import { Card, Form, Image, Container } from 'react-bootstrap';
 const menBootDataURL = "https://rickshaw-boots.myshopify.com/collections/mens-boots/products.json";
 const womenBootDataURL = "https://rickshaw-boots.myshopify.com/collections/womens-boots/products.json";
 
-const menSizes = [8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 13.5, 14, 14.5, 15];
+const menSizes = [8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 14, 15];
 const womenSizes = [5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12];
 
 const BootSelect = ({ handleCustomerInputChange, customerForm }) => {
@@ -107,7 +107,21 @@ const BootSelect = ({ handleCustomerInputChange, customerForm }) => {
       {bootData.map((boot) => (
 
 
-        <Card key={boot.id} id={boot.sku} alt={boot.title} data-bootsku={boot.sku} data-bootname={boot.title} style={{flex: "0 1 350px", backgroundColor: "#FFFFFF", borderRadius: "5px", margin: "10px"}} onClick={handleSelectBoot}>
+        <Card 
+            key={boot.id} 
+            id={boot.sku} 
+            alt={boot.title} 
+            data-bootsku={boot.sku} 
+            data-bootname={boot.title} 
+            onClick={handleSelectBoot}
+            style={{
+                flex: "0 1 350px", 
+                backgroundColor: "#FFFFFF", 
+                borderRadius: "5px", 
+                margin: "10px",
+                cursor: "pointer",
+                }} 
+            >
      
             
             <Card.Title>
