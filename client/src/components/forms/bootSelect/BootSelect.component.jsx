@@ -100,15 +100,17 @@ const BootSelect = ({ handleCustomerInputChange, customerForm }) => {
             <Form.Text style={{fontSize: "2cqh", textAlign: "center", backgroundColor: "#FFFFFF", height: "100%", padding: "5px", verticalAlign: "center", borderRadius: "4px"}}>
                 Boot: {selectedBootName}
             </Form.Text>
-            <Button variant="outline-secondary" onClick={() => {setSelectedBootSku(''); setSelectedBootName(''); setShowBoots(false);}}>X</Button>
+            <Button variant="outline-secondary" onClick={() => {setSelectedBootSku(''); setSelectedBootName(''); setShowBoots(true);}}>X</Button>
             </>
         : null}
     
     
     </Form.Group>
     {showBoots ? 
+    <>
+    <Button variant="outline-secondary" onClick={() => {setSelectedBootSku(''); setSelectedBootName(''); setShowBoots(false);}}>Another Size?</Button>
     <Container fluid style={{display: "flex", flexWrap: "wrap", flexDirection: "row"}}>
-
+        
       {bootData.map((boot) => (
 
 
@@ -120,7 +122,7 @@ const BootSelect = ({ handleCustomerInputChange, customerForm }) => {
             data-bootname={boot.title} 
             onClick={handleSelectBoot}
             style={{
-                flex: "0 1 350px", 
+                flex: "1 0 250px", 
                 backgroundColor: "#FFFFFF", 
                 borderRadius: "5px", 
                 margin: "10px",
@@ -154,6 +156,7 @@ const BootSelect = ({ handleCustomerInputChange, customerForm }) => {
 
 
     </Container>
+    </> 
     : null}
     {console.log(selectedBootSku, selectedBootName)}
     </>
