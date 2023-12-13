@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Form, Button, Alert, Container } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
 import { CREATE_CUSTOMER } from '../../util/mutations';
-import { BootCarousel } from '../pageElements/';
+import { BootSelect } from './';
 
 
 const CustomerForm = ({ setCurrentStep }) => {
@@ -88,7 +88,7 @@ const CustomerForm = ({ setCurrentStep }) => {
         </Form.Group>
 
         <Form.Group>
-            <BootCarousel customerForm={customerForm} handleCustomerInputChange={handleCustomerInputChange} />
+            <BootSelect customerForm={customerForm} handleCustomerInputChange={handleCustomerInputChange} />
         </Form.Group>
 
 
