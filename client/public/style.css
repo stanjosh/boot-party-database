@@ -41,6 +41,7 @@ li {
 
 footer {
     color: aliceblue;
+    font-size: 2cqh;
     padding: 5px;
     width: 100%;
     display: flex;
@@ -53,13 +54,14 @@ footer {
 footer a {
     color: aliceblue;
     text-decoration: none;
-    padding: 10px;
     font-size: 3.5cqh;
 
 }
 
-footer li {
-    justify-content: right;
+footer ul li {
+    font-size: 2.5cqh;
+    justify-content: flex-end;
+
 }
 
 
