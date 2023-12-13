@@ -54,7 +54,7 @@ const CustomerForm = ({ setCurrentStep }) => {
 
 
   return (
-    <Form onSubmit={handleSubmit} style={{backgroundColor: 'aliceblue', textAlign: 'center', padding: '7px'}}>
+    <Form onSubmit={handleSubmit} width={"100%"}>
             <Form.Group className="mb-3" controlId="formCustomerInfo">
         <Form.Control
             type="text"
@@ -80,13 +80,6 @@ const CustomerForm = ({ setCurrentStep }) => {
             onChange={handleCustomerInputChange} 
         />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formCustomerInfo" style={{display: 'flex'}}>
-        
-
-
-        
-        </Form.Group>
-
         <Form.Group>
             <BootSelect customerForm={customerForm} handleCustomerInputChange={handleCustomerInputChange} />
         </Form.Group>

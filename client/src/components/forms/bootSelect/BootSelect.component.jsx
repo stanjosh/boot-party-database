@@ -117,9 +117,15 @@ const BootSelect = ({ handleCustomerInputChange, customerForm }) => {
                 <Image width={"100%"} src={boot.featured_image.src} alt={boot.option3} />
             </Card.Body>
             <Card.Footer>
+                <a href={`https://www.alvies.com/products/${boot.handle}`} target="_blank" rel="noreferrer" style={{position: "absolute", top: "0", right: "0", margin: "10px", fontSize: "2cqh"}}>
+                    <img src="/external-link.svg" alt="external link" style={{height: "3.5cqh", width: "3.5cqh"}} />
+                </a>
                 <h3 style={{fontSize: "2cqh", textAlign: "right"}}>{boot.option3}</h3>
             </Card.Footer>
-        
+
+            
+
+
         </Card>
         
         
