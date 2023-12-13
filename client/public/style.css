@@ -10,6 +10,13 @@ body {
     margin: 0;
     padding: 0;
     max-width: 100%;
+    display: block;
+    box-sizing: border-box;
+    background-color: aliceblue;
+    font-size: 16px;
+    line-height: 1.5;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
 }
 header {
     background-color: #333;
@@ -33,21 +40,31 @@ li {
 
 
 footer {
-    background-color: var(--alviesDarkBlue);
-    color: rgb(255, 255, 255);
-    text-align: center;
-    padding: 10px;
-    
+    color: aliceblue;
+    padding: 5px;
     width: 100%;
-    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    background-color: var(--alviesDarkBlue);
+    font-family: 'Yanone Kaffeesatz', sans-serif;
 
 }
 
+footer a {
+    color: aliceblue;
+    text-decoration: none;
+    padding: 10px;
+    font-size: 3.5cqh;
+
+}
+
+footer li {
+    justify-content: right;
+}
+
+
 main {
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: column;
-    align-items: center;
+    display: inline-block;
     width: 100%;
     background-image: url(https://alvies-test.imgix.net/gsmith_20220611_0285-1.jpg?auto=compress%2Cformat&dm=1665771107&fit=clip&ixlib=php-3.1.0&w=2100);
     background-size: cover;
@@ -98,7 +115,7 @@ h4 {
     color: aliceblue;;
     font-size: 5cqb;
     font-family: 'Yanone Kaffeesatz', sans-serif;
-    letter-spacing: .5cqw;
+    letter-spacing: .3cqw;
     padding: 10px;
     width: 100%;
 }
@@ -128,8 +145,8 @@ h4 {
     width: 100%;
     max-width: 90%;
     font-size: 5cqh;
-    border: 3px solid aliceblue;
-    filter: drop-shadow(2px 2px 3px black) drop-shadow(-2px -2px 3px var(--alviesBlue));
+    border-radius: 2px;
+    
 }
 
 .landingPageButton:hover {
@@ -149,6 +166,8 @@ h4 {
 
     
 }
+
+
 
 
 
@@ -197,7 +216,6 @@ h4 {
 
     .imageBG {
         padding: 0;
-        height: 100cqh;
         background-position: 25%;
     }
     .smallHide {
