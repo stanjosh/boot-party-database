@@ -4,7 +4,7 @@ import { Card, Form, Image, Container, Button } from 'react-bootstrap';
 const menBootDataURL = "https://rickshaw-boots.myshopify.com/collections/mens-boots/products.json";
 const womenBootDataURL = "https://rickshaw-boots.myshopify.com/collections/womens-boots/products.json";
 
-const menSizes = [8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 13.5, 14, 14.5, 15];
+const menSizes = [8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 14, 15];
 const womenSizes = [5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12];
 
 const BootSelect = ({ handleCustomerInputChange, customerForm }) => {
@@ -100,19 +100,35 @@ const BootSelect = ({ handleCustomerInputChange, customerForm }) => {
             <Form.Text style={{fontSize: "2cqh", textAlign: "center", backgroundColor: "#FFFFFF", height: "100%", padding: "5px", verticalAlign: "center", borderRadius: "4px"}}>
                 Boot: {selectedBootName}
             </Form.Text>
-            <Button variant="outline-secondary" onClick={() => {setSelectedBootSku(''); setSelectedBootName(''); setShowBoots(false);}}>X</Button>
+            <Button variant="outline-secondary" onClick={() => {setSelectedBootSku(''); setSelectedBootName(''); setShowBoots(true);}}>X</Button>
             </>
         : null}
     
     
     </Form.Group>
     {showBoots ? 
+    <>
+    <Button variant="outline-secondary" onClick={() => {setSelectedBootSku(''); setSelectedBootName(''); setShowBoots(false);}}>Another Size?</Button>
     <Container fluid style={{display: "flex", flexWrap: "wrap", flexDirection: "row"}}>
-
+        
       {bootData.map((boot) => (
 
 
-        <Card key={boot.id} id={boot.sku} alt={boot.title} data-bootsku={boot.sku} data-bootname={boot.title} style={{flex: "0 1 350px", backgroundColor: "#FFFFFF", borderRadius: "5px", margin: "10px"}} onClick={handleSelectBoot}>
+        <Card 
+            key={boot.id} 
+            id={boot.sku} 
+            alt={boot.title} 
+            data-bootsku={boot.sku} 
+            data-bootname={boot.title} 
+            onClick={handleSelectBoot}
+            style={{
+                flex: "1 0 250px", 
+                backgroundColor: "#FFFFFF", 
+                borderRadius: "5px", 
+                margin: "10px",
+                cursor: "pointer",
+                }} 
+            >
      
             
             <Card.Title>
@@ -140,6 +156,7 @@ const BootSelect = ({ handleCustomerInputChange, customerForm }) => {
 
 
     </Container>
+    </> 
     : null}
     {console.log(selectedBootSku, selectedBootName)}
     </>
