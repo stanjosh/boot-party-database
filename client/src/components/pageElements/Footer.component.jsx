@@ -7,7 +7,7 @@ const Footer = () => {
         <div>
 
           <ul>
-            <li>
+            <li style={{justifyContent: "space-between"}}>
               <a href="https://facebook.com/alviesboots" rel="noreferrer" target="_blank">
                 <Image src="../../../public/facebook-svgrepo-com.svg" height="40cqh" />
               </a>  
@@ -40,7 +40,6 @@ const Footer = () => {
               </a>
             <a href="https://bootparty.com/privacy-policy">
               <li>
-
                   Privacy Policy
               </li>
             </a>
