@@ -3,7 +3,7 @@ import { Form, Button, Alert, Container } from 'react-bootstrap';
 import { Link, useParams } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { EVENT_ADD_SIGNUP } from '../../util/mutations';
-import { BootCarousel } from '../pageElements';
+import { BootSelect } from './';
 
 
 const JoinForm = () => {
@@ -83,7 +83,7 @@ const JoinForm = () => {
         />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formCustomerInfo">
-            <BootCarousel customerForm={customerForm} handleCustomerInputChange={handleCustomerInputChange} />
+            <BootSelect customerForm={customerForm} handleCustomerInputChange={handleCustomerInputChange} />
         </Form.Group>
     <Form.Group className="mb-3" controlId="formSubmit">
         <Button type="submit" disabled={loading}>

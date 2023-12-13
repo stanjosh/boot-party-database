@@ -10,6 +10,7 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { Admin, LandingPage, Booking, ShareParty, JoinParty, AdminParty } from './components/'
+import { BootSelect } from './components/pageElements/index.js';
 
 const host = '/graphql';
 
@@ -62,6 +63,10 @@ const router = createBrowserRouter([
       {
         path: "/admin",
         element: <Admin/>
+      },
+      {
+        path: "/test",
+        element: <BootSelect />
       },
       {
         path: "*",
