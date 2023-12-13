@@ -6,7 +6,7 @@ import { BootSelect } from './';
 
 
 const CustomerForm = ({ setCurrentStep }) => {
-    const [customerForm, setCustomerFormData] = useState('');
+    const [customerForm, setCustomerFormData] = useState({});
     const [createCustomer, { loading, error }] = useMutation(CREATE_CUSTOMER);
     //const [validated, setValidated] = useState(false);
 

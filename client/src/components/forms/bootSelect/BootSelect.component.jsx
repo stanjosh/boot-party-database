@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Form, Image, Container } from 'react-bootstrap';
+import { Card, Form, Image, Container, Button } from 'react-bootstrap';
 
 const menBootDataURL = "https://rickshaw-boots.myshopify.com/collections/mens-boots/products.json";
 const womenBootDataURL = "https://rickshaw-boots.myshopify.com/collections/womens-boots/products.json";
@@ -30,6 +30,7 @@ const BootSelect = ({ handleCustomerInputChange, customerForm }) => {
                         }
                     }))
                 setBootData(filteredBoots);
+                console.log(filteredBoots);
             });
     }, [handleCustomerInputChange, customerForm, shoeSize, shoeWidth]);
 
@@ -37,7 +38,7 @@ const BootSelect = ({ handleCustomerInputChange, customerForm }) => {
         const { name, value } = e.target;
         if (name === "shoeWidth") {
             setShoeWidth(value);
-            setShoeSize(null);
+            setShoeSize('null');
         } else {
             setShoeSize(value);
             setShowBoots(true);
@@ -52,6 +53,7 @@ const BootSelect = ({ handleCustomerInputChange, customerForm }) => {
         setSelectedBootName(e.currentTarget.dataset.bootname);
         customerForm.bootSku = e.currentTarget.dataset.bootsku;
         customerForm.bootName = e.currentTarget.dataset.bootname;
+        window.scrollTo(0, 0)
         setShowBoots(false);
         
     }
@@ -59,7 +61,7 @@ const BootSelect = ({ handleCustomerInputChange, customerForm }) => {
 
   return (
     <>
-    <Form.Group style={{display: "flex"}}>
+    <Form.Group style={{display: "flex", flexWrap: "wrap"}} hidden={showBoots || selectedBootSku}>
 
     <Form.Select 
         id="shoeWidth" 
@@ -89,13 +91,16 @@ const BootSelect = ({ handleCustomerInputChange, customerForm }) => {
             <option value={size} key={size}>{size}</option>
         )}
     </Form.Select>
+    </Form.Group>
+    <Form.Group style={{display: "flex", flexWrap: "wrap"}} hidden={!selectedBootSku}>
     {selectedBootSku 
         ? <>
             <Form.Control type="hidden" name="bootSku" value={customerForm.bootSku} />
             <Form.Control type="hidden" name="bootName" value={customerForm.bootName} />
             <Form.Text style={{fontSize: "2cqh", textAlign: "center", backgroundColor: "#FFFFFF", height: "100%", padding: "5px", verticalAlign: "center", borderRadius: "4px"}}>
-                Selected Boot: {selectedBootName}
+                Boot: {selectedBootName}
             </Form.Text>
+            <Button variant="outline-secondary" onClick={() => {setSelectedBootSku(''); setSelectedBootName(''); setShowBoots(false);}}>X</Button>
             </>
         : null}
     
@@ -117,7 +122,7 @@ const BootSelect = ({ handleCustomerInputChange, customerForm }) => {
                 <Image width={"100%"} src={boot.featured_image.src} alt={boot.option3} />
             </Card.Body>
             <Card.Footer>
-                <a href={`https://www.alvies.com/products/${boot.handle}`} target="_blank" rel="noreferrer" style={{position: "absolute", top: "0", right: "0", margin: "10px", fontSize: "2cqh"}}>
+                <a href={`https://rickshaw-boots.myshopify.com/variants/${boot.id}`} target="_blank" rel="noreferrer" style={{position: "absolute", top: "0", right: "0", margin: "10px", fontSize: "2cqh"}}>
                     <img src="/external-link.svg" alt="external link" style={{height: "3.5cqh", width: "3.5cqh"}} />
                 </a>
                 <h3 style={{fontSize: "2cqh", textAlign: "right"}}>{boot.option3}</h3>
