@@ -9,9 +9,11 @@ function App() {
     <>
       <Header />
       <main>
-          <Outlet />
+        <Outlet />
       </main>
-      <Footer />
+      <footer>
+        <Footer />
+      </footer>
     </>
   );
 }
