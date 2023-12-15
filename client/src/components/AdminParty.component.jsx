@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Container, Form, Button, Alert } from 'react-bootstrap';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 import { EventDisplay, GuestsDisplay } from '../components/pageElements';
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_EVENT } from '../util/queries';
@@ -15,8 +17,16 @@ const AdminParty = () => {
   });
   console.log(data)
   const [eventForm, setEventFormData] = useState({});
-
+  const [eventTime, setEventTime] = useState(new Date());
   console.log(eventForm)
+
+  useEffect(() => {
+    if (data) {
+      setEventFormData(data.findEventByID);
+      setEventTime(new Date(parseInt(data.findEventByID.eventTime)));
+    }
+  }, [data]);
+
 
   const [updateEvent, { loadingUpdateEvent, errorUpdateEvent }] = useMutation(UPDATE_EVENT);
 
@@ -61,6 +71,19 @@ const AdminParty = () => {
           <>
             <Form  onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" controlId="formEventInfo">
+                <DatePicker
+        name='eventTime'
+        selected={eventTime}
+        onChange={setEventTime}
+        value={eventTime}
+        showTodayButton={false}
+        showIcon={true}
+        minDate={new Date()}
+        minTime={new Date().setHours(8,0,0,0)}
+        maxTime={new Date().setHours(20,0,0,0)}
+        showTimeSelect
+        dateFormat="Pp"
+      />
                     <Form.Control
                         type="text"
                         placeholder="Event Address"
@@ -87,41 +110,7 @@ const AdminParty = () => {
                         onChange={handleEventInputChange}
                     />
                     </Form.Group>
-                    <Form.Group className="mb-3" controlId="formEventInfo">
-                        <Form.Control
-                            type="text"
-                            placeholder="Event Contact"
-                            name="name"
-                            defaultValue={data.findEventByID.eventContact?.name}
-                            value={eventForm.eventContact?.name}
-                            onChange={handleEventInputChange}
-                        />
-                        <Form.Control
-                            type="text"
-                            placeholder="Event Contact"
-                            name="email"
-                            defaultValue={data.findEventByID.eventContact?.email}
-                            value={eventForm.eventContact?.name}
-                            onChange={handleEventInputChange}
-                        />
-                        <Form.Control
-                            type="text"
-                            placeholder="Event Contact"
-                            name="phone"
-                            defaultValue={data.findEventByID.eventContact?.phone}
-                            value={eventForm.eventContact?.phone}
-                            onChange={handleEventInputChange}
-                        />
-                        <Form.Control
-                            type="text"
-                            placeholder="Event Contact"
-                            name="boot"
-                            defaultValue={data.findEventByID.eventContact?.boot}
-                            value={eventForm.eventContact?.boot}
-                            onChange={handleEventInputChange}
-                        />
-
-                    </Form.Group>
+                   
                     <Form.Group className="mb-3" controlId="formEventInfo">
                     <Form.Control
                         type="text"
@@ -151,6 +140,41 @@ const AdminParty = () => {
 
                  
                 </Form.Group>
+                <Form.Group className="mb-3" controlId="formEventInfo">
+                        <Form.Control
+                            type="text"
+                            placeholder="Event contact name"
+                            name="name"
+                            defaultValue={data.findEventByID.eventContact?.name}
+                            value={eventForm.eventContact?.name}
+                            onChange={handleEventInputChange}
+                        />
+                        <Form.Control
+                            type="text"
+                            placeholder="Event contact email"
+                            name="email"
+                            defaultValue={data.findEventByID.eventContact?.email}
+                            value={eventForm.eventContact?.email}
+                            onChange={handleEventInputChange}
+                        />
+                        <Form.Control
+                            type="text"
+                            placeholder="Event contact phone"
+                            name="phone"
+                            defaultValue={data.findEventByID.eventContact?.phone}
+                            value={eventForm.eventContact?.phone}
+                            onChange={handleEventInputChange}
+                        />
+                        <Form.Control
+                            type="text"
+                            placeholder="Event contact boot"
+                            name="boot"
+                            defaultValue={data.findEventByID.eventContact?.bootName}
+                            value={eventForm.eventContact?.bootName}
+                            onChange={handleEventInputChange}
+                        />
+
+                    </Form.Group>
                 <Form.Group className="mb-3" controlId="formSubmit">
                     <Button type="submit" disabled={loading}>
                     save changes

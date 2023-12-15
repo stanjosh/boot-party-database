@@ -9,13 +9,13 @@ const Footer = () => {
           <ul>
             <li style={{justifyContent: "space-between"}}>
               <a href="https://facebook.com/alviesboots" rel="noreferrer" target="_blank">
-                <Image src="../../../public/facebook-svgrepo-com.svg" height="40cqh" />
+                <Image src="/facebook-svgrepo-com.svg" height="40cqh" />
               </a>  
               <a href="https://instagram.com/alviesboots" rel="noreferrer" target="_blank">
-                <Image src="../../../public/instagram-round-svgrepo-com.svg" height="40cqh" />
+                <Image src="/instagram-round-svgrepo-com.svg" height="40cqh" />
               </a>  
               <a href="https://youtube.com/alviesboots" rel="noreferrer" target="_blank">
-                <Image src="../../../public/youtube-round-svgrepo-com.svg" height="40cqh" />
+                <Image src="/youtube-round-svgrepo-com.svg" height="40cqh" />
               </a>  
             </li>
               <a href="mailto:BootParty@Alvies.com">
