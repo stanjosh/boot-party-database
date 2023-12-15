@@ -191,6 +191,7 @@ h4 {
     width: 100%;
     max-width: 50cqw;
     margin: 100px 10px 0px 0px;
+    border-radius: 3px;
 }
 
 .pblock a {
