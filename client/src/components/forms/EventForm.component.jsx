@@ -55,6 +55,7 @@ const EventForm = ({ setCurrentStep }) => {
         name="eventLocation"
         value={eventForm.eventLocation}
         onChange={handleEventInputChange}
+        required
       />
       <DatePicker
         name='eventTime'
@@ -68,6 +69,7 @@ const EventForm = ({ setCurrentStep }) => {
         maxTime={new Date().setHours(20,0,0,0)}
         showTimeSelect
         dateFormat="Pp"
+        required
       />
     </Form.Group>
     <Form.Group className="mb-3" controlId="formSubmit">
