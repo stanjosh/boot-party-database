@@ -3,10 +3,12 @@ import { Button } from "react-bootstrap";
 const LandingPage = () => {
     return (
       <>
-        <div className="landingPageBox" style={{}}>
-          <h1 className="landingPageTitle">BOOT FITTINGS ANYWHERE</h1>
+        <div className="landingPageBox" style={{minWidth: "100%", textAlign: "center", alignContent: "center"}}>
+          <div style={{maxWidth: "600px", margin: "auto"}}>
+            <h1 className="landingPageTitle">BOOT FITTINGS ANYWHERE</h1>
           
           <Button href="/book" className="landingPageButton">BOOK A PARTY</Button>
+          </div>
         </div>
 
         <div className="landingPageBox" 
