@@ -38,33 +38,35 @@ li {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #ccc;
+
     padding: 8px 0;
 }
 
 
 
 footer {
-    color: aliceblue;
-    padding: 5px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
     background-color: var(--alviesDarkBlue);
     font-family: 'unpretentious', sans-serif;
-
+    color: aliceblue;
 }
 
 footer a {
     color: aliceblue;
     text-decoration: none;
     padding: 10px;
-    font-size: 3.5cqh;
+    font-size: 2.5cqh;
 
+}
+
+
+
+footer a:hover {
+    color: var(--alviesBlue);
 }
 
 footer li {
     justify-content: right;
+    list-style: none;
 }
 
 
@@ -189,6 +191,7 @@ h4 {
     width: 100%;
     max-width: 50cqw;
     margin: 100px 10px 0px 0px;
+    border-radius: 3px;
 }
 
 .pblock a {

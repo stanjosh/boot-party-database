@@ -54,42 +54,56 @@ const CustomerForm = ({ setCurrentStep }) => {
 
 
   return (
-    <Form onSubmit={handleSubmit} width={"100%"}>
-            <Form.Group className="mb-3" controlId="formCustomerInfo">
-        <Form.Control
-            type="text"
-            placeholder='your name'
-            name="name"
-            value={customerForm.name}
-            onChange={handleCustomerInputChange}
-            required
-        />
-        <Form.Control
-            type="text"
-            placeholder='your email'
-            name="email"
-            value={customerForm.email}
-            onChange={handleCustomerInputChange}
-            required
-        />
-        <Form.Control
-            type="text"
-            placeholder='your phone number (optional)'
-            name="phone"
-            value={customerForm.phone}
-            onChange={handleCustomerInputChange} 
-        />
-        </Form.Group>
-        <Form.Group>
+    <Form onSubmit={handleSubmit} >
+        <h1 style={{fontSize: "5cqh" }}>Who are you?</h1>
+        <Form.Group className="mb-3" controlId="formCustomerInfo" style={{marginRight: "15px", marginLeft: "15px", }} >
+            <Form.Control
+                type="text"
+                placeholder='your name'
+                name="name"
+                value={customerForm.name}
+                onChange={handleCustomerInputChange}
+                required
+            />
+            <Form.Control
+                type="text"
+                placeholder='your email'
+                name="email"
+                value={customerForm.email}
+                onChange={handleCustomerInputChange}
+                required
+            />
+            <Form.Control
+                type="text"
+                placeholder='your phone number (optional)'
+                name="phone"
+                value={customerForm.phone}
+                onChange={handleCustomerInputChange} 
+            />
+            </Form.Group>
+        <Form.Group  style={{margin: "25px"}}>
             <BootSelect customerForm={customerForm} handleCustomerInputChange={handleCustomerInputChange} />
         </Form.Group>
 
 
         
-        <Form.Group className="mb-3" controlId="formSubmit">
-            <Button type="submit" disabled={loading}>
-                next: where and when
-            </Button>
+        <Form.Group controlId="formSubmit" style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            width: "100%", 
+            height: "100%",
+            position: "relative",
+            bottom: "0",
+            left: "0",
+            right: "0",
+
+        }}>
+        <Button type="submit" disabled={loading} style={{
+            flex: "0 1 50%",
+            borderRadius: "0 0 3px 0",
+        }}>
+            next: where and when
+        </Button>
             {error && <Alert>Error creating customer</Alert>}
         </Form.Group>
 

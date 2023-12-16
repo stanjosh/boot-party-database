@@ -48,7 +48,7 @@ const EventForm = ({ setCurrentStep }) => {
   return (
 
     <Form onSubmit={handleSubmit}>
-    <Form.Group className="mb-3" controlId="formEventInfo">
+    <Form.Group className="mb-3" controlId="formEventInfo" >
       <Form.Control
         type="text"
         placeholder="Event Address"
