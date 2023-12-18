@@ -26,12 +26,20 @@ const CreateEventPage = () => {
 }
 
   return (
-    <Container fluid style={{ minHeight: '90cqh', textAlign: "center"}}>
-      <h1 style={{fontSize: '12cqw'}}>BOOK A BOOT PARTY</h1>
-        <Container fluid style={{display: "flex", flexWrap: "wrap", flexDirection: "row", justifyContent: "center", backgroundColor: "aliceblue", width: "100%", maxWidth: "780px"}}>
+    <div style={{ minHeight: "580px", textAlign: "center", marginTop: "25px", width: "100%", display: "flex", alignContent: "center", justifyContent: "center"}}>
+        <div style={{
+          justifyContent: "center", 
+          backgroundColor: "var(--alviesBlue)", 
+          width: "100%", 
+          height: "100%",
+          maxWidth: "580px", 
+          marginBottom: "25px",
+          borderRadius: "3px",
+          paddingTop: "25px",
+        }}>
         {getCurrentStep()}
-        </Container>
-    </Container>
+        </div>
+    </div>
   );
 };
 

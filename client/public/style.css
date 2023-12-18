@@ -38,22 +38,16 @@ li {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #ccc;
+
     padding: 8px 0;
 }
 
 
 
 footer {
-    color: aliceblue;
-    font-size: 2cqh;
-    padding: 5px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
     background-color: var(--alviesDarkBlue);
     font-family: 'unpretentious', sans-serif;
-
+    color: aliceblue;
 }
 
 footer a {
@@ -111,7 +105,7 @@ h1 {
 
  h2, h3 {
     color: var(--alviesBlue);;
-    font-size: 10cqb;
+    font-size: 7cqb;
     font-family: 'unpretentious', sans-serif;
     letter-spacing: .5cqw;
     padding: 10px;

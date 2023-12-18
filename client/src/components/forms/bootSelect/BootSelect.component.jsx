@@ -38,19 +38,19 @@ const BootSelect = ({ handleCustomerInputChange, customerForm }) => {
         const { name, value } = e.target;
         if (name === "shoeWidth") {
             setShoeWidth(value);
-            setShoeSize('null');
         } else {
             setShoeSize(value);
             setShowBoots(true);
-        }
-        
+        } 
+
+
     }
 
     const handleSelectBoot = (e) => {
         console.log(e.currentTarget);
         
         setSelectedBootSku(e.currentTarget.dataset.bootsku);
-        setSelectedBootName(e.currentTarget.dataset.bootname);
+        setSelectedBootName(`${e.currentTarget.dataset.bootmodel} / ${e.currentTarget.dataset.bootname}`);
         customerForm.bootSku = e.currentTarget.dataset.bootsku;
         customerForm.bootName = e.currentTarget.dataset.bootname;
         window.scrollTo(0, 0)
@@ -61,7 +61,7 @@ const BootSelect = ({ handleCustomerInputChange, customerForm }) => {
 
   return (
     <>
-    <Form.Group style={{display: "flex", flexWrap: "wrap"}} hidden={showBoots || selectedBootSku}>
+    <Form.Group style={{display: "flex", flexWrap: "wrap"}} hidden={selectedBootSku} >
 
     <Form.Select 
         id="shoeWidth" 
@@ -92,15 +92,15 @@ const BootSelect = ({ handleCustomerInputChange, customerForm }) => {
         )}
     </Form.Select>
     </Form.Group>
-    <Form.Group style={{display: "flex", flexWrap: "wrap"}} hidden={!selectedBootSku}>
+    <Form.Group style={{display: "flex", flexWrap: "wrap", width: "100%"}} hidden={!selectedBootSku}>
     {selectedBootSku 
         ? <>
             <Form.Control type="hidden" name="bootSku" value={customerForm.bootSku} />
             <Form.Control type="hidden" name="bootName" value={customerForm.bootName} />
-            <Form.Text style={{fontSize: "2cqh", textAlign: "center", backgroundColor: "#FFFFFF", height: "100%", padding: "5px", verticalAlign: "center", borderRadius: "4px"}}>
+            <Form.Text style={{fontSize: "2cqh", textAlign: "center", backgroundColor: "#FFFFFF", flex: "1 0 80%", height: "100%", padding: "10px", verticalAlign: "center", borderRadius: "4px", margin: "5px"}}>
                 Boot: {selectedBootName}
             </Form.Text>
-            <Button variant="outline-secondary" onClick={() => {setSelectedBootSku(''); setSelectedBootName(''); setShowBoots(true);}}>X</Button>
+            <Button style={{margin: "5px", flex: "1"}} variant="secondary" onClick={() => {setSelectedBootSku(''); setSelectedBootName(''); setShowBoots(true);}}>X</Button>
             </>
         : null}
     
@@ -108,7 +108,7 @@ const BootSelect = ({ handleCustomerInputChange, customerForm }) => {
     </Form.Group>
     {showBoots ? 
     <>
-    <Button variant="outline-secondary" onClick={() => {setSelectedBootSku(''); setSelectedBootName(''); setShowBoots(false);}}>Another Size?</Button>
+    
     <Container fluid style={{display: "flex", flexWrap: "wrap", flexDirection: "row"}}>
         
       {bootData.map((boot) => (
@@ -116,8 +116,9 @@ const BootSelect = ({ handleCustomerInputChange, customerForm }) => {
 
         <Card 
             key={boot.id} 
-            id={boot.sku} 
+            id={boot.sku}
             alt={boot.title} 
+            data-bootmodel={boot.alt} 
             data-bootsku={boot.sku} 
             data-bootname={boot.title} 
             onClick={handleSelectBoot}

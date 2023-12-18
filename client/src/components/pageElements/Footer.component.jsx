@@ -18,31 +18,34 @@ const Footer = () => {
                 <Image src="/youtube-round-svgrepo-com.svg" height="40cqh" />
               </a>  
             </li>
+            <li>
               <a href="mailto:BootParty@Alvies.com">
-            <li>
                 bootparty@alvies.com
-            </li>
               </a>
+            </li>
+            <li>
               <a href="tel:+15126197000">
-            <li>
                 512-619-7000
-            </li>
               </a>
+            </li>
+            <li>
               <a href="https://alvies.com/" target="_blank">
-            <li>
                 Alvies.com
-            </li>
               </a>
-              <a href="https://bootparty.com/terms-of-service">
+            </li>
             <li>
+              <a href="https://bootparty.com/terms-of-service">
                 Terms of Service
-            </li>
               </a>
-            <a href="https://bootparty.com/privacy-policy">
+            </li>
               <li>
                   Privacy Policy
               </li>
             </a>
+            <a href="https://bootparty.com/privacy-policy">
+                Privacy Policy
+              </a>
+            </li>
            
           </ul>
         </div>
