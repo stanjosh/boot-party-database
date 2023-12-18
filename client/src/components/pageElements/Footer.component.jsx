@@ -40,8 +40,6 @@ const Footer = () => {
             </li>
               <li>
                   Privacy Policy
-              </li>
-            </a>
             <a href="https://bootparty.com/privacy-policy">
                 Privacy Policy
               </a>
