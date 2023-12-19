@@ -109,6 +109,27 @@ const BootSelect = ({ handleCustomerInputChange, customerForm }) => {
     {showBoots ? 
     <>
     
+    <div style={{color: "aliceblue", margin : "15px", fontWeight: "600", letterSpacing: "1.2px"}} >
+    { !showBoots 
+        ? <div style={{margin: "5px"}}>Go ahead and choose your style. 
+            Your guests can choose their own later. </div> 
+        : null
+    }
+    { shoeSize && shoeWidth && bootData.length > 0 
+            ? <>
+                <p>These are the styles we have in your size.</p>
+                <p>Pick one, then we're ready to party! </p>
+            </>
+            : null
+    }
+
+    { shoeSize && shoeWidth && bootData.length <= 0
+        ? <p> Looks like we don't have anything in that size. Try a half size down? </p>
+        : null
+    } 
+
+    </div>
+
     <Container fluid style={{display: "flex", flexWrap: "wrap", flexDirection: "row"}}>
         
       {bootData.map((boot) => (
@@ -123,7 +144,7 @@ const BootSelect = ({ handleCustomerInputChange, customerForm }) => {
             data-bootname={boot.title} 
             onClick={handleSelectBoot}
             style={{
-                flex: "1 0 250px", 
+                flex: "1 0 340px", 
                 backgroundColor: "#FFFFFF", 
                 borderRadius: "5px", 
                 margin: "10px",
@@ -132,17 +153,17 @@ const BootSelect = ({ handleCustomerInputChange, customerForm }) => {
             >
      
             
-            <Card.Title>
-                <h2 style={{fontSize: "3cqh"}}>{boot.alt}</h2>
+            <Card.Title style={{textAlign: "left"}}>
+                <h2 style={{fontSize: "2.5cqh" }}>{boot.alt}</h2>
             </Card.Title>
-            <Card.Body >
+            <Card.Body style={{margin: "0", padding: "0"}} >
                 <Image width={"100%"} src={boot.featured_image.src} alt={boot.option3} />
             </Card.Body>
-            <Card.Footer>
+            <Card.Footer style={{margin: "0", padding: "0"}}>
                 <a href={`https://rickshaw-boots.myshopify.com/variants/${boot.id}`} target="_blank" rel="noreferrer" style={{position: "absolute", top: "0", right: "0", margin: "10px", fontSize: "2cqh"}}>
-                    <img src="/external-link.svg" alt="external link" style={{height: "3.5cqh", width: "3.5cqh"}} />
+                    <img src="/external-link.svg" alt="external link" style={{height: "4cqh", width: "3.5cqh"}} />
                 </a>
-                <h3 style={{fontSize: "2cqh", textAlign: "right"}}>{boot.option3}</h3>
+                <h3 style={{fontSize: "3.5cqh", textAlign: "right", fontStyle: "italic",  color: "var(--alviesDarkBlue"}}>{boot.option3}</h3>
             </Card.Footer>
 
             

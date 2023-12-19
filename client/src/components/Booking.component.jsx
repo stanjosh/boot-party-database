@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Container } from 'react-bootstrap';
-import { CustomerForm, EventForm, EventDetailsForm } from '../components/forms';
-import ShareParty from './ShareParty.component';
+import { CustomerForm, EventForm } from '../components/forms';
+
 
 
 const CreateEventPage = () => {
@@ -16,9 +15,6 @@ const CreateEventPage = () => {
         case 'stepB' :
             component = <EventForm setCurrentStep={setCurrentStep}/>;
             break;
-        case 'stepC' :
-            component = <EventDetailsForm setCurrentStep={setCurrentStep}/>;
-            break;
         default:
             component = <CustomerForm setCurrentStep={setCurrentStep}/>;
     }
@@ -26,13 +22,13 @@ const CreateEventPage = () => {
 }
 
   return (
-    <div style={{ minHeight: "580px", textAlign: "center", marginTop: "25px", width: "100%", display: "flex", alignContent: "center", justifyContent: "center"}}>
+    <div style={{ minHeight: "780px", textAlign: "center", marginTop: "25px", width: "100%", display: "flex", alignContent: "center", justifyContent: "center"}}>
         <div style={{
           justifyContent: "center", 
           backgroundColor: "var(--alviesBlue)", 
           width: "100%", 
           height: "100%",
-          maxWidth: "580px", 
+          maxWidth: "780px", 
           marginBottom: "25px",
           borderRadius: "3px",
           paddingTop: "25px",

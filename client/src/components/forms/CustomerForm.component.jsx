@@ -56,7 +56,7 @@ const CustomerForm = ({ setCurrentStep }) => {
   return (
     <Form onSubmit={handleSubmit} >
         <h1 style={{fontSize: "5cqh" }}>Who are you?</h1>
-        <Form.Group className="mb-3" controlId="formCustomerInfo" style={{marginRight: "15px", marginLeft: "15px", }} >
+        <Form.Group controlId="formCustomerInfo" style={{marginRight: "15px", marginLeft: "15px", }} >
             <Form.Control
                 type="text"
                 placeholder='your name'
@@ -64,6 +64,7 @@ const CustomerForm = ({ setCurrentStep }) => {
                 value={customerForm.name}
                 onChange={handleCustomerInputChange}
                 required
+                className='mb-3'
             />
             <Form.Control
                 type="text"
@@ -72,6 +73,7 @@ const CustomerForm = ({ setCurrentStep }) => {
                 value={customerForm.email}
                 onChange={handleCustomerInputChange}
                 required
+                className='mb-3'
             />
             <Form.Control
                 type="text"
@@ -79,14 +81,13 @@ const CustomerForm = ({ setCurrentStep }) => {
                 name="phone"
                 value={customerForm.phone}
                 onChange={handleCustomerInputChange} 
+                className='mb-3'
             />
             </Form.Group>
-        <Form.Group  style={{margin: "25px"}}>
+        <Form.Group >
             <BootSelect customerForm={customerForm} handleCustomerInputChange={handleCustomerInputChange} />
         </Form.Group>
 
-
-        
         <Form.Group controlId="formSubmit" style={{
             display: "flex",
             justifyContent: "flex-end",

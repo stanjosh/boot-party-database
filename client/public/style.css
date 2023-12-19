@@ -204,8 +204,8 @@ h4 {
 .imageBG {
 
 
-    background-position: right;
-    background-size: fill;    
+    background-size: "cover";    
+    
     background-attachment: fixed;
     background-repeat: no-repeat;
 

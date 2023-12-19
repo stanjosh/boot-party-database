@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Form, Button, Container } from 'react-bootstrap';
+import { Form, Button, Alert } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { useMutation } from '@apollo/client';
@@ -27,7 +27,7 @@ const EventForm = ({ setCurrentStep }) => {
         // Handle success
         console.log('Event created:', res.data);
         localStorage.setItem('event', JSON.stringify(res.data.createEvent));
-        setCurrentStep('stepC');
+        window.location.assign(`/party/${JSON.parse(localStorage.getItem('event'))._id}`);
         })
         .catch((err) => {
         // Handle error
@@ -48,7 +48,7 @@ const EventForm = ({ setCurrentStep }) => {
   return (
 
     <Form onSubmit={handleSubmit}>
-    <Form.Group className="mb-3" controlId="formEventInfo" >
+    <Form.Group controlId="formEventInfo" >
       <Form.Control
         type="text"
         placeholder="Event Address"
@@ -71,12 +71,29 @@ const EventForm = ({ setCurrentStep }) => {
         dateFormat="Pp"
         required
       />
+      <Form.Control
+          type="text"
+          placeholder="Title your event? (you don't have to)"
+          name="eventTitle"
+          value={eventForm.eventTitle}
+          onChange={handleEventInputChange}
+      />
+      <Form.Control
+          as="textarea"
+          rows={4}
+          placeholder="Notes for us? (don't worry about it)"
+          name="eventNotes"
+          value={eventForm.eventNotes}
+          onChange={handleEventInputChange}
+      />
+     
     </Form.Group>
-    <Form.Group className="mb-3" controlId="formSubmit">
+    <Form.Group controlId="formSubmit">
       <Button type="submit" disabled={loading}>
-        next: more details
+        next: share your boot party
       </Button>
-      {error && <p>Error creating event</p>}
+      
+      {error && <Alert>Error creating event</Alert>}
       </Form.Group>
     </Form>
 
