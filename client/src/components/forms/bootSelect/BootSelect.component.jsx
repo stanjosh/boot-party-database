@@ -61,46 +61,61 @@ const BootSelect = ({ handleCustomerInputChange, customerForm }) => {
 
   return (
     <>
-    <Form.Group style={{display: "flex", flexWrap: "wrap"}} hidden={selectedBootSku} >
+        <Form.Group hidden={selectedBootSku} style={{
+            display: "flex", 
+            flexWrap: "wrap", 
+            textAlign: "right", 
+            justifyContent: "space-between", 
+            width: "100%"
+        }} >
 
-    <Form.Select 
-        id="shoeWidth" 
-        aria-label="Boot Width"
-        placeholder="Boot Width"
-        onChange={handleSelectSize}
-        name="shoeWidth"
-        value={shoeWidth}
-        style={{width: "50%"}}    
-    >
-        <option value={null}>Boot Width</option>
-        <option value="B">B (Women)</option>
-        <option value="D">D (Men)</option>
-        <option value="EE">EE (Men Wide)</option>
-    </Form.Select> 
-    <Form.Select 
-        id="shoeSize" 
-        aria-label="Womens' Boot Sizes"
-        placeholder="Womens' Boot Sizes"
-        onChange={handleSelectSize}
-        name="shoeSize"
-        value={shoeSize}
-        style={{width: "50%", overflowY: "scroll"}}    
-    >
-        <option value={null}>Boot Size</option>
-        {(shoeWidth === "B" ? womenSizes : menSizes).map((size) =>               
-            <option value={size} key={size}>{size}</option>
-        )}
-    </Form.Select>
-    </Form.Group>
-    <Form.Group style={{display: "flex", flexWrap: "wrap", width: "100%"}} hidden={!selectedBootSku}>
+            <Form.Select 
+                id="shoeWidth" 
+                aria-label="Boot Width"
+                placeholder="Boot Width"
+                onChange={handleSelectSize}
+                name="shoeWidth"
+                value={shoeWidth}
+                style={{margin: "15px", maxWidth: "150px"}}
+            >
+                <option value={null}>Boot Width</option>
+                <option value="B">B (Women)</option>
+                <option value="D">D (Men)</option>
+                <option value="EE">EE (Men Wide)</option>
+
+            </Form.Select> 
+            <Form.Select 
+                id="shoeSize" 
+                aria-label="Womens' Boot Sizes"
+                placeholder="Womens' Boot Sizes"
+                onChange={handleSelectSize}
+                name="shoeSize"
+                value={shoeSize}
+                style={{margin: "15px", maxWidth: "150px"}}
+            >
+                <option value={null}>Boot Size</option>
+                    {(shoeWidth === "B" ? womenSizes : menSizes).map((size) =>               
+                        <option value={size} key={size}>{size}</option>
+                )}
+            </Form.Select>
+        </Form.Group>
+    <Form.Group style={{display: "flex", flexWrap: "nowrap", width: "100%", alignItems: "center", justifyContent: "end", padding: "15px"}} hidden={!selectedBootSku}>
     {selectedBootSku 
         ? <>
             <Form.Control type="hidden" name="bootSku" value={customerForm.bootSku} />
             <Form.Control type="hidden" name="bootName" value={customerForm.bootName} />
-            <Form.Text style={{fontSize: "2cqh", textAlign: "center", backgroundColor: "#FFFFFF", flex: "1 0 80%", height: "100%", padding: "10px", verticalAlign: "center", borderRadius: "4px", margin: "5px"}}>
+            <Form.Text style={{
+                fontSize: "2cqh", 
+                textAlign: "center", 
+                backgroundColor: "#FFFFFF",  
+                height: "100%", 
+                padding: "10px", 
+                verticalAlign: "center", 
+                borderRadius: "4px", 
+                margin: "5px"}}>
                 Boot: {selectedBootName}
             </Form.Text>
-            <Button style={{margin: "5px", flex: "1"}} variant="secondary" onClick={() => {setSelectedBootSku(''); setSelectedBootName(''); setShowBoots(true);}}>X</Button>
+            <Button variant="danger" style={{height: "100%", verticalAlign: "center", padding: "10px"}} onClick={() => {setSelectedBootSku(''); setSelectedBootName(''); setShowBoots(true);}}>X</Button>
             </>
         : null}
     
@@ -110,23 +125,17 @@ const BootSelect = ({ handleCustomerInputChange, customerForm }) => {
     <>
     
     <div style={{color: "aliceblue", margin : "15px", fontWeight: "600", letterSpacing: "1.2px"}} >
-    { !showBoots 
-        ? <div style={{margin: "5px"}}>Go ahead and choose your style. 
-            Your guests can choose their own later. </div> 
-        : null
-    }
-    { shoeSize && shoeWidth && bootData.length > 0 
-            ? <>
-                <p>These are the styles we have in your size.</p>
-                <p>Pick one, then we're ready to party! </p>
-            </>
-            : null
-    }
+        <div style={{margin: "5px"}} hidden={showBoots}>Go ahead and choose your style. 
+            Your guests can choose their own later. 
+        </div> 
 
-    { shoeSize && shoeWidth && bootData.length <= 0
-        ? <p> Looks like we don't have anything in that size. Try a half size down? </p>
-        : null
-    } 
+    { bootData.length > 0 && shoeSize && shoeWidth 
+        ? <>
+            <p>These are the styles we have in your size.</p>
+            <p>Pick one, then we're ready to party! </p>
+        </>
+        : <p> Looks like we don't have anything in that size. Try a half size down? </p>
+    }
 
     </div>
 
