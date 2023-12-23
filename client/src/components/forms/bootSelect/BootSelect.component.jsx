@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Form, Image, Container, Button } from 'react-bootstrap';
+import { Card, Form, Image, Container, Alert, Button } from 'react-bootstrap';
 
 const menBootDataURL = "https://rickshaw-boots.myshopify.com/collections/mens-boots/products.json";
 const womenBootDataURL = "https://rickshaw-boots.myshopify.com/collections/womens-boots/products.json";
@@ -61,22 +61,28 @@ const BootSelect = ({ handleCustomerInputChange, customerForm }) => {
 
   return (
     <>
+        {!showBoots && !selectedBootSku 
+          ? <div style={{color: "aliceblue", height: "100%", padding: "20px"}}>Select the boots you want to check out?</div>
+          : null }
         <Form.Group hidden={selectedBootSku} style={{
             display: "flex", 
-            flexWrap: "wrap", 
+            flexWrap: "nowrap", 
             textAlign: "right", 
-            justifyContent: "space-between", 
+            justifyContent: "center", 
+            alignContent: "center",
+            verticalAlign: "center",
             width: "100%"
         }} >
-
+            
             <Form.Select 
                 id="shoeWidth" 
+                
                 aria-label="Boot Width"
                 placeholder="Boot Width"
                 onChange={handleSelectSize}
                 name="shoeWidth"
                 value={shoeWidth}
-                style={{margin: "15px", maxWidth: "150px"}}
+                style={{margin: "15px", maxWidth: "150px" }}
             >
                 <option value={null}>Boot Width</option>
                 <option value="B">B (Women)</option>
@@ -123,20 +129,13 @@ const BootSelect = ({ handleCustomerInputChange, customerForm }) => {
     </Form.Group>
     {showBoots ? 
     <>
-    
-    <div style={{color: "aliceblue", margin : "15px", fontWeight: "600", letterSpacing: "1.2px"}} >
-        <div style={{margin: "5px"}} hidden={showBoots}>Go ahead and choose your style. 
-            Your guests can choose their own later. 
-        </div> 
-
-    { bootData.length > 0 && shoeSize && shoeWidth 
-        ? <>
-            <p>These are the styles we have in your size.</p>
-            <p>Pick one, then we're ready to party! </p>
-        </>
-        : <p> Looks like we don't have anything in that size. Try a half size down? </p>
-    }
-
+    <div style={{position: "static", bottom: "0", zIndex: "1"}}>
+    <Alert dismissible>
+        { bootData.length > 0 && shoeSize && shoeWidth 
+            ? <> These are the styles we have in your size. </>
+            : <> Looks like we don't have anything in that size. (Try a half size down!) </>
+        }
+    </Alert>
     </div>
 
     <Container fluid style={{display: "flex", flexWrap: "wrap", flexDirection: "row"}}>
@@ -163,16 +162,16 @@ const BootSelect = ({ handleCustomerInputChange, customerForm }) => {
      
             
             <Card.Title style={{textAlign: "left"}}>
-                <h2 style={{fontSize: "2.5cqh" }}>{boot.alt}</h2>
+                <h2 style={{fontSize: "2cqh", fontStyle: "italic"}}>{boot.alt}</h2>
             </Card.Title>
             <Card.Body style={{margin: "0", padding: "0"}} >
                 <Image width={"100%"} src={boot.featured_image.src} alt={boot.option3} />
             </Card.Body>
             <Card.Footer style={{margin: "0", padding: "0"}}>
                 <a href={`https://rickshaw-boots.myshopify.com/variants/${boot.id}`} target="_blank" rel="noreferrer" style={{position: "absolute", top: "0", right: "0", margin: "10px", fontSize: "2cqh"}}>
-                    <img src="/external-link.svg" alt="external link" style={{height: "4cqh", width: "3.5cqh"}} />
+                    <img src="/external-link.svg" alt="alvies.com" style={{height: "4cqh", width: "3.5cqh"}} loading='lazy'/>
                 </a>
-                <h3 style={{fontSize: "3.5cqh", textAlign: "right", fontStyle: "italic",  color: "var(--alviesDarkBlue"}}>{boot.option3}</h3>
+                <h3 style={{fontSize: "2cqh", textAlign: "right", color: "var(--alviesDarkBlue"}}>{boot.option3}</h3>
             </Card.Footer>
 
             
