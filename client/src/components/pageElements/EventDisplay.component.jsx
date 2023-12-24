@@ -13,7 +13,7 @@ const EventDisplay = ( { eventData } ) => {
             <Card.Body>
                 <Card.Title>
                     <h3 style={{ fontSize: '3.5cqb' }}>
-                    {eventData.eventTitle ? eventData.eventTitle : 'Event Details'}
+                    {eventData.eventTitle ? eventData.eventTitle : 'Boot Party'}
                     </h3>
                 </Card.Title>
                 <Card.Text>
