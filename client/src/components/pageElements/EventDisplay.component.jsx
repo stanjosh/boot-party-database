@@ -9,7 +9,7 @@ const EventDisplay = ( { eventData } ) => {
 
     return (
         <>
-        <Card>
+        <Card style={{marginTop: "15px"}}>
             <Card.Body>
                 <Card.Title>
                     <h3 style={{ fontSize: '3.5cqb' }}>

@@ -5,52 +5,14 @@ import { CREATE_CUSTOMER } from '../../util/mutations';
 import { BootSelect } from './';
 
 
-const CustomerForm = ({ setCurrentStep }) => {
-    const [customerForm, setCustomerFormData] = useState({});
-    const [createCustomer, { loading, error }] = useMutation(CREATE_CUSTOMER);
-    //const [validated, setValidated] = useState(false);
-
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        console.log(customerForm);
-        await createCustomer({
-            variables: {
-                customerInput: { ...customerForm },           
-               
-            }
-        })
-        .then((res) => {
-        // Handle success
-        console.log('Event created:', res.data);
-        localStorage.setItem('customer', JSON.stringify(res.data.createCustomer));
-        setCurrentStep('stepB');
-        })
-        .catch((err) => {
-        // Handle error
-        console.error('Error creating event:', err);
-        });
-
-};
-
+const CustomerForm = ({ customerForm, setCustomerFormData, handleSubmit, loading, error }) => {
     const handleCustomerInputChange = (e) => {
         const { name, value } = e.target;
         setCustomerFormData({ ...customerForm, [name]: value });
-        //checkValidity();
-        //console.log(customerForm);
     }
 
 
 
-    // const checkValidity = () => {
-    //     const emailRegEx = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    //     const email = String(customerForm.email).trim() !== '' && customerForm.email
-    //         .toLowerCase()
-    //         .match(emailRegEx);
-    //     setValidated((!loading && email))
-    //     console.log(validated)
-    //     return validated;
-    // }
 
 
   return (
@@ -100,10 +62,12 @@ const CustomerForm = ({ setCurrentStep }) => {
 
         }}>
         <Button type="submit" disabled={loading} style={{
-            flex: "0 1 50%",
+            flex: "0 1 40%",
+            boxShadow: "2px 2px 3px black",
             borderRadius: "0 0 3px 0",
+            margin: "8px",
         }}>
-            next: where and when
+            <h3 style={{fontSize : "2.5cqh", color: "aliceblue", marginBottom : "0"}}>LET'S GO</h3>
         </Button>
             {error && <Alert>Error creating customer</Alert>}
         </Form.Group>
