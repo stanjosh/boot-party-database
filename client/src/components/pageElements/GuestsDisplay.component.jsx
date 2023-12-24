@@ -7,7 +7,7 @@ const GuestsDisplay = ( { eventData } ) => {
 
     return (
         <>
-        <Card><h3 style={{ fontSize: '5cqb' }}>Guests</h3></Card>
+        
             <Card key={eventData?.eventContact?._id} style={{marginTop: "5px"}}>
                 <Card.Body>
                     

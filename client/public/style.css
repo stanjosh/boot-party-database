@@ -176,8 +176,14 @@ h4 {
 }
 
 
+.card {
+    background-color: aliceblue;
+}
 
-
+.card .h1 .h2 .h3 .h4 {
+    color: var(--alviesBlue);
+    font-family: 'unpretentious', sans-serif;
+}
 
 .pblock {
     background-color: var(--alviesBlue);;

@@ -5,7 +5,7 @@ import { Card } from 'react-bootstrap';
 
 const EventDisplay = ( { eventData } ) => {
     
-    const prettyTime = new Date(parseInt(eventData.eventTime)).toLocaleString('en-US', { month: "long", day: "numeric", hour: 'numeric', minute: 'numeric', hour12: true })  
+    const prettyTime = new Date(parseInt(eventData.eventTime)).toLocaleString('en-US', { month: "long", day: "numeric", weekday: "long", hour: 'numeric', minute: 'numeric', hour12: true })  
 
     return (
         <>
@@ -18,14 +18,25 @@ const EventDisplay = ( { eventData } ) => {
                 </Card.Title>
                 <Card.Text>
                     {console.log(eventData)}
-                    <strong>location:</strong> {eventData.eventLocation}<br />
-                    <strong>time:</strong> {prettyTime}<br />
+                    <strong>location:</strong> { eventData.eventLocation }<br />
+                    <strong>time:</strong> { prettyTime }<br />
                     
-                    <strong>contact:</strong> {eventData.eventContact.name}<br />
-                    <strong>email:</strong> {eventData.eventContact.email}<br />
-                    <strong>phone:</strong> {eventData.eventContact.phone}<br />
-                    <strong>notes:</strong> {eventData.eventNotes}<br />
-                    <strong>guests:</strong> {eventData.eventSignups.length}<br />
+                    <strong>host name:</strong> { eventData.eventContact.name}<br />
+                    <strong>email:</strong> { eventData.eventContact.email}<br />
+                    <strong>phone:</strong> { eventData.eventContact.phone ? eventData.eventContact.phone : 'not provided' }<br />
+                    
+
+                    {eventData.eventNotes
+                        ? <><strong>notes:</strong> {eventData.eventNotes}</>
+                        : null
+                    }
+                    
+                    {eventData.eventNotes 
+                        ? <><strong>guests:</strong> {eventData.eventSignups.length}</>
+                        : null
+                    }
+                
+                
                 </Card.Text>
             </Card.Body>
         </Card>
