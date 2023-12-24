@@ -152,7 +152,8 @@ h4 {
     width: 100%;
     max-width: 90%;
     font-size: 5cqh;
-    border-radius: 2px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 3px black;
     
 }
 
@@ -211,7 +212,15 @@ h4 {
 
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1200px) {
+
+    .smallHide {
+        display: none;
+    }
+    
+}
+
+@media screen and (max-width: 980px) {
 
     .pblock {
         text-align: center;
@@ -226,8 +235,5 @@ h4 {
         padding: 0;
         background-position: 25%;
     }
-    .smallHide {
-        display: none;
-    }
-    
+
 }
