@@ -5,7 +5,7 @@ import { Card } from 'react-bootstrap';
 
 const EventDisplay = ( { eventData } ) => {
     
-    const prettyTime = new Date(eventData.eventTime * 1000).toLocaleString('en-US', { month: "long", day: "numeric", hour: 'numeric', minute: 'numeric', hour12: true })  
+    const prettyTime = new Date(parseInt(eventData.eventTime)).toLocaleString('en-US', { month: "long", day: "numeric", hour: 'numeric', minute: 'numeric', hour12: true })  
 
     return (
         <>
