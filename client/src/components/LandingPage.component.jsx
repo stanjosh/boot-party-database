@@ -30,7 +30,7 @@ const LandingPage = () => {
             justifyContent: "center", 
             alignContent: "Center", 
             alignItems: "center",
-            overflowY: "hidden"
+            overflow: "hidden"
           }}>
             <PolaroidDrop />
           <div className="landingPageTextBlock" style={{maxWidth:"600px"}}>
@@ -44,9 +44,10 @@ const LandingPage = () => {
             <Button href="/book" className="landingPageButton">LET&apos;S PARTY</Button>
           </div>
         </div>
-          <div className="landingPageBox imageBG" style={{marginTop: "0", 
-          minWidth: "100%",
-          backgroundImage: "url(https://alvies-test.imgix.net/gsmith_20220611_0019.jpg?ar=1%3A1&auto=compress%2Cformat&dm=1656514717&fit=crop&ixlib=php-3.1.0&w=1500"
+          <div className="landingPageBox imageBG" style={{
+            marginTop: "0", 
+            minWidth: "100%",
+            backgroundImage: "url(https://alvies-test.imgix.net/gsmith_20220611_0019.jpg?ar=1%3A1&auto=compress%2Cformat&dm=1656514717&fit=crop&ixlib=php-3.1.0&w=1500"
         }}>
             <div className="pblock" style={{textAlign: "left", alignSelf: "start"}}>
             <h4>THE REVIEWS ARE IN:</h4>
