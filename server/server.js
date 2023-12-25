@@ -6,7 +6,7 @@ const { authMiddleware } = require('./utils/auth');
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
 const forever = require('forever-monitor')
-// const insertNewEvent = require('./utils/googleCal');
+const insertNewEvent = require('./utils/googleCal');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -20,35 +20,35 @@ const server = new ApolloServer({
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-// app.post('/api/calendar', async (req, res) => {
-//   const { title, description, location, time } = req.body;
-//   const dateTimeStart = new Date(time).toISOString();
-//   const dateTimeEnd = new Date(new Date(time).setHours(new Date(time).getHours() + 3)).toISOString();
-//   const event = {
-//     'summary': title,
-//     'location': location,
-//     'description': description,
-//     'start': {
-//       'dateTime': dateTimeStart,
-//       'timeZone': 'America/Chicago'
-//     },
-//     'end': {
-//       'dateTime': dateTimeEnd,
-//       'timeZone': 'America/Chicago'
-//     },
-//     'attendees': [
-//       { 'email': '' }
-//     ],
-//     'reminders': {
-//       'useDefault': false,
-//       'overrides': [
-//         { 'method': 'email', 'minutes': 24 * 60 },
-//         { 'method': 'popup', 'minutes': 10 }
-//       ]
-//     }
-//   }
-//   insertNewEvent( event )
-// })
+app.post('/api/calendar', async (req, res) => {
+  const { title, description, location, time } = req.body;
+  const dateTimeStart = new Date(time).toISOString();
+  const dateTimeEnd = new Date(new Date(time).setHours(new Date(time).getHours() + 3)).toISOString();
+  const event = {
+    'summary': title,
+    'location': location,
+    'description': description,
+    'start': {
+      'dateTime': dateTimeStart,
+      'timeZone': 'America/Chicago'
+    },
+    'end': {
+      'dateTime': dateTimeEnd,
+      'timeZone': 'America/Chicago'
+    },
+    'attendees': [
+      { 'email': '' }
+    ],
+    'reminders': {
+      'useDefault': false,
+      'overrides': [
+        { 'method': 'email', 'minutes': 24 * 60 },
+        { 'method': 'popup', 'minutes': 10 }
+      ]
+    }
+  }
+  insertNewEvent( event )
+})
 
 
 if (process.env.NODE_ENV === 'production') {

@@ -17,6 +17,7 @@ const BootSelect = ({ handleCustomerInputChange, customerForm }) => {
     const [shoeSize, setShoeSize] = useState('');
 
     useEffect(() => {
+        if (! showBoots || ! shoeSize && shoeWidth) return;
         const bootDataURL = shoeWidth === "B" ? womenBootDataURL : menBootDataURL;
         fetch(bootDataURL)
             .then((response) => response.json())

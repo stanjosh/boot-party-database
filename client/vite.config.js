@@ -10,6 +10,11 @@ export default defineConfig({
         secure: false,
         
       },
+      '/api/calendar': {
+        target: 'http://localhost:3001',
+        changeOrigin: true,
+        secure: false,
+      },
     },
   },
   plugins: [

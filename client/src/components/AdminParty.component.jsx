@@ -20,7 +20,7 @@ const AdminParty = () => {
   const [customerJoinForm, setJoinFormData] = useState({});
   const [success, setSuccess] = useState(false);
   const [eventForm, setEventFormData] = useState({});
-  const [eventTime, setEventTime] = useState(new Date());
+  const [eventTime, setEventTime] = useState(Date(parseInt(data?.findEventByID.eventTime)));
   console.log(eventForm)
 
   useEffect(() => {
