@@ -10,8 +10,8 @@ const womenSizes = [5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 
 const BootSelect = ({ handleCustomerInputChange, customerForm }) => {
     const [bootData, setBootData] = useState([]);
     const [showBoots, setShowBoots] = useState(false);
-    const [selectedBootSku, setSelectedBootSku] = useState('');
-    const [selectedBootName, setSelectedBootName] = useState('');
+    const [selectedBootSku, setSelectedBootSku] = useState(customerForm?.bootSku);
+    const [selectedBootName, setSelectedBootName] = useState(customerForm?.bootName);
 
     const [shoeWidth, setShoeWidth] = useState('');
     const [shoeSize, setShoeSize] = useState('');
@@ -105,9 +105,9 @@ const BootSelect = ({ handleCustomerInputChange, customerForm }) => {
                 )}
             </Form.Select>
         </Form.Group>
-    <Form.Group style={{display: "flex", flexWrap: "nowrap", width: "100%", alignItems: "center", justifyContent: "end", padding: "15px"}} hidden={!selectedBootSku}>
-    {selectedBootSku 
-        ? <>
+    
+    {customerForm.bootSku &&
+        <Form.Group style={{display: "flex", flexWrap: "nowrap", width: "100%", alignItems: "center", justifyContent: "end", padding: "15px"}} >
             <Form.Control type="hidden" name="bootSku" value={customerForm.bootSku} />
             <Form.Control type="hidden" name="bootName" value={customerForm.bootName} />
             <Form.Text style={{
@@ -122,11 +122,10 @@ const BootSelect = ({ handleCustomerInputChange, customerForm }) => {
                 Boot: {selectedBootName}
             </Form.Text>
             <Button variant="danger" style={{height: "100%", verticalAlign: "center", padding: "10px"}} onClick={() => {setSelectedBootSku(''); setSelectedBootName(''); setShowBoots(true);}}>X</Button>
-            </>
-        : null}
+        </Form.Group>}
     
     
-    </Form.Group>
+    
     {showBoots ? 
     <>
     <div style={{position: "static", bottom: "0", zIndex: "1"}}>
