@@ -277,7 +277,7 @@ const AdminParty = () => {
                 <h4>no guests yet</h4>
               </>
             )}
-          <CustomerForm customerForm={ customerJoinForm } setCustomerFormData={ setJoinFormData } handleSubmit={ handleJoinParty } loading={ joinPartyLoading } error={ joinPartyError } formTitle={'Add a guest'}/>
+          <CustomerForm customerForm={ customerJoinForm } setCustomerFormData={ setJoinFormData } handleSubmit={ handleJoinParty } loading={ joinPartyLoading } error={ joinPartyError } formTitle={'Add a guest'} submitText={'add guest'}/>
           
           {success && ( <Alert >Guest added.</Alert> )} 
           {joinPartyError && ( <Alert>Error adding guest.</Alert> )}

@@ -45,7 +45,7 @@ const CustomerForm = ({ customerForm, setCustomerFormData, handleSubmit, loading
         <Form.Group controlId="formCustomerInfo" style={{marginRight: "15px", marginLeft: "15px", }} >
             <Form.Control
                 type="text"
-                placeholder='your name'
+                placeholder='name'
                 name="name"
                 value={customerForm.name}
                 onChange={handleCustomerInputChange}
@@ -54,7 +54,7 @@ const CustomerForm = ({ customerForm, setCustomerFormData, handleSubmit, loading
             />
             <Form.Control
                 type="text"
-                placeholder='your email'
+                placeholder='email'
                 name="email"
                 value={customerForm.email}
                 onChange={handleCustomerInputChange}
@@ -63,7 +63,7 @@ const CustomerForm = ({ customerForm, setCustomerFormData, handleSubmit, loading
             />
             <Form.Control
                 type="text"
-                placeholder='your phone number (optional)'
+                placeholder='phone (optional)'
                 name="phone"
                 value={customerForm.phone}
                 onChange={handleCustomerInputChange} 
