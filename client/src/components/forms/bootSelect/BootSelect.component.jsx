@@ -92,8 +92,8 @@ const BootSelect = ({ handleCustomerInputChange, customerForm }) => {
             </Form.Select> 
             <Form.Select 
                 id="shoeSize" 
-                aria-label="Womens' Boot Sizes"
-                placeholder="Womens' Boot Sizes"
+                aria-label="Boot Sizes"
+                placeholder="Boot Sizes"
                 onChange={handleSelectSize}
                 name="shoeSize"
                 value={shoeSize}

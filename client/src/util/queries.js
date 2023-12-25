@@ -39,6 +39,8 @@ query FindEventByID($uuid: ID!) {
       name
       email
       phone
+      shoeSize
+      shoeWidth
       bootName
       bootSku
     }
@@ -51,6 +53,8 @@ query FindEventByID($uuid: ID!) {
       name
       email
       phone
+      shoeSize
+      shoeWidth
       bootName
       bootSku
     }
@@ -74,6 +78,8 @@ query FindAllEvents($date: String) {
       name
       email
       phone
+      shoeSize
+      shoeWidth
       bootName
       bootSku
     }
@@ -86,6 +92,8 @@ query FindAllEvents($date: String) {
       name
       email
       phone
+      shoeSize
+      shoeWidth
       bootName
       bootSku
     }

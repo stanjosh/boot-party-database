@@ -3,11 +3,11 @@ import { useParams, Link } from 'react-router-dom';
 import { Container, Form, Button, Alert } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
-import { EventDisplay, GuestsDisplay } from '../components/pageElements';
+import { CustomerForm, GuestEditForm } from './forms';
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_EVENT } from '../util/queries';
-import { UPDATE_EVENT } from '../util/mutations';
-import { JoinForm } from './forms';
+import { UPDATE_EVENT, EVENT_ADD_SIGNUP } from '../util/mutations';
+
 
 const AdminParty = () => {
   const { eventId } = useParams();
@@ -16,19 +16,48 @@ const AdminParty = () => {
     variables: { uuid : eventId }, 
   });
   console.log(data)
+  const [joinParty, { loading: joinPartyLoading, error: joinPartyError }] = useMutation(EVENT_ADD_SIGNUP);
+  const [customerJoinForm, setJoinFormData] = useState({});
+  const [success, setSuccess] = useState(false);
   const [eventForm, setEventFormData] = useState({});
   const [eventTime, setEventTime] = useState(new Date());
   console.log(eventForm)
 
   useEffect(() => {
     if (data) {
-      setEventFormData(data.findEventByID);
       setEventTime(new Date(parseInt(data.findEventByID.eventTime)));
+      setEventFormData( {...data?.findEventByID, eventTime: new Date(parseInt(data.findEventByID.eventTime))});
+
     }
-  }, [data]);
+  }, [data, joinPartyError]);
 
 
-  const [updateEvent, { loadingUpdateEvent, errorUpdateEvent }] = useMutation(UPDATE_EVENT);
+  const [updateEvent, { loading: loadingUpdateEvent, error: errorUpdateEvent }] = useMutation(UPDATE_EVENT);
+
+  // const handleInsertIntoCalendar = async (e) => {
+  //   const calendarEvent = await fetch('/api/insert-into-calendar', {
+  //     method: 'POST',
+  //     body: JSON.stringify({
+  //       event: {
+  //         title : eventForm.eventTitle, 
+  //         description: eventForm.eventNotes,
+  //         location: eventForm.eventLocation,
+  //         time: eventForm.eventTime,
+  //       },
+  //     }),
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //   });
+  //   const { success } = await calendarEvent.json();
+  //   if (success) {
+  //     console.log('Event added to calendar');
+  //   } else {
+  //     console.log('Event not added to calendar');
+  //   }
+  // };
+
+
 
   const handleSubmit = async (e) => {
       e.preventDefault();
@@ -57,13 +86,33 @@ const AdminParty = () => {
         console.log(eventForm);
     }
 
-
+    const handleJoinParty = async (e) => {
+      e.preventDefault();
+      await joinParty({
+          variables: {
+              eventId: eventId,
+              customerInput: { ...customerJoinForm },           
+             
+          }
+      })
+      .then((res) => {
+      // Handle success
+      console.log('Joined party:', res.data);
+      setJoinFormData({ name: '', email: '', phone: '' });
+      setSuccess(true);
+      
+      })
+      .catch((err) => {
+      // Handle error
+      console.error('Error joining party:', err);
+      });
+  
+    };
  
-
 
   return (
     <>
-      <Container fluid style={{ minHeight: '70cqh', backgroundColor: "#009ceb" }}>
+      <Container fluid style={{ minHeight: '70cqh', backgroundColor: "#009ceb", paddingTop: "3cqh" }}>
         
         {loading ? (
           <div>Loading...</div>
@@ -84,95 +133,124 @@ const AdminParty = () => {
         showTimeSelect
         dateFormat="Pp"
       />
-                    <Form.Control
-                        type="text"
-                        placeholder="Event Address"
-                        name="eventLocation"
-                        defaultValue={data.findEventByID.eventLocation}
-                        value={eventForm.eventLocation}
-                        onChange={handleEventInputChange}
-                    /> 
-                    <Form.Control
-                        type="date"
-                        placeholder="Event Date"
-                        name="eventLocation"
-                        defaultValue={data.findEventByID.eventDate}
-                        value={eventForm.eventTime}
-                        onChange={handleEventInputChange}
-                    />
-                                        <Form.Control
-                        as="textarea"
-                        rows={4}
-                        placeholder="Notes for us?"
-                        name="eventNotes"
-                        defaultValue={data.findEventByID.eventNotes}
-                        value={eventForm.eventNotes}
-                        onChange={handleEventInputChange}
-                    />
+                    <Form.Label htmlFor='eventLocation' style={{width: "100%"}} > 
+                      location
+                      <Form.Control
+                          type="text"
+                          placeholder="Event Address"
+                          name="eventLocation"
+                          defaultValue={eventForm?.eventLocation}
+                          value={eventForm.eventLocation}
+                          onChange={handleEventInputChange}
+                      /> 
+                    </Form.Label>
+                    <Form.Label htmlFor='eventTitle' style={{width: "100%"}} >
+                      title
+                      <Form.Control
+
+                          type="text" 
+                          placeholder="Event Title"
+                          name="eventTitle"
+                          defaultValue={eventForm?.eventTitle}
+                          value={eventForm.eventTitle}
+                          onChange={handleEventInputChange}
+                      />
+                    </Form.Label>
+                    <Form.Label htmlFor='eventNotes' style={{width: "100%"}} >
+                      notes
+                      <Form.Control
+                          as="textarea"
+                          rows={4}
+                          placeholder="Notes"
+                          name="eventNotes"
+                          defaultValue={eventForm?.eventNotes}
+                          value={eventForm.eventNotes}
+                          onChange={handleEventInputChange}
+                      /> 
+                    </Form.Label>
+
                     </Form.Group>
                    
                     <Form.Group className="mb-3" controlId="formEventInfo">
+                    <Form.Label htmlFor='eventDisplay' style={{width: "100%"}} >
+                      display
                     <Form.Control
                         type="text"
                         placeholder="Event Display"
                         name="EventDisplay"
-                        defaultValue={data.findEventByID.EventDisplay}
+                        defaultValue={eventForm?.EventDisplay}
                         value={eventForm.EventDisplay}
                         onChange={handleEventInputChange}
-                    />
+                    /> </Form.Label>
+                    <Form.Label htmlFor='eventLeadEmployee' style={{width: "100%"}} >
+                      bp lead
                     <Form.Control
                         type="text"
                         placeholder="Event Lead"
                         name="eventLeadEmployee"
-                        defaultValue={data.findEventByID.eventLeadEmployee}
+                        defaultValue={eventForm?.eventLeadEmployee}
                         value={eventForm.eventLeadEmployee}
                         onChange={handleEventInputChange}
-                    />
+                    /> </Form.Label>
+                    <Form.Label htmlFor='eventHelpers' style={{width: "100%"}} >
+                      helpers
                     <Form.Control
                         type="text"
                         placeholder="Event Helpers"
                         name="eventHelpers"
-                        defaultValue={data.findEventByID.eventHelpers}
+                        defaultValue={eventForm?.eventHelpers}
                         value={eventForm.eventHelpers}
                         onChange={handleEventInputChange}
-                    />
+                    />  </Form.Label>
 
 
                  
                 </Form.Group>
+                <h4 style={{fontSize: "2cqh"}}>Event Contact</h4>
                 <Form.Group className="mb-3" controlId="formEventInfo">
+                        <Form.Label htmlFor='eventContact' style={{width: "100%"}} >
+                          contact
                         <Form.Control
                             type="text"
                             placeholder="Event contact name"
                             name="name"
-                            defaultValue={data.findEventByID.eventContact?.name}
+                            defaultValue={eventForm?.eventContact?.name}
                             value={eventForm.eventContact?.name}
                             onChange={handleEventInputChange}
-                        />
+                        /> </Form.Label>
+                        <Form.Label htmlFor='eventContact' style={{width: "100%"}} >
+                          email
                         <Form.Control
                             type="text"
                             placeholder="Event contact email"
                             name="email"
-                            defaultValue={data.findEventByID.eventContact?.email}
+                            defaultValue={eventForm?.eventContact?.email}
                             value={eventForm.eventContact?.email}
                             onChange={handleEventInputChange}
                         />
+                        </Form.Label>
+                        <Form.Label htmlFor='eventContact' style={{width: "100%"}} >
+                          phone
                         <Form.Control
                             type="text"
                             placeholder="Event contact phone"
                             name="phone"
-                            defaultValue={data.findEventByID.eventContact?.phone}
+                            defaultValue={eventForm?.eventContact?.phone}
                             value={eventForm.eventContact?.phone}
                             onChange={handleEventInputChange}
                         />
+                        </Form.Label>
+                        <Form.Label htmlFor='eventContact' style={{width: "100%"}} >
+                          boot
                         <Form.Control
                             type="text"
                             placeholder="Event contact boot"
                             name="boot"
-                            defaultValue={data.findEventByID.eventContact?.bootName}
+                            defaultValue={eventForm?.eventContact?.bootName}
                             value={eventForm.eventContact?.bootName}
                             onChange={handleEventInputChange}
                         />
+                        </Form.Label>
 
                     </Form.Group>
                 <Form.Group className="mb-3" controlId="formSubmit">
@@ -184,14 +262,12 @@ const AdminParty = () => {
                     </Form.Group>
                 </Form>
 
-            { data.findEventByID.eventSignups.length > 0 ? (
+            { eventForm?.eventSignups?.length > 0 ? (
                 <Container>
-                {data.findEventByID.eventSignups.map((guest) => (
-                    <Container key={guest._id} style={{backgroundColor: "aliceblue", padding: "2px", margin: "2px", border: "2px solid var(--alviesDarkBlue)"}}>
-                        <p>{guest.name}</p>
-                        <p>{guest.email}</p>
-                        <p>{guest.phone}</p>
-                    </Container>
+                {eventForm?.eventSignups.map((guest, index) => (
+                    <>
+                      <GuestEditForm key={guest._id} guest={guest} eventId={eventId} index={index + 1} />
+                    </>
                     ))
                 }
                 
@@ -199,22 +275,18 @@ const AdminParty = () => {
             ) : (
               <>
                 <h4>no guests yet</h4>
-                
               </>
             )}
-
-            <JoinForm />
-
+          <CustomerForm customerForm={ customerJoinForm } setCustomerFormData={ setJoinFormData } handleSubmit={ handleJoinParty } loading={ joinPartyLoading } error={ joinPartyError } formTitle={'Add a guest'}/>
+          
+          {success && ( <Alert >Guest added.</Alert> )} 
+          {joinPartyError && ( <Alert>Error adding guest.</Alert> )}
+          
           </>
         )}
-
-
       </Container>
-      
-      
-     
     </>
-  );
-};
+    )
+}
 
 export default AdminParty;

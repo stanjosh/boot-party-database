@@ -8,7 +8,7 @@ import "react-datepicker/dist/react-datepicker.css";
 const EventForm = ({ eventForm, setEventFormData, handleSubmit, loading, error }) => {
     const [eventTime, setEventTime] = useState(new Date());
 
-    
+      
 
     const handleEventInputChange = (e) => {
       const { name, value } = e.target;

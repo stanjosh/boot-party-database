@@ -106,6 +106,22 @@ const resolvers = {
         return event
 
         ;
+    },
+
+    eventRemoveSignup: async (parent, { eventId, customerId }, context) => {
+      const event = await Event.findOneAndUpdate({ _id: eventId },
+        {
+          $pull:{
+            eventSignups: customerId
+            }
+          }
+        );
+        return event;
+    },
+
+    editCustomer: async (parent, { customerId, customerInput }, context) => {
+      const customer = await Customer.findOneAndUpdate({ _id: customerId }, { ...customerInput }, { new: true });
+      return customer;
     }
   }
 };
