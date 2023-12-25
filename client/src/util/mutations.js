@@ -172,3 +172,49 @@ mutation EventAddSignup($eventId: ID!, $customerInput: CustomerInput!) {
   }
 }
 `;
+
+export const EVENT_REMOVE_SIGNUP = gql`
+mutation EventRemoveSignup($eventId: ID!, $customerId: ID!) {
+  eventRemoveSignup(eventId: $eventId, customerId: $customerId) {
+    _id
+    eventLocation
+    eventTime
+    eventContact {
+      email
+      name
+      phone
+      bootName
+      bootSku
+    }
+    eventTitle
+    eventLeadEmployee
+    eventLoadinTime
+    eventDisplay
+    eventSignups {
+      name
+      email
+      phone
+      bootName
+      bootSku
+    }
+    eventNotes
+    eventPartyType
+    eventVan
+    eventTransferOrder
+    eventHelpers
+  }
+}
+`;
+
+export const EDIT_CUSTOMER = gql`
+mutation editCustomer($customerId: ID!, $customerInput: CustomerInput!) {
+  editCustomer(customerId: $customerId, customerInput: $customerInput) {
+    _id
+    name
+    email
+    phone
+    bootName
+    bootSku
+  }
+}
+`;

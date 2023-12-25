@@ -61,18 +61,8 @@ const Header = () => {
       {['sm'].map((expand) => (
         <Navbar key={expand} expand={expand} style={{zIndex: "100"}} className="bg-body-tertiary mb-3">
           <Container fluid>
-            <Navbar.Brand href="#"><img src='/boot-party-blue.png' height={'70cqb'} /></Navbar.Brand>
-            <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`}/>
-            <Navbar.Offcanvas expand={expand} id={`offcanvasNavbar-expand-${expand}`}>
-              <Offcanvas.Header style={{backgroundColor: "var(--alviesBlue)", color: "aliceblue"}} closeButton>
-                <Offcanvas.Title style={{backgroundColor: "var(--alviesBlue)", color: "aliceblue"}}>Boot Party</Offcanvas.Title>
-              </Offcanvas.Header>
-              <Offcanvas.Body style={{backgroundColor: "var(--alviesBlue)" , color: "aliceblue"}}>
-                <Nav className="justify-content-end flex-grow-1 pe-3">
-                  {/* <Nav.Link onClick={() => setShowModal(true)}>Login</Nav.Link> */}
-                </Nav>
-              </Offcanvas.Body>
-            </Navbar.Offcanvas>
+            <Navbar.Brand href="/"><img src='/boot-party-blue.png' height={'70cqb'} /></Navbar.Brand>
+           
           </Container>
         </Navbar>
       ))}

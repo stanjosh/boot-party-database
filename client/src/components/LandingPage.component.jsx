@@ -1,13 +1,25 @@
+import { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
+import { PolaroidDrop } from "./pageElements";
 
 const LandingPage = () => {
+    const [scrollY, setScrollY] = useState(0);
+
+
+    useEffect(() => {
+      window.addEventListener("scroll", () => {
+        setScrollY(window.scrollY);
+      });
+      console.log(scrollY)
+    }, [scrollY])
+
     return (
       <>
         <div className="landingPageBox" style={{minWidth: "100%", textAlign: "center", alignContent: "center"}}>
           <div style={{maxWidth: "600px", margin: "auto"}}>
-            <h1 className="landingPageTitle">BOOT FITTINGS ANYWHERE</h1>
+            <h1 className="landingPageTitle">WE BRING THE FIT</h1>
           
-          <Button href="/book" className="landingPageButton">BOOK A PARTY</Button>
+          <Button href="/book" className="landingPageButton">START A PARTY</Button>
           </div>
         </div>
 
@@ -17,17 +29,26 @@ const LandingPage = () => {
             minWidth: "100%", 
             justifyContent: "center", 
             alignContent: "Center", 
-            alignItems: "center"
+            alignItems: "center",
+            overflow: "hidden"
           }}>
+            <PolaroidDrop />
           <div className="landingPageTextBlock" style={{maxWidth:"600px"}}>
+
+
             <h2 className="landingPageTitle">KICK UP YOUR FEET</h2>
             <h3 className="landingPageTitle">WE&apos;LL COME TO YOU</h3>
+
             <p style={{fontFamily: '"work-sans",sans-serif', fontWeight: "600",  fontSize: "1.5cqh" }}>
               We want to provide the best customer experience in all of footwear. Because if you can’t have fun trying on boots, you’re doing it wrong. We will literally drive a van-full of boots to you for a personal boot-fitting, wherever you are. Your couch? Cool. Work, no problemo. Got a favorite park bench? Drop us a pin. We want you to feel comfortable trying on our boots, and pulling them off. We’ll bring a few sizes and styles of your choice, for you (and whoever else may be joining) to find the perfect pair, and answer all your boot-wearin’ questions with trusted expertise.</p>
-            <Button href="/book" className="landingPageButton">LET&apos;S PARTY</Button>
+            <Button href="/book" className="landingPageButton">LET'S GO</Button>
           </div>
         </div>
-          <div className="landingPageBox imageBG" style={{marginTop: "0", minWidth: "100%", backgroundImage: "url(https://alvies-test.imgix.net/gsmith_20220611_0019.jpg?ar=1%3A1&auto=compress%2Cformat&dm=1656514717&fit=crop&ixlib=php-3.1.0&w=1500"}}>
+          <div className="landingPageBox imageBG" style={{
+            marginTop: "0", 
+            minWidth: "100%",
+            backgroundImage: "url(https://alvies-test.imgix.net/gsmith_20220611_0019.jpg?ar=1%3A1&auto=compress%2Cformat&dm=1656514717&fit=crop&ixlib=php-3.1.0&w=1500"
+        }}>
             <div className="pblock" style={{textAlign: "left", alignSelf: "start"}}>
             <h4>THE REVIEWS ARE IN:</h4>
             <p>
@@ -44,16 +65,11 @@ const LandingPage = () => {
             <p>&quot;I highly recommend using Alvies Boot Party for any event including companies and friends&apos; gatherings. Thank you, Alvies!!&quot;</p>
             <p>- Stephanie Martin</p>
           </div>
-				
- 
           <div className="pblock" style={{textAlign: "right", alignSelf: "end", display: "inline-block"}}>
               <h4>CHOOSE YOUR BOOT PARTY</h4>
-              
-                
               <strong><a href="/book">Party of 1 (just you)</a></strong>
-              
               <p>
-              It's kinda like the Uber of boots, with a personalized boot fitter that knows 
+              It&apos;s kinda like the Uber of boots, with a personalized boot fitter that knows 
               everything there is to know about boots, fit, and a good experience. One-time $50 
               delivery fee.
               </p>
@@ -76,19 +92,11 @@ const LandingPage = () => {
               <p>
               What better way to celebrate with the folks who walk the walk with you? We can accommodate all sizes of companies — from mom &amp; pops and start-ups to inter-galactic tech companies.
               </p>
-					
-				  </div>
-
-
-        </div>
-				
-              
-        <div style={{width: "100%", backgroundColor: "aliceblue", paddingTop: "15px", paddingBottom: "15px", textAlign: "center"}}>
-          <Button href="/book" className="landingPageButton">SIGN ME UP</Button>
           </div>
-  
-
-        
+        </div>
+        <div style={{width: "100%", backgroundColor: "aliceblue", paddingTop: "15px", paddingBottom: "15px", textAlign: "center"}}>
+          <Button href="/book" className="landingPageButton">KICK IT OFF</Button>
+        </div>
       </>
     );
   };
