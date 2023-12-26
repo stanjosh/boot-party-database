@@ -7,16 +7,19 @@ const womenBootDataURL = "https://rickshaw-boots.myshopify.com/collections/women
 const menSizes = [8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 14, 15];
 const womenSizes = [5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12];
 
-const BootSelect = ({ handleCustomerInputChange, customerForm }) => {
+const BootSelect = ({ handleCustomerInputChange, customerForm, scrollBackTo }) => {
     const [bootData, setBootData] = useState([]);
     const [showBoots, setShowBoots] = useState(false);
     const [selectedBootSku, setSelectedBootSku] = useState(customerForm?.bootSku);
     const [selectedBootName, setSelectedBootName] = useState(customerForm?.bootName);
 
-    const [shoeWidth, setShoeWidth] = useState('');
-    const [shoeSize, setShoeSize] = useState('');
+    const [shoeWidth, setShoeWidth] = useState(customerForm?.shoeWidth);
+    const [shoeSize, setShoeSize] = useState();
+
+    console.log(customerForm);
 
     useEffect(() => {
+
         if (! showBoots || ! shoeSize && shoeWidth) return;
         const bootDataURL = shoeWidth === "B" ? womenBootDataURL : menBootDataURL;
         fetch(bootDataURL)
@@ -54,7 +57,7 @@ const BootSelect = ({ handleCustomerInputChange, customerForm }) => {
         setSelectedBootName(`${e.currentTarget.dataset.bootmodel} / ${e.currentTarget.dataset.bootname}`);
         customerForm.bootSku = e.currentTarget.dataset.bootsku;
         customerForm.bootName = e.currentTarget.dataset.bootname;
-        window.scrollTo(0, 0)
+        scrollBackTo();
         setShowBoots(false);
         
     }

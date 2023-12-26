@@ -43,7 +43,7 @@ const GuestEditForm = ({ guest, eventId, index }) => {
 
     return (
        
-        <Container key={guest._id} style={{backgroundColor: "aliceblue", padding: "2px", margin: "2px", borderRadius: "3px"}}>
+        <Container key={guest._id} style={{borderRadius: "3px", border: "2px solid aliceblue"}}>
 
         <CustomerForm 
             customerForm={ customerJoinForm } 
@@ -52,7 +52,7 @@ const GuestEditForm = ({ guest, eventId, index }) => {
             loading={ editGuestLoading } 
             error={ editGuestError } 
             formTitle={<h4 style={{fontSize: "2cqh", color: "var(--alviesDarkBlue"}}>guest {index}</h4>}
-            submitText={'edit'}
+            submitText={'save'}
             deleteId={guest._id}
         />   
             

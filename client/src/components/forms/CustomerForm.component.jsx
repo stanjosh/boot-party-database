@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Form, Button, Alert, Container } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
 import { EVENT_REMOVE_SIGNUP } from '../../util/mutations';
@@ -13,6 +13,9 @@ const CustomerForm = ({ customerForm, setCustomerFormData, handleSubmit, loading
         setCustomerFormData({ ...customerForm, [name]: value });
     }
 
+    const customerFormRef = useRef(null)
+
+    const scrollto = () => customerFormRef.current.scrollIntoView()    
 
     const handleRemoveGuest = async (e) => {
         e.preventDefault();
@@ -40,7 +43,7 @@ const CustomerForm = ({ customerForm, setCustomerFormData, handleSubmit, loading
 
 
   return (
-    <Form onSubmit={handleSubmit} >
+    <Form onSubmit={handleSubmit} ref={customerFormRef} >
         {formTitle || <h1 style={{fontSize: "5cqh" }}>Who are you?</h1>}
         <Form.Group controlId="formCustomerInfo" style={{marginRight: "15px", marginLeft: "15px", }} >
             <Form.Control
@@ -71,7 +74,7 @@ const CustomerForm = ({ customerForm, setCustomerFormData, handleSubmit, loading
             />
             </Form.Group>
         <Form.Group >
-            <BootSelect customerForm={customerForm} handleCustomerInputChange={handleCustomerInputChange} />
+            <BootSelect customerForm={customerForm} handleCustomerInputChange={handleCustomerInputChange} scrollBackTo={scrollto} />
         </Form.Group>
 
         

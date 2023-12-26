@@ -46,7 +46,6 @@ const typeDefs = gql`
   input UpdateEventInput {
     eventLocation: String
     eventTime: String
-    eventContact: String
     eventTitle: String 
     eventLeadEmployee: String
     eventLoadinTime: String
@@ -56,6 +55,7 @@ const typeDefs = gql`
     eventVan: Int
     eventTransferOrder: String
     eventHelpers: [String]
+    eventContact: CustomerInput
   }
 
   type Customer {
