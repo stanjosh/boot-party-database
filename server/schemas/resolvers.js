@@ -94,18 +94,15 @@ const resolvers = {
       return await Event.findOneAndUpdate({ _id: eventId }, { ...updateEventInput}, { new: true });
     },
 
-    eventAddSignup: async (parent, { eventId, customerInput }, context) => {
-      const customer = await Customer.create( customerInput );
-
+    eventAddSignup: async (parent, { eventId, customerId }, context) => {
       const event = await Event.findOneAndUpdate({ _id: eventId },
         {
           $push: {
-            eventSignups: customer._id
+            eventSignups: customerId
           },
                 
         });
         return event
-
         ;
     },
 

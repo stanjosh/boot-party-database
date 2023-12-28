@@ -1,25 +1,27 @@
 import { useRef } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
-import { EDIT_CUSTOMER } from '../../util/mutations';
+import { EDIT_CUSTOMER, EVENT_ADD_SIGNUP } from '../../util/mutations';
+
 import { BootSelect } from '.';
 import { useForm } from '../../util/hooks';
 
-const CustomerForm = ({ customer, formTitle, submitText, success }) => {
+const CustomerForm = ({ customer, joinPartyId, formTitle, submitText, success }) => {
     const [editCustomer, { loading, error }] = useMutation(EDIT_CUSTOMER);
+    const [addGuest, { loading: addGuestLoading, error: addGuestError }] = useMutation(EVENT_ADD_SIGNUP);
    
     
     
 
     const customerFormRef = useRef(null)
     const { formData, handleInputChange, handleSubmit } = useForm({
-            name: customer?.name || '',
-            email: customer?.email || '',
-            phone: customer?.phone || '',
-            bootName: customer?.bootName || '',
-            shoeWidth: customer?.shoeWidth || '',
-            shoeSize: customer?.shoeSize || '',
-            bootSku: customer?.bootSku || '',
+            name: customer?.name ?? '',
+            email: customer?.email ?? '',
+            phone: customer?.phone ?? '',
+            bootName: customer?.bootName ?? '',
+            shoeWidth: customer?.shoeWidth ?? '',
+            shoeSize: customer?.shoeSize ?? '',
+            bootSku: customer?.bootSku ?? '',
         },
         (formData) => writeCustomer(formData)
     );
@@ -27,6 +29,7 @@ const CustomerForm = ({ customer, formTitle, submitText, success }) => {
     const { name, email, phone, bootName, shoeWidth, shoeSize, bootSku } = formData;
 
     const writeCustomer = async (formData) => {
+        
         await editCustomer({
             variables: {
                 customerInput: { ...formData },           
@@ -36,8 +39,11 @@ const CustomerForm = ({ customer, formTitle, submitText, success }) => {
     
             console.log('Customer created: ', res.data);
             localStorage.setItem('customer', JSON.stringify(res.data.editCustomer));
-            success();
-          
+            if (joinPartyId) {
+                addGuestToParty(res.data.editCustomer._id);
+            } else {
+                success();
+            }
         })
         .catch((err) => {
             alert('Error creating customer:', err);
@@ -47,7 +53,23 @@ const CustomerForm = ({ customer, formTitle, submitText, success }) => {
     
     };
 
- 
+    const addGuestToParty = async (customerId) => {
+        await addGuest({
+            variables: {
+                eventId: joinPartyId,
+                customerId: customerId,
+            }
+        })
+        .then((res) => {
+            console.log('Joined party:', res.data);
+            localStorage.setItem('event', JSON.stringify(res.data.addSignup));
+            success();
+        })
+        .catch((err) => {
+            console.error('Error joining party:', err);
+        });
+    }
+
 
     const scrollto = () => customerFormRef.current.scrollIntoView()    
 
@@ -78,8 +100,8 @@ const CustomerForm = ({ customer, formTitle, submitText, success }) => {
 
   return (
     <Form onSubmit={handleSubmit} ref={customerFormRef} >
-        {formTitle || <h1 style={{fontSize: "5cqh" }}>Who are you?</h1>}
-        <Form.Group controlId="formCustomerInfo" style={{marginRight: "15px", marginLeft: "15px", }} >
+        {<h4 style={{color: "aliceblue", marginBottom: "15px", marginTop: "15px", fontSize: "3cqb" }}>{formTitle}</h4> || <h1 style={{fontSize: "5cqh" }}>Who are you?</h1>}
+        <Form.Group controlId="formCustomerInfo" >
             <Form.Control
                 type="text"
                 placeholder='name'
@@ -139,7 +161,7 @@ const CustomerForm = ({ customer, formTitle, submitText, success }) => {
             </Button> } */}
 
 
-        <Button type="submit" disabled={ loading } style={{
+        <Button type="submit" disabled={ loading || addGuestLoading } style={{
             flex: "0 1 40%",
             boxShadow: "2px 2px 3px black",
             borderRadius: "0 0 3px 0",
@@ -147,7 +169,7 @@ const CustomerForm = ({ customer, formTitle, submitText, success }) => {
         }}>
             {submitText || <h3 style={{fontSize : "2.5cqh", color: "aliceblue", marginBottom : "0"}}>LET'S GO</h3>}
         </Button>
-            {error && <Alert>Error updating customer</Alert>}
+            {error || addGuestError && <Alert>Error updating customer</Alert>}
         </Form.Group>
 
                 

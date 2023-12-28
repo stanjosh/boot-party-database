@@ -32,7 +32,7 @@ const CreateEventPage = () => {
           maxWidth: "780px", 
           marginBottom: "25px",
           borderRadius: "3px",
-          paddingTop: "25px",
+          padding: "15px",
         }}>
         {getCurrentStep()}
         </div>

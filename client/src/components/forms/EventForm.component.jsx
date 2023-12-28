@@ -6,23 +6,26 @@ import { useForm } from '../../util/hooks';
 import { useMutation } from '@apollo/client';
 import { CREATE_EVENT } from '../../util/mutations';
 
-const EventForm = ({ }) => {
+const EventForm = ({ eventData, formTitle, submitText, admin }) => {
     const [eventTime, setEventTime] = useState(new Date());
-    
+    console.log(eventData)
     const { formData, handleInputChange, handleSubmit } = useForm({
         eventTime: eventTime,
-        eventLocation: '',
-        eventTitle: '',
-        eventNotes: '',
+        eventLocation: eventData?.eventLocation ?? '',
+        eventTitle: eventData?.eventTitle ?? '',
+        eventNotes: eventData?.eventNotes ?? '',
+        eventLead: eventData?.eventLead ?? '',
+        eventHelpers: eventData?.eventHelpers ?? '',
+        eventDisplay: eventData?.eventDisplay ?? '',
       },
       (formData) => writeEvent(formData)
     );
  
-    const { eventLocation, eventTitle, eventNotes } = formData;
+    const { eventLocation, eventTitle, eventNotes, eventLead, eventHelpers, eventDisplay } = formData;
 
     const [createEvent, { loading, error }] = useMutation(CREATE_EVENT);
   
-
+    const today = new Date();
 
     const writeEvent = async (formData) => {
       await createEvent({
@@ -45,20 +48,13 @@ const EventForm = ({ }) => {
     };
 
   return (
-
-    <Form onSubmit={handleSubmit}>
-    <Form.Group controlId="formEventInfo" style={{marginRight: "15px", marginLeft: "15px", }}>
-      <Form.Group controlId="formEventInfo" style={{            
-        display: "flex", 
-        flexWrap: "nowrap", 
-        textAlign: "right", 
-        justifyContent: "center", 
-        alignContent: "center",
-        verticalAlign: "center",
-        width: "100%",
-        marginBottom: "15px",
-      }}>
-
+    <Form onSubmit={handleSubmit} >
+      <h4 style={{color: "aliceblue", marginBottom: "15px", fontSize: "3cqb" }}>event details</h4>
+      <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "15px"}}>
+      
+      
+      <Form.Group controlId="formEventAddress" style={{flex: "0 1 60%"}}>
+      {admin ? <Form.Label>address</Form.Label> : null}
       <Form.Control
         type="text"
         placeholder="Event Address"
@@ -66,11 +62,17 @@ const EventForm = ({ }) => {
         value={eventLocation}
         onChange={handleInputChange}
         required
-        style={{flex: "0 1 60%", marginRight: "15px"}}
+        
       />
+      </Form.Group>
+
+      <Form.Group controlId="formEventTime" style={{flex: "0 1"}}>
+      {admin ? <Form.Label>time</Form.Label> : null}
+      
       <DatePicker
         style={{flex: "0 1 60%", borderRadius: "3px"}}
         name='eventTime'
+        excludeDates={[today.setDate(today.getDate()), today.setDate(today.getDate() + 1)]}
         selected={eventTime}
         onChange={setEventTime}
         value={eventTime}
@@ -84,14 +86,22 @@ const EventForm = ({ }) => {
         required
       />
       </Form.Group>
+      </div>
+
+      <Form.Group controlId="formEventTitle" style={{marginBottom: "10px"}} >
+      {admin ? <Form.Label>event title</Form.Label> : null}
       <Form.Control
           type="text"
           placeholder="Title your event? (you don't have to)"
           name="eventTitle"
           value={eventTitle}
           onChange={handleInputChange}
-          style={{marginBottom: "15px"}}
       />
+      </Form.Group>
+
+      
+      <Form.Group controlId="formEventNotes" style={{marginBottom: "10px"}} >
+      {admin ? <Form.Label>notes</Form.Label> : null}
       <Form.Control
           as="textarea"
           rows={4}
@@ -100,30 +110,59 @@ const EventForm = ({ }) => {
           value={eventNotes}
           onChange={handleInputChange}
       />
-     
-    </Form.Group>
-    <Form.Group controlId="formSubmit" style={{
-            display: "flex",
-            justifyContent: "flex-end",
-            width: "100%", 
-            height: "100%",
-            position: "relative",
-            bottom: "0",
-            left: "0",
-            right: "0",
-
-        }}>
-      <Button type="submit" disabled={loading} style={{
-          flex: "0 1 40%",
-          boxShadow: "2px 2px 3px black",
-          borderRadius: "0 0 3px 0",
-          margin: "8px",
-      }}>
-        <h3 style={{fontSize : "2.5cqh", color: "aliceblue", marginBottom : "0"}}>SHARE IT</h3>
-      </Button>
-      
-      {error && <Alert>Error creating event</Alert>}
       </Form.Group>
+
+
+      
+      <div hidden={!admin} style={{marginBottom: "15px"}}>
+      <h4 style={{color: "aliceblue", marginBottom: "15px", marginTop: "15px", fontSize: "3cqb" }}>alvies details</h4>
+      <Form.Group controlId="formEventLead"  style={{marginBottom: "10px"}}>
+      <Form.Label>lead</Form.Label>
+      <Form.Control
+          type="text"
+          placeholder=""
+          name="eventLead"
+          value={eventLead}
+          onChange={handleInputChange}
+      />
+      </Form.Group>
+      <Form.Group controlId="formEventHelpers" style={{marginBottom: "10px"}} >
+      <Form.Label>helpers</Form.Label>
+      <Form.Control
+          as="textarea"
+          rows={4}
+          placeholder=""
+          name="eventHelpers"
+          value={eventHelpers}
+          onChange={handleInputChange}
+      />
+      </Form.Group>
+      <Form.Group controlId="formEventDisplay" style={{marginBottom: "10px"}} >
+      {admin ? <Form.Label>display</Form.Label> : null}
+      <Form.Control
+          as="textarea"
+          rows={4}
+          placeholder=""
+          name="eventDisplay"
+          value={eventDisplay}
+          onChange={handleInputChange}
+      />
+      </Form.Group>
+      </div>
+
+    <Form.Group controlId="formSubmit" style={{width: "100%", marginRight: "15px", alignItems:"flex-end"}}>
+        <Button type="submit" disabled={ loading } style={{
+            flex: "0 1 40%",
+            boxShadow: "2px 2px 3px black",
+            borderRadius: "0 0 3px 0",
+            margin: "8px",
+            justifySelf: "flex-end",
+        }}>
+            {submitText || <h3 style={{fontSize : "2.5cqh", color: "aliceblue", marginBottom : "0"}}>LET'S GO</h3>}
+        </Button>
+    </Form.Group>
+      {error && <Alert>Error updating event</Alert>}
+      
     </Form>
 
   );

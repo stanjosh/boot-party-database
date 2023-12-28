@@ -141,8 +141,8 @@ mutation UpdateEvent($eventId: ID!, $updateEventInput: UpdateEventInput) {
 `;
 
 export const EVENT_ADD_SIGNUP = gql`
-mutation EventAddSignup($eventId: ID!, $customerInput: CustomerInput!) {
-  eventAddSignup(eventId: $eventId, customerInput: $customerInput) {
+mutation EventAddSignup($eventId: ID!, $customerId: ID!) {
+  eventAddSignup(eventId: $eventId, customerId: $customerId) {
     _id
     eventLocation
     eventTime

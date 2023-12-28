@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Form, Image, Container, Alert, Button } from 'react-bootstrap';
+import { useShopifyBoots } from '../../../util/hooks';
 
 const menBootDataURL = "https://rickshaw-boots.myshopify.com/collections/mens-boots/products.json";
 const womenBootDataURL = "https://rickshaw-boots.myshopify.com/collections/womens-boots/products.json";
@@ -7,47 +8,31 @@ const womenBootDataURL = "https://rickshaw-boots.myshopify.com/collections/women
 const menSizes = [8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 14, 15];
 const womenSizes = [5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12];
 
-const BootSelect = ({ handleCustomerInputChange, customerData, scrollBackTo }) => {
-    const [bootData, setBootData] = useState([]);
+const BootSelect = ({ customerData, scrollBackTo }) => {
+    
     const [showBoots, setShowBoots] = useState(false);
     const [selectedBootSku, setSelectedBootSku] = useState(customerData?.bootSku);
     const [selectedBootName, setSelectedBootName] = useState(customerData?.bootName);
 
-    const [shoeWidth, setShoeWidth] = useState(customerData?.shoeWidth);
-    const [shoeSize, setShoeSize] = useState();
-
-
+    const [shoeWidth, setShoeWidth] = useState('');
+    const [shoeSize, setShoeSize] = useState('');
+    const { bootData } = useShopifyBoots({shoeSize, shoeWidth});
 
     useEffect(() => {
+        if (shoeSize && shoeWidth) {
+            
+            setShowBoots(true);
+        }
+    }, [shoeSize, shoeWidth]);
 
-        if (! showBoots || ! shoeSize && shoeWidth) return;
-        const bootDataURL = shoeWidth === "B" ? womenBootDataURL : menBootDataURL;
-        fetch(bootDataURL)
-            .then((response) => response.json())
-            .then((data) => {
-                const filteredBoots = []
-                data.products?.filter((style) => 
-                    style.variants.forEach((variant) => {
-                        if (variant.available === true && variant.option1 === shoeSize && variant.option2 === shoeWidth ) {
-                            variant.alt = style.title
-                            filteredBoots.push(variant)
-                        }
-                    }))
-                setBootData(filteredBoots);
-                console.log(filteredBoots);
-            });
-    }, [handleCustomerInputChange, customerData, shoeSize, shoeWidth, showBoots]);
-
-    const handleSelectSize = (e) => {
+    const handleInputChange = (e) => {
         const { name, value } = e.target;
         if (name === "shoeWidth") {
             setShoeWidth(value);
-        } else {
+            setShoeSize('');
+        } else if (name === "shoeSize") {
             setShoeSize(value);
-            setShowBoots(true);
-        } 
-
-
+        }
     }
 
     const handleSelectBoot = (e) => {
@@ -80,7 +65,7 @@ const BootSelect = ({ handleCustomerInputChange, customerData, scrollBackTo }) =
                 
                 aria-label="Boot Width"
                 placeholder="Boot Width"
-                onChange={handleSelectSize}
+                onChange={handleInputChange}
                 name="shoeWidth"
                 value={shoeWidth}
                 style={{margin: "15px", maxWidth: "150px" }}
@@ -95,7 +80,7 @@ const BootSelect = ({ handleCustomerInputChange, customerData, scrollBackTo }) =
                 id="shoeSize" 
                 aria-label="Boot Sizes"
                 placeholder="Boot Sizes"
-                onChange={handleSelectSize}
+                onChange={handleInputChange}
                 name="shoeSize"
                 value={shoeSize}
                 style={{margin: "15px", maxWidth: "150px"}}
@@ -111,6 +96,7 @@ const BootSelect = ({ handleCustomerInputChange, customerData, scrollBackTo }) =
         <Form.Group style={{display: "flex", flexWrap: "nowrap", width: "100%", alignItems: "center", justifyContent: "end", padding: "15px"}} >
             <Form.Control type="hidden" name="bootSku" value={selectedBootSku} />
             <Form.Control type="hidden" name="bootName" value={selectedBootName} />
+
             <Form.Text style={{
                 fontSize: "2cqh", 
                 textAlign: "center", 
@@ -131,7 +117,7 @@ const BootSelect = ({ handleCustomerInputChange, customerData, scrollBackTo }) =
     <>
     <div style={{position: "static", bottom: "0", zIndex: "1"}}>
     <Alert dismissible>
-        { bootData.length > 0 && shoeSize && shoeWidth 
+        { bootData?.length > 0 && shoeSize && shoeWidth 
             ? <> These are the styles we have in your size. </>
             : <> Looks like we don't have anything in that size. (Try a half size down!) </>
         }
@@ -140,7 +126,7 @@ const BootSelect = ({ handleCustomerInputChange, customerData, scrollBackTo }) =
 
     <Container fluid style={{display: "flex", flexWrap: "wrap", flexDirection: "row"}}>
         
-      {bootData.map((boot) => (
+      {bootData?.map((boot) => (
 
 
         <Card 

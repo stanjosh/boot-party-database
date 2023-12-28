@@ -106,7 +106,7 @@ const typeDefs = gql`
   type Mutation {
     createEvent(eventInput: EventInput): Event
     updateEvent(eventId: ID!, updateEventInput: UpdateEventInput  ): Event
-    eventAddSignup(eventId: ID!, customerInput: CustomerInput!): Event
+    eventAddSignup(eventId: ID!, customerId: ID!): Event
     eventRemoveSignup(eventId: ID!, customerId: ID!): Event
     editCustomer(customerInput: CustomerInput!): Customer
     createCustomer(customerInput: CustomerInput): Customer
