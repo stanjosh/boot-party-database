@@ -51,6 +51,7 @@ footer {
 }
 
 footer a {
+    display: block;
     color: aliceblue;
     text-decoration: none;
     font-size: 3.5cqh;
@@ -211,6 +212,8 @@ h4 {
     background-repeat: no-repeat;
 
 }
+
+
 
 @media screen and (max-width: 1200px) {
 

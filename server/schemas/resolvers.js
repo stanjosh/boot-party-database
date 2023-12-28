@@ -1,5 +1,6 @@
 const { AuthenticationError } = require('apollo-server-express');
 const { Event, Customer } = require('../models');
+const { Mongoose } = require('mongoose');
 
 
 
@@ -93,18 +94,15 @@ const resolvers = {
       return await Event.findOneAndUpdate({ _id: eventId }, { ...updateEventInput}, { new: true });
     },
 
-    eventAddSignup: async (parent, { eventId, customerInput }, context) => {
-      const customer = await Customer.create( customerInput );
-
+    eventAddSignup: async (parent, { eventId, customerId }, context) => {
       const event = await Event.findOneAndUpdate({ _id: eventId },
         {
           $push: {
-            eventSignups: customer._id
+            eventSignups: customerId
           },
                 
         });
         return event
-
         ;
     },
 
@@ -119,8 +117,15 @@ const resolvers = {
         return event;
     },
 
-    editCustomer: async (parent, { customerId, customerInput }, context) => {
-      const customer = await Customer.findOneAndUpdate({ _id: customerId }, { ...customerInput }, { new: true });
+    editCustomer: async (parent, { customerInput }, context) => {
+      const customer = await Customer.findOneAndUpdate(
+        customerInput._id ? { _id: customerInput._id } : null,
+        { 
+          ...customerInput 
+        },
+        { 
+          new: true, upsert: true
+        });
       return customer;
     }
   }

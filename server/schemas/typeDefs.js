@@ -46,7 +46,6 @@ const typeDefs = gql`
   input UpdateEventInput {
     eventLocation: String
     eventTime: String
-    eventContact: String
     eventTitle: String 
     eventLeadEmployee: String
     eventLoadinTime: String
@@ -56,6 +55,7 @@ const typeDefs = gql`
     eventVan: Int
     eventTransferOrder: String
     eventHelpers: [String]
+    eventContact: CustomerInput
   }
 
   type Customer {
@@ -106,9 +106,9 @@ const typeDefs = gql`
   type Mutation {
     createEvent(eventInput: EventInput): Event
     updateEvent(eventId: ID!, updateEventInput: UpdateEventInput  ): Event
-    eventAddSignup(eventId: ID!, customerInput: CustomerInput!): Event
+    eventAddSignup(eventId: ID!, customerId: ID!): Event
     eventRemoveSignup(eventId: ID!, customerId: ID!): Event
-    editCustomer(customerId: ID!, customerInput: CustomerInput!): Customer
+    editCustomer(customerInput: CustomerInput!): Customer
     createCustomer(customerInput: CustomerInput): Customer
     
   }
