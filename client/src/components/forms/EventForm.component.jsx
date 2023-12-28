@@ -2,22 +2,47 @@ import { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import { useForm } from '../../util/hooks';
+import { useMutation } from '@apollo/client';
+import { CREATE_EVENT } from '../../util/mutations';
 
-
-
-const EventForm = ({ eventForm, setEventFormData, handleSubmit, loading, error }) => {
+const EventForm = ({ }) => {
     const [eventTime, setEventTime] = useState(new Date());
-
-      
-
-    const handleEventInputChange = (e) => {
-      const { name, value } = e.target;
-      setEventFormData({ ...eventForm, [name]: value , eventTime: eventTime});
-      console.log(eventForm);
-
-    }
-
+    
+    const { formData, handleInputChange, handleSubmit } = useForm({
+        eventTime: eventTime,
+        eventLocation: '',
+        eventTitle: '',
+        eventNotes: '',
+      },
+      (formData) => writeEvent(formData)
+    );
  
+    const { eventLocation, eventTitle, eventNotes } = formData;
+
+    const [createEvent, { loading, error }] = useMutation(CREATE_EVENT);
+  
+
+
+    const writeEvent = async (formData) => {
+      await createEvent({
+          variables: {
+              eventInput: { ...formData, 
+                eventContact: JSON.parse(localStorage.getItem('customer'))._id,
+              },
+  
+          }
+      })
+      .then((res) => {
+        console.log('Event created:', res.data);
+        localStorage.setItem('event', JSON.stringify(res.data.createEvent));
+        window.location.assign(`/party/${JSON.parse(localStorage.getItem('event'))._id}`);
+      })
+      .catch((err) => {
+        console.error('Error creating event:', err);
+      });
+  
+    };
 
   return (
 
@@ -38,8 +63,8 @@ const EventForm = ({ eventForm, setEventFormData, handleSubmit, loading, error }
         type="text"
         placeholder="Event Address"
         name="eventLocation"
-        value={eventForm.eventLocation}
-        onChange={handleEventInputChange}
+        value={eventLocation}
+        onChange={handleInputChange}
         required
         style={{flex: "0 1 60%", marginRight: "15px"}}
       />
@@ -63,8 +88,8 @@ const EventForm = ({ eventForm, setEventFormData, handleSubmit, loading, error }
           type="text"
           placeholder="Title your event? (you don't have to)"
           name="eventTitle"
-          value={eventForm.eventTitle}
-          onChange={handleEventInputChange}
+          value={eventTitle}
+          onChange={handleInputChange}
           style={{marginBottom: "15px"}}
       />
       <Form.Control
@@ -72,8 +97,8 @@ const EventForm = ({ eventForm, setEventFormData, handleSubmit, loading, error }
           rows={4}
           placeholder="Notes for us? (don't worry about it)"
           name="eventNotes"
-          value={eventForm.eventNotes}
-          onChange={handleEventInputChange}
+          value={eventNotes}
+          onChange={handleInputChange}
       />
      
     </Form.Group>

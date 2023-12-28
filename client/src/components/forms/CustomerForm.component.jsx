@@ -1,44 +1,78 @@
-import { useState, useRef } from 'react';
-import { Form, Button, Alert, Container } from 'react-bootstrap';
+import { useRef } from 'react';
+import { Form, Button, Alert } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
-import { EVENT_REMOVE_SIGNUP } from '../../util/mutations';
-import { BootSelect } from './';
+import { EDIT_CUSTOMER } from '../../util/mutations';
+import { BootSelect } from '.';
+import { useForm } from '../../util/hooks';
 
-
-const CustomerForm = ({ customerForm, setCustomerFormData, handleSubmit, loading, error, formTitle, submitText, deleteId }) => {
-    const [removeGuest, { loading: removeGuestLoading, error: removeGuestError }] = useMutation(EVENT_REMOVE_SIGNUP);
-
-    const handleCustomerInputChange = (e) => {
-        const { name, value } = e.target;
-        setCustomerFormData({ ...customerForm, [name]: value });
-    }
+const CustomerForm = ({ customer, formTitle, submitText, success }) => {
+    const [editCustomer, { loading, error }] = useMutation(EDIT_CUSTOMER);
+   
+    
+    
 
     const customerFormRef = useRef(null)
+    const { formData, handleInputChange, handleSubmit } = useForm({
+            name: customer?.name || '',
+            email: customer?.email || '',
+            phone: customer?.phone || '',
+            bootName: customer?.bootName || '',
+            shoeWidth: customer?.shoeWidth || '',
+            shoeSize: customer?.shoeSize || '',
+            bootSku: customer?.bootSku || '',
+        },
+        (formData) => writeCustomer(formData)
+    );
+    
+    const { name, email, phone, bootName, shoeWidth, shoeSize, bootSku } = formData;
 
-    const scrollto = () => customerFormRef.current.scrollIntoView()    
-
-    const handleRemoveGuest = async (e) => {
-        e.preventDefault();
-        console.log('CLICKED DELETE ' + e.target.dataset.customerid);
-        const event = await removeGuest({
+    const writeCustomer = async (formData) => {
+        await editCustomer({
             variables: {
-                eventId: eventId,
-                customerId: e.target.dataset.customerid,           
-               
+                customerInput: { ...formData },           
             }
         })
         .then((res) => {
-          // Handle success
-          console.log('Joined party:', res.data);
-          setJoinFormData({ name: '', email: '', phone: '' });
-          setSuccess(true);
+    
+            console.log('Customer created: ', res.data);
+            localStorage.setItem('customer', JSON.stringify(res.data.editCustomer));
+            success();
           
-          })
-          .catch((err) => {
-          // Handle error
-          console.error('Error joining party:', err);
-          });
-        }
+        })
+        .catch((err) => {
+            alert('Error creating customer:', err);
+            console.error('Error creating customer:', err);
+         
+        });
+    
+    };
+
+ 
+
+    const scrollto = () => customerFormRef.current.scrollIntoView()    
+
+    // const handleRemoveGuest = async (e) => {
+    //     e.preventDefault();
+    //     console.log('CLICKED DELETE ' + e.target.dataset.customerid);
+    //     const event = await removeGuest({
+    //         variables: {
+    //             eventId: eventId,
+    //             customerId: e.target.dataset.customerid,           
+               
+    //         }
+    //     })
+    //     .then((res) => {
+    //       // Handle success
+    //       console.log('Joined party:', res.data);
+    //       setJoinFormData({ name: '', email: '', phone: '' });
+    //       setSuccess(true);
+          
+    //       })
+    //       .catch((err) => {
+    //       // Handle error
+    //       console.error('Error joining party:', err);
+    //       });
+    //     }
 
 
 
@@ -50,8 +84,8 @@ const CustomerForm = ({ customerForm, setCustomerFormData, handleSubmit, loading
                 type="text"
                 placeholder='name'
                 name="name"
-                value={customerForm.name}
-                onChange={handleCustomerInputChange}
+                value={name}
+                onChange={handleInputChange}
                 required
                 className='mb-3'
             />
@@ -59,8 +93,8 @@ const CustomerForm = ({ customerForm, setCustomerFormData, handleSubmit, loading
                 type="text"
                 placeholder='email'
                 name="email"
-                value={customerForm.email}
-                onChange={handleCustomerInputChange}
+                value={email}
+                onChange={handleInputChange}
                 required
                 className='mb-3'
             />
@@ -68,13 +102,13 @@ const CustomerForm = ({ customerForm, setCustomerFormData, handleSubmit, loading
                 type="text"
                 placeholder='phone (optional)'
                 name="phone"
-                value={customerForm.phone}
-                onChange={handleCustomerInputChange} 
+                value={phone}
+                onChange={handleInputChange} 
                 className='mb-3'
             />
             </Form.Group>
         <Form.Group >
-            <BootSelect customerForm={customerForm} handleCustomerInputChange={handleCustomerInputChange} scrollBackTo={scrollto} />
+            <BootSelect customerData={formData} handleInputChange={handleInputChange} scrollBackTo={scrollto} />
         </Form.Group>
 
         
@@ -91,7 +125,7 @@ const CustomerForm = ({ customerForm, setCustomerFormData, handleSubmit, loading
 
         }}>
 
-        {deleteId && <Button 
+        {/* {deleteId && <Button 
                 type="button" 
                 data-customerid={deleteId} 
                 onClick={handleRemoveGuest}
@@ -102,10 +136,10 @@ const CustomerForm = ({ customerForm, setCustomerFormData, handleSubmit, loading
                     margin: "8px",
             }}>
                 delete
-            </Button> }
+            </Button> } */}
 
 
-        <Button type="submit" disabled={loading} style={{
+        <Button type="submit" disabled={ loading } style={{
             flex: "0 1 40%",
             boxShadow: "2px 2px 3px black",
             borderRadius: "0 0 3px 0",
@@ -113,7 +147,7 @@ const CustomerForm = ({ customerForm, setCustomerFormData, handleSubmit, loading
         }}>
             {submitText || <h3 style={{fontSize : "2.5cqh", color: "aliceblue", marginBottom : "0"}}>LET'S GO</h3>}
         </Button>
-            {error && <Alert>Error creating customer</Alert>}
+            {error && <Alert>Error updating customer</Alert>}
         </Form.Group>
 
                 

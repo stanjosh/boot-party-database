@@ -207,8 +207,8 @@ mutation EventRemoveSignup($eventId: ID!, $customerId: ID!) {
 `;
 
 export const EDIT_CUSTOMER = gql`
-mutation editCustomer($customerId: ID!, $customerInput: CustomerInput!) {
-  editCustomer(customerId: $customerId, customerInput: $customerInput) {
+mutation editCustomer( $customerInput: CustomerInput!) {
+  editCustomer( customerInput: $customerInput) {
     _id
     name
     email

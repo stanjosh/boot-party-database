@@ -7,16 +7,16 @@ const womenBootDataURL = "https://rickshaw-boots.myshopify.com/collections/women
 const menSizes = [8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 14, 15];
 const womenSizes = [5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12];
 
-const BootSelect = ({ handleCustomerInputChange, customerForm, scrollBackTo }) => {
+const BootSelect = ({ handleCustomerInputChange, customerData, scrollBackTo }) => {
     const [bootData, setBootData] = useState([]);
     const [showBoots, setShowBoots] = useState(false);
-    const [selectedBootSku, setSelectedBootSku] = useState(customerForm?.bootSku);
-    const [selectedBootName, setSelectedBootName] = useState(customerForm?.bootName);
+    const [selectedBootSku, setSelectedBootSku] = useState(customerData?.bootSku);
+    const [selectedBootName, setSelectedBootName] = useState(customerData?.bootName);
 
-    const [shoeWidth, setShoeWidth] = useState(customerForm?.shoeWidth);
+    const [shoeWidth, setShoeWidth] = useState(customerData?.shoeWidth);
     const [shoeSize, setShoeSize] = useState();
 
-    console.log(customerForm);
+
 
     useEffect(() => {
 
@@ -36,7 +36,7 @@ const BootSelect = ({ handleCustomerInputChange, customerForm, scrollBackTo }) =
                 setBootData(filteredBoots);
                 console.log(filteredBoots);
             });
-    }, [handleCustomerInputChange, customerForm, shoeSize, shoeWidth]);
+    }, [handleCustomerInputChange, customerData, shoeSize, shoeWidth, showBoots]);
 
     const handleSelectSize = (e) => {
         const { name, value } = e.target;
@@ -51,12 +51,9 @@ const BootSelect = ({ handleCustomerInputChange, customerForm, scrollBackTo }) =
     }
 
     const handleSelectBoot = (e) => {
-        console.log(e.currentTarget);
-        
+      
         setSelectedBootSku(e.currentTarget.dataset.bootsku);
         setSelectedBootName(`${e.currentTarget.dataset.bootmodel} / ${e.currentTarget.dataset.bootname}`);
-        customerForm.bootSku = e.currentTarget.dataset.bootsku;
-        customerForm.bootName = e.currentTarget.dataset.bootname;
         scrollBackTo();
         setShowBoots(false);
         
@@ -110,10 +107,10 @@ const BootSelect = ({ handleCustomerInputChange, customerForm, scrollBackTo }) =
             </Form.Select>
         </Form.Group>
     
-    {customerForm.bootSku &&
+    {(selectedBootName || customerData?.selectedBootName) && 
         <Form.Group style={{display: "flex", flexWrap: "nowrap", width: "100%", alignItems: "center", justifyContent: "end", padding: "15px"}} >
-            <Form.Control type="hidden" name="bootSku" value={customerForm.bootSku} />
-            <Form.Control type="hidden" name="bootName" value={customerForm.bootName} />
+            <Form.Control type="hidden" name="bootSku" value={selectedBootSku} />
+            <Form.Control type="hidden" name="bootName" value={selectedBootName} />
             <Form.Text style={{
                 fontSize: "2cqh", 
                 textAlign: "center", 
@@ -191,7 +188,7 @@ const BootSelect = ({ handleCustomerInputChange, customerForm, scrollBackTo }) =
     </Container>
     </> 
     : null}
-    {console.log(selectedBootSku, selectedBootName)}
+  
     </>
   );
 };
