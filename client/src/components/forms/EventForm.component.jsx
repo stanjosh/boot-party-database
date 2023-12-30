@@ -7,7 +7,7 @@ import { useMutation } from '@apollo/client';
 import { CREATE_EVENT } from '../../util/mutations';
 
 const EventForm = ({ eventData, formTitle, submitText, admin }) => {
-    const [eventTime, setEventTime] = useState(new Date());
+    const [eventTime, setEventTime] = useState(new Date().setDate(parseInt(eventData?.eventTime)) || new Date());
     console.log(eventData)
     const { formData, handleInputChange, handleSubmit } = useForm({
         eventTime: eventTime,
