@@ -14,14 +14,14 @@ const EventForm = ({ eventData, formTitle, submitText, admin }) => {
         eventLocation: eventData?.eventLocation ?? '',
         eventTitle: eventData?.eventTitle ?? '',
         eventNotes: eventData?.eventNotes ?? '',
-        eventLead: eventData?.eventLead ?? '',
+        eventLeadEmployee: eventData?.eventLeadEmployee ?? '',
         eventHelpers: eventData?.eventHelpers ?? '',
         eventDisplay: eventData?.eventDisplay ?? '',
       },
       (formData) => writeEvent(formData)
     );
  
-    const { eventLocation, eventTitle, eventNotes, eventLead, eventHelpers, eventDisplay } = formData;
+    const { eventLocation, eventTitle, eventNotes, eventLeadEmployee, eventHelpers, eventDisplay } = formData;
 
     const [createEvent, { loading, error }] = useMutation(CREATE_EVENT);
   
@@ -116,13 +116,13 @@ const EventForm = ({ eventData, formTitle, submitText, admin }) => {
       
       <div hidden={!admin} style={{marginBottom: "15px"}}>
       <h4 style={{color: "aliceblue", marginBottom: "15px", marginTop: "15px", fontSize: "3cqb" }}>alvies details</h4>
-      <Form.Group controlId="formEventLead"  style={{marginBottom: "10px"}}>
+      <Form.Group controlId="formEventLeadEmployee"  style={{marginBottom: "10px"}}>
       <Form.Label>lead</Form.Label>
       <Form.Control
           type="text"
           placeholder=""
-          name="eventLead"
-          value={eventLead}
+          name="eventLeadEmployee"
+          value={eventLeadEmployee}
           onChange={handleInputChange}
       />
       </Form.Group>
