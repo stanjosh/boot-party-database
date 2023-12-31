@@ -67,13 +67,18 @@ main {
     text-align: center;
     min-height: 100cqh;
     padding: 10px;
-    max-width: 500px;
+    
     width: 100%;
+    max-width: 500px;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     background-attachment: fixed;
-;
+
+}
+
+.landingPageBox h3 {
+    font-size: 5cqb;
 }
 
 
@@ -105,9 +110,6 @@ h4 {
     width: 100%;
 }
 
-.landingPageBox h3 {
-    font-size: 5cqb;
-}
 
 
 
@@ -174,8 +176,8 @@ h4 {
     text-align: right;
     padding: 2cqb;
     width: 100%;
-    max-width: 50cqw;
-    margin: 100px 10px 0px 0px;
+    max-width: 40cqw;
+    margin: 100px 100px 10px 100px;
     border-radius: 3px;
 }
 
