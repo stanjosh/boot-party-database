@@ -70,6 +70,8 @@ mutation CreateCustomer($customerInput: CustomerInput) {
     phone
     bootName
     bootSku
+    shoeWidth
+    shoeSize
   }
 }
 `;
@@ -86,6 +88,8 @@ mutation CreateEvent($eventInput: EventInput) {
       phone
       bootName
       bootSku
+      shoeWidth
+      shoeSize
     }
     eventTitle
     eventLeadEmployee
@@ -97,6 +101,8 @@ mutation CreateEvent($eventInput: EventInput) {
       phone
       bootName
       bootSku
+      shoeWidth
+      shoeSize
     }
     eventNotes
     eventPartyType
@@ -119,6 +125,8 @@ mutation UpdateEvent($eventId: ID!, $updateEventInput: UpdateEventInput) {
       phone
       bootName
       bootSku
+      shoeWidth
+      shoeSize
     }
     eventTitle
     eventLeadEmployee
@@ -130,6 +138,8 @@ mutation UpdateEvent($eventId: ID!, $updateEventInput: UpdateEventInput) {
       phone
       bootName
       bootSku
+      shoeWidth
+      shoeSize
     }
     eventNotes
     eventPartyType
@@ -152,6 +162,8 @@ mutation EventAddSignup($eventId: ID!, $customerId: ID!) {
       phone
       bootName
       bootSku
+      shoeWidth
+      shoeSize
     }
     eventTitle
     eventLeadEmployee
@@ -163,6 +175,8 @@ mutation EventAddSignup($eventId: ID!, $customerId: ID!) {
       phone
       bootName
       bootSku
+      shoeWidth
+      shoeSize
     }
     eventNotes
     eventPartyType
@@ -185,6 +199,8 @@ mutation EventRemoveSignup($eventId: ID!, $customerId: ID!) {
       phone
       bootName
       bootSku
+      shoeWidth
+      shoeSize
     }
     eventTitle
     eventLeadEmployee
@@ -196,6 +212,8 @@ mutation EventRemoveSignup($eventId: ID!, $customerId: ID!) {
       phone
       bootName
       bootSku
+      shoeWidth
+      shoeSize
     }
     eventNotes
     eventPartyType
@@ -215,6 +233,8 @@ mutation editCustomer( $customerInput: CustomerInput!) {
     phone
     bootName
     bootSku
+    shoeWidth
+    shoeSize
   }
 }
 `;
