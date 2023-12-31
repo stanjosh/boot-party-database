@@ -23,6 +23,7 @@ body {
     overflow-x: hidden;
     scroll-behavior: smooth;
 }
+
 header {
     background-color: #333;
     color: #fff;
@@ -32,7 +33,7 @@ header {
 
 ul {
     list-style: none;
-    padding: 0;
+
 }
 li {
     display: flex;
@@ -44,31 +45,7 @@ li {
 
 
 
-footer {
-    background-color: var(--alviesDarkBlue);
-    font-family: 'unpretentious', sans-serif;
-    color: aliceblue;
-}
 
-footer a {
-    display: block;
-    color: aliceblue;
-    text-decoration: none;
-    padding: 10px;
-    font-size: 2.5cqh;
-
-}
-
-
-
-footer a:hover {
-    color: var(--alviesBlue);
-}
-
-footer li {
-    justify-content: right;
-    list-style: none;
-}
 
 
 main {
@@ -227,6 +204,51 @@ h4 {
 
 
 
+
+.footerContainer {
+    display: block;
+    background-color: var(--alviesDarkBlue);
+    font-family: 'unpretentious', sans-serif;
+    color: aliceblue;
+    min-height: max-content;
+    
+}
+
+footer a {
+    display: block;
+    color: aliceblue;
+    text-decoration: none;
+
+    font-size: 2.5cqh;
+
+}
+
+footer ul {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+}
+
+footer a:hover {
+    color: var(--alviesBlue);
+}
+
+footer li {
+    list-style: none;
+    padding: 10px;
+    justify-content: flex-end;
+}
+
+footer .socials {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    flex: 1 0 ;
+}
+
 @media screen and (max-width: 1200px) {
 
     .smallHide {
@@ -240,6 +262,12 @@ h4 {
 }
 
 @media screen and (max-width: 980px) {
+    footer ul {
+        flex-direction: column;
+        padding: auto;
+        overflow: scroll;
+    }
+
 
     .pblock {
         text-align: center;
