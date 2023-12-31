@@ -8,12 +8,12 @@ const customerSchema = new Schema({
         required: true,
         trim: true
     },
-    email: {
+    phone : {
         type: String,
-        required: true,
+        required: false,
         trim: true
     },
-    phone : {
+    email : {
         type: String,
         required: false,
         trim: true

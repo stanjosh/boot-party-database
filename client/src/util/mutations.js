@@ -2,29 +2,21 @@ import { gql } from '@apollo/client';
 
 
 export const SAVE_USER = gql`
-mutation SaveUser($username: String!, $email: String!, $password: String!) {
+mutation SaveUser($username: String!, $email: String!, $password: String!, $customerProfile: CustomerInput!) {
   saveUser(username: $username, email: $email, password: $password) {
     user {
-      inventories {
-        products {
-          _id
-          UPC
-          brand
-          price
-          description
-          name
-          image
-          link
-          category
-          
-        }
-        priceTotal
-        inventoryName
-        _id
-      }
-      email
       _id
       username
+      email
+      customerProfile {
+        _id
+        name
+        phone
+        shoeSize
+        shoeWidth
+        bootName
+        bootSku
+      }
     }
     token
   }
@@ -38,22 +30,14 @@ export const LOGIN_USER = gql`
       _id
       username
       email
-      inventories {
+      customerProfile {
         _id
-        inventoryName
-        priceTotal
-        products {
-          _id
-          UPC
-          brand
-          price
-          description
-          name
-          image
-          link
-          category
-          
-        }
+        name
+        phone
+        shoeSize
+        shoeWidth
+        bootName
+        bootSku
       }
     }
     token
@@ -64,14 +48,20 @@ export const LOGIN_USER = gql`
 export const CREATE_CUSTOMER = gql`
 mutation CreateCustomer($customerInput: CustomerInput) {
   createCustomer(customerInput: $customerInput) {
-    _id
-    name
-    email
-    phone
-    bootName
-    bootSku
-    shoeWidth
-    shoeSize
+    user {
+      _id
+      username
+      email
+      customerProfile {
+        _id
+        name
+        phone
+        shoeSize
+        shoeWidth
+        bootName
+        bootSku
+      }
+    }
   }
 }
 `;

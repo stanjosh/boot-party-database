@@ -187,11 +187,15 @@ h4 {
 
 }
 
+.modal-content {
+    border-radius: 5px;
+}
+
 .formButtom {
     width: 100%;
     box-shadow: 2px 2px 3px black;
-    border-radius: 0 0 3px 0;
-    margin: 8px;
+    border-radius: 3px;
+
 }
 
 .imageBG {

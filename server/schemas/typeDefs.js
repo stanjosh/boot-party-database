@@ -3,10 +3,9 @@ const { gql } = require('apollo-server-express');
 const typeDefs = gql`
   type me {
     _id: ID!
-    username: String!
     email: String!
     password: String!
-   
+    customerProfile: Customer!
   }
 
   type Event {
@@ -61,7 +60,6 @@ const typeDefs = gql`
   type Customer {
     _id: ID!
     name: String!
-    email: String!
     phone: String
     bootSku: String
     bootName: String
@@ -70,8 +68,7 @@ const typeDefs = gql`
   }
 
   input CustomerInput {
-    name: String!
-    email: String!
+    name: String
     phone: String
     bootSku: String
     bootName: String

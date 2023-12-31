@@ -7,22 +7,15 @@ query Me {
     username
     email
     password
-    inventories {
+    customerProfile {
       _id
-      inventoryName
-      priceTotal
-      products {
-        _id
-        UPC
-        brand
-        price
-        description
-        name
-        image
-        link
-        category
-        
-      }
+      name
+      email
+      phone
+      shoeSize
+      shoeWidth
+      bootName
+      bootSku
     }
   }
 }
