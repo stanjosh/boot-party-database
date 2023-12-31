@@ -1,6 +1,6 @@
 import CustomerForm from './CustomerForm.component';
 import EventForm from './EventForm.component';
 import BootSelect from './bootSelect/BootSelect.component';
-import GuestEditForm from './GuestEditForm.component';
+import EventAdminForm from './EventAdminForm.component';
 
-export { CustomerForm, EventForm, BootSelect, GuestEditForm };
+export { CustomerForm, EventForm, BootSelect, EventAdminForm };

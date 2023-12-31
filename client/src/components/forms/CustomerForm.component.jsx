@@ -2,11 +2,11 @@ import { useRef } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
 import { EDIT_CUSTOMER, EVENT_ADD_SIGNUP } from '../../util/mutations';
-
+import { RemoveGuestButton } from './buttons';
 import { BootSelect } from '.';
 import { useForm } from '../../util/hooks';
 
-const CustomerForm = ({ customer, joinPartyId, formTitle, submitText, success }) => {
+const CustomerForm = ({ customer, eventId, formTitle, submitText, success, admin }) => {
     const [editCustomer, { loading, error }] = useMutation(EDIT_CUSTOMER);
     const [addGuest, { loading: addGuestLoading, error: addGuestError }] = useMutation(EVENT_ADD_SIGNUP);
    
@@ -39,7 +39,7 @@ const CustomerForm = ({ customer, joinPartyId, formTitle, submitText, success })
     
             console.log('Customer created: ', res.data);
             localStorage.setItem('customer', JSON.stringify(res.data.editCustomer));
-            if (joinPartyId) {
+            if (eventId) {
                 addGuestToParty(res.data.editCustomer._id);
             } else {
                 success();
@@ -56,7 +56,7 @@ const CustomerForm = ({ customer, joinPartyId, formTitle, submitText, success })
     const addGuestToParty = async (customerId) => {
         await addGuest({
             variables: {
-                eventId: joinPartyId,
+                eventId: eventId,
                 customerId: customerId,
             }
         })
@@ -73,28 +73,7 @@ const CustomerForm = ({ customer, joinPartyId, formTitle, submitText, success })
 
     const scrollto = () => customerFormRef.current.scrollIntoView()    
 
-    // const handleRemoveGuest = async (e) => {
-    //     e.preventDefault();
-    //     console.log('CLICKED DELETE ' + e.target.dataset.customerid);
-    //     const event = await removeGuest({
-    //         variables: {
-    //             eventId: eventId,
-    //             customerId: e.target.dataset.customerid,           
-               
-    //         }
-    //     })
-    //     .then((res) => {
-    //       // Handle success
-    //       console.log('Joined party:', res.data);
-    //       setJoinFormData({ name: '', email: '', phone: '' });
-    //       setSuccess(true);
-          
-    //       })
-    //       .catch((err) => {
-    //       // Handle error
-    //       console.error('Error joining party:', err);
-    //       });
-    //     }
+
 
 
 
@@ -133,45 +112,21 @@ const CustomerForm = ({ customer, joinPartyId, formTitle, submitText, success })
             <BootSelect customerData={formData} handleInputChange={handleInputChange} scrollBackTo={scrollto} />
         </Form.Group>
 
+        <div style={{display: "flex", flexWrap: "nowrap", justifyContent:"flex-end", width: "100%"}}>
+        { admin && eventId && customer?._id && <RemoveGuestButton customerId={customer?._id} eventId={eventId}/> }
         
-        <Form.Group controlId="formSubmit" style={{
-            display: "flex",
-            justifyContent: "space-between",
-            width: "100%", 
-            maxWidth: "380px",
-            height: "100%",
-            position: "relative",
-            bottom: "0",
-            left: "0",
-            right: "0",
-
-        }}>
-
-        {/* {deleteId && <Button 
-                type="button" 
-                data-customerid={deleteId} 
-                onClick={handleRemoveGuest}
-                disabled={removeGuestLoading} style={{
-                    flex: "0 1 40%",
-                    boxShadow: "2px 2px 3px black",
-                    borderRadius: "0 0 3px 0",
-                    margin: "8px",
-            }}>
-                delete
-            </Button> } */}
-
-
-        <Button type="submit" disabled={ loading || addGuestLoading } style={{
-            flex: "0 1 40%",
-            boxShadow: "2px 2px 3px black",
-            borderRadius: "0 0 3px 0",
-            margin: "8px",
-        }}>
+        <Form.Group controlId="formSubmit"  style={{flex: "0 1 60%", padding: "5px"}}>
+        
+        <Button type="submit" disabled={ loading || addGuestLoading } className='formButtom'>
             {submitText || <h3 style={{fontSize : "2.5cqh", color: "aliceblue", marginBottom : "0"}}>LET'S GO</h3>}
         </Button>
-            {error || addGuestError && <Alert>Error updating customer</Alert>}
+            
         </Form.Group>
+        
+        
 
+        </div>
+        {error && <Alert variant='danger'>Error updating customer</Alert>}
                 
 
 

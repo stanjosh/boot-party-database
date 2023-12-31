@@ -112,44 +112,6 @@ const EventForm = ({ eventData, formTitle, submitText, admin }) => {
       />
       </Form.Group>
 
-
-      
-      <div hidden={!admin} style={{marginBottom: "15px"}}>
-      <h4 style={{color: "aliceblue", marginBottom: "15px", marginTop: "15px", fontSize: "3cqb" }}>alvies details</h4>
-      <Form.Group controlId="formEventLeadEmployee"  style={{marginBottom: "10px"}}>
-      <Form.Label>lead</Form.Label>
-      <Form.Control
-          type="text"
-          placeholder=""
-          name="eventLeadEmployee"
-          value={eventLeadEmployee}
-          onChange={handleInputChange}
-      />
-      </Form.Group>
-      <Form.Group controlId="formEventHelpers" style={{marginBottom: "10px"}} >
-      <Form.Label>helpers</Form.Label>
-      <Form.Control
-          as="textarea"
-          rows={4}
-          placeholder=""
-          name="eventHelpers"
-          value={eventHelpers}
-          onChange={handleInputChange}
-      />
-      </Form.Group>
-      <Form.Group controlId="formEventDisplay" style={{marginBottom: "10px"}} >
-      {admin ? <Form.Label>display</Form.Label> : null}
-      <Form.Control
-          as="textarea"
-          rows={4}
-          placeholder=""
-          name="eventDisplay"
-          value={eventDisplay}
-          onChange={handleInputChange}
-      />
-      </Form.Group>
-      </div>
-
     <Form.Group controlId="formSubmit" style={{width: "100%", marginRight: "15px", alignItems:"flex-end"}}>
         <Button type="submit" disabled={ loading } style={{
             flex: "0 1 40%",
