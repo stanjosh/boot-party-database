@@ -30,9 +30,11 @@ const EventForm = ({ eventData, formTitle, submitText, admin }) => {
     const writeEvent = async (formData) => {
       await createEvent({
           variables: {
-              eventInput: { ...formData, 
+              eventInput: { ...formData,
+
                 eventContact: JSON.parse(localStorage.getItem('customer'))._id,
               },
+              userId: JSON.parse(localStorage.getItem('customer'))._id,
   
           }
       })

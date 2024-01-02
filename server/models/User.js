@@ -8,7 +8,7 @@ const userSchema = new Schema({
       required: true,
       trim: true
     },
-    guestProfile: {
+    customerProfile: {
       type: Schema.Types.ObjectId,
       required: true,
       ref: 'Customer',

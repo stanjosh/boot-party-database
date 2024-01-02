@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Modal, Button, Form, Alert } from 'react-bootstrap';
+import { Container, Button, Form, Alert } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../../util/mutations';
 import Auth from '../../util/Auth';
 
 
-const Login = () => {
+const LoginForm = () => {
     // Component logic goes here
     const [loginUser, { error }] = useMutation(LOGIN_USER);
     const [ loginSuccess, setLoginSuccess ] = useState(false);
@@ -36,11 +36,12 @@ const Login = () => {
             } catch (e) {
                 console.error(e);
             }
+                setLoginSuccess(true);
                 setLoginForm({
                     email: '',
                     password: '',
                 });
-            setLoginSuccess(true);
+            
     }
 
     
@@ -89,12 +90,14 @@ const Login = () => {
                 className='formButtom'>
                 log in
             </Button>
-            {error && <Alert variant='danger'>Error logging in!</Alert>}
-            {loginSuccess && <Alert variant='success'>Success!</Alert>}
+            <Container>
+                {error && <Alert variant='danger'>Error logging in!</Alert>}
+                {loginSuccess && <Alert variant='success'>Success!</Alert>}
+            </Container>
         </Form>
 
 
     );
 };
 
-export default Login;
+export default LoginForm;

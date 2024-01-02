@@ -1,12 +1,11 @@
 import { gql } from '@apollo/client';
 
 
-export const SAVE_USER = gql`
-mutation SaveUser($username: String!, $email: String!, $password: String!, $customerProfile: CustomerInput!) {
-  saveUser(username: $username, email: $email, password: $password) {
+export const CREATE_USER = gql`
+mutation CreateUser($userInput: UserInput!) {
+  createUser(userInput: $userInput) {
     user {
       _id
-      username
       email
       customerProfile {
         _id
@@ -28,7 +27,6 @@ export const LOGIN_USER = gql`
     loginUser(email: $email, password: $password) {
     user {
       _id
-      username
       email
       customerProfile {
         _id
@@ -50,7 +48,6 @@ mutation CreateCustomer($customerInput: CustomerInput) {
   createCustomer(customerInput: $customerInput) {
     user {
       _id
-      username
       email
       customerProfile {
         _id
@@ -67,8 +64,8 @@ mutation CreateCustomer($customerInput: CustomerInput) {
 `;
 
 export const CREATE_EVENT = gql`
-mutation CreateEvent($eventInput: EventInput) {
-  createEvent(eventInput: $eventInput) {
+mutation CreateEvent($eventInput: EventInput!, $userId: ID) {
+  createEvent(eventInput: $eventInput, userId: $userId) {
     _id
     eventLocation
     eventTime

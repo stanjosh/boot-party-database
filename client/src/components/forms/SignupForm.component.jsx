@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import { Container, Button, Form, Alert } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
-import { LOGIN_USER } from '../../util/mutations';
+import { CREATE_USER } from '../../util/mutations';
 import Auth from '../../util/Auth';
 
 
-const Login = () => {
+
+const SignupForm = () => {
     // Component logic goes here
-    const [loginUser, { error }] = useMutation(LOGIN_USER);
+    const [createUser, { error }] = useMutation(CREATE_USER);
+    const [validated] = useState(false);
+    const [passwordCheck, setPasswordCheck] = useState('');
+    const [showAlert, setShowAlert] = useState(false);
     const [ loginSuccess, setLoginSuccess ] = useState(false);
     const [ signupForm, setSignupForm ] = useState({
         email: '',
@@ -22,26 +26,36 @@ const Login = () => {
         });
     };
     
-    const [validated] = useState(false);
-    const [passwordCheck, setPasswordCheck] = useState('');
-    const [showAlert, setShowAlert] = useState(false);
+
 
     
-    const handleLogin = async (e) => {
+    const handleSignup = async (e) => {
         e.preventDefault();
+
+        // check if form has everything (as per react-bootstrap docs)
+        const form = e.currentTarget;
+        if (form.checkValidity() === false) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+    
         try {
-            const user = await loginUser({
-                variables: { ...signupForm }
-            });
-            Auth.login(user.data.loginUser.token);
-            } catch (e) {
-                console.error(e);
+          const user = await createUser({
+            variables: {
+                userInput : signupForm
             }
-                setSignupForm({
-                    email: '',
-                    password: '',
-                });
-            setLoginSuccess(true);
+            
+          });
+          Auth.login(user.data.createUser.token);
+        } catch (err) {
+          console.error(err);
+          setShowAlert(true);
+        }
+        setLoginSuccess(true);
+        setSignupForm({
+          email: '',
+          password: '',
+        });
     }
 
     
@@ -50,14 +64,15 @@ const Login = () => {
         <>
             <Form noValidate 
                     validated={validated} 
-                    onSubmit={handleLogin} 
+                    onSubmit={handleSignup} 
                     style={{
                         padding: "20px", 
                         backgroundColor: "var(--alviesBlue)",
                         borderRadius: "3px"
                         }}>
             <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
-            Something went wrong with your login credentials!
+                Something went wrong with your login credentials!
+
             </Alert>
             <Form.Group className='mb-3'>
             <Form.Label htmlFor='email'>Email</Form.Label>
@@ -111,12 +126,11 @@ const Login = () => {
                 className='formButtom'>
                 log in
             </Button>
-            {error && <Alert variant='danger'>Error logging in!</Alert>}
-            {loginSuccess && <Alert variant='success'>Success!</Alert>}
+
         </Form>
         
     </>
     );
 };
 
-export default Login;
+export default SignupForm;

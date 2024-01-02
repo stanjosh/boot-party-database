@@ -1,12 +1,19 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
-  type me {
+  type User {
     _id: ID!
     email: String!
     password: String!
-    customerProfile: Customer!
+    customerProfile: Customer
+    events: [Event]
   }
+
+  input UserInput {
+    email: String!
+    password: String!
+  }
+  
 
   type Event {
     _id: ID!
@@ -30,16 +37,8 @@ const typeDefs = gql`
     eventLocation: String!
     eventTime: String!
     eventContact: String!
-
-    eventTitle: String 
-    eventLeadEmployee: String
-    eventLoadinTime: String
-    eventDisplay: String
     eventNotes: String
-    eventPartyType: String
-    eventVan: Int
-    eventTransferOrder: String
-    eventHelpers: [String]
+    eventTitle: String 
   }
 
   input UpdateEventInput {
@@ -60,6 +59,7 @@ const typeDefs = gql`
   type Customer {
     _id: ID!
     name: String!
+    email: String
     phone: String
     bootSku: String
     bootName: String
@@ -69,6 +69,7 @@ const typeDefs = gql`
 
   input CustomerInput {
     name: String
+    email: String
     phone: String
     bootSku: String
     bootName: String
@@ -76,10 +77,14 @@ const typeDefs = gql`
     shoeWidth: String
   }
 
+  type Auth {
+    token: ID!
+    user: User
+  }
 
 
   type Query {
-    me(uuid: ID!): me
+    me: User
     findAllEvents(date: String): [Event]
     findCustomerByID(uuid: ID!): Customer
     findEventByID(uuid: ID!): Event
@@ -101,13 +106,16 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    createEvent(eventInput: EventInput): Event
-    updateEvent(eventId: ID!, updateEventInput: UpdateEventInput  ): Event
+    createUser(userInput: UserInput!): Auth
+    loginUser(email: String!, password: String!): Auth
+    updateUser(userId: ID!, userInput: UserInput!): User
+    createEvent(eventInput: EventInput!, userId: ID): Event
+    updateEvent(eventId: ID!, updateEventInput: UpdateEventInput!): Event
     eventAddSignup(eventId: ID!, customerId: ID!): Event
     eventRemoveSignup(eventId: ID!, customerId: ID!): Event
-    editCustomer(customerInput: CustomerInput!): Customer
-    createCustomer(customerInput: CustomerInput): Customer
-    
+    updateCustomer(customerInput: CustomerInput!): Customer
+    createCustomer(customerInput: CustomerInput!): Customer
+
   }
 
 `;

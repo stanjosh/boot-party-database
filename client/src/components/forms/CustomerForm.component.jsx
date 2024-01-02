@@ -6,7 +6,7 @@ import { RemoveGuestButton } from './buttons';
 import { BootSelect } from '.';
 import { useForm } from '../../util/hooks';
 
-const CustomerForm = ({ customer, eventId, formTitle, submitText, success, admin }) => {
+const CustomerForm = ({ customer, eventId, formTitle, submitText, success, updating, admin }) => {
     const [editCustomer, { loading, error }] = useMutation(EDIT_CUSTOMER);
     const [addGuest, { loading: addGuestLoading, error: addGuestError }] = useMutation(EVENT_ADD_SIGNUP);
    

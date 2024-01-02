@@ -2,7 +2,7 @@ import React, { useState }from 'react';
 import { Modal, Tabs, Tab, Container } from 'react-bootstrap';
 
 
-import { Login, Signup } from '../forms';
+import { LoginForm, SignupForm } from '../forms';
 
 const LoginSignup = ({show, onHide}) => {
 
@@ -25,10 +25,10 @@ const LoginSignup = ({show, onHide}) => {
             
         <Tab eventKey="login" title="Login" >
             
-            <Login />
+            <LoginForm />
         </Tab>
         <Tab eventKey="signup" title="Signup">
-            <Signup />
+            <SignupForm />
         </Tab>
      
         </Tabs>
