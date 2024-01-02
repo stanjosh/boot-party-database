@@ -2,27 +2,19 @@ import { gql } from '@apollo/client';
 
 export const QUERY_ME = gql`
 query Me {
-  me {
+  user {
     _id
-    username
     email
     password
-    inventories {
+    customerProfile {
       _id
-      inventoryName
-      priceTotal
-      products {
-        _id
-        UPC
-        brand
-        price
-        description
-        name
-        image
-        link
-        category
-        
-      }
+      name
+      email
+      phone
+      shoeSize
+      shoeWidth
+      bootName
+      bootSku
     }
   }
 }

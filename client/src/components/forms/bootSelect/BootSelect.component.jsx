@@ -9,13 +9,13 @@ const menSizes = [8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 14, 15];
 const womenSizes = [5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12];
 
 const BootSelect = ({ customerData, scrollBackTo }) => {
-    
+    console.log(customerData)
     const [showBoots, setShowBoots] = useState(false);
     const [selectedBootSku, setSelectedBootSku] = useState(customerData?.bootSku);
     const [selectedBootName, setSelectedBootName] = useState(customerData?.bootName);
 
-    const [shoeWidth, setShoeWidth] = useState('');
-    const [shoeSize, setShoeSize] = useState('');
+    const [shoeWidth, setShoeWidth] = useState(customerData?.shoeWidth);
+    const [shoeSize, setShoeSize] = useState(customerData?.shoeSize);
     const { bootData } = useShopifyBoots({shoeSize, shoeWidth});
 
     useEffect(() => {
@@ -66,6 +66,7 @@ const BootSelect = ({ customerData, scrollBackTo }) => {
                 aria-label="Boot Width"
                 placeholder="Boot Width"
                 onChange={handleInputChange}
+                defaultChecked={shoeWidth}
                 name="shoeWidth"
                 value={shoeWidth}
                 style={{margin: "15px", maxWidth: "150px" }}
@@ -81,6 +82,7 @@ const BootSelect = ({ customerData, scrollBackTo }) => {
                 aria-label="Boot Sizes"
                 placeholder="Boot Sizes"
                 onChange={handleInputChange}
+                defaultValue={shoeSize}
                 name="shoeSize"
                 value={shoeSize}
                 style={{margin: "15px", maxWidth: "150px"}}

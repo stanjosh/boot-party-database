@@ -3,26 +3,28 @@ const bcrypt = require('bcryptjs');
 
 
 const userSchema = new Schema({
-    username: {
-      type: String,
-      required: true,
-      unique: true,
-    },
     email: {
       type: String,
       required: true,
-      unique: true,
-      match: [/.+@.+\..+/, 'Must use a valid email address'],
+      trim: true
     },
+    customerProfile: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: 'Customer',
+      autopopulate: true,
+   },
+    events : [{
+      type: Schema.Types.ObjectId,
+      ref: 'Event',
+      autopopulate: true,
+    }],
     password: {
       type: String,
       required: true,
     },
     
-    inventories: [{
-      type: Schema.Types.ObjectId,
-      ref: 'Inventory',
-    }],
+
 },
   {
     toJSON: {

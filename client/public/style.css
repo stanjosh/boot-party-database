@@ -23,6 +23,7 @@ body {
     overflow-x: hidden;
     scroll-behavior: smooth;
 }
+
 header {
     background-color: #333;
     color: #fff;
@@ -32,7 +33,7 @@ header {
 
 ul {
     list-style: none;
-    padding: 0;
+
 }
 li {
     display: flex;
@@ -44,11 +45,6 @@ li {
 
 
 
-footer {
-    background-color: var(--alviesDarkBlue);
-    font-family: 'unpretentious', sans-serif;
-    color: aliceblue;
-}
 
 footer a {
     display: block;
@@ -84,13 +80,18 @@ main {
     text-align: center;
     min-height: 100cqh;
     padding: 10px;
-    max-width: 500px;
+    
     width: 100%;
+    max-width: 500px;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     background-attachment: fixed;
-;
+
+}
+
+.landingPageBox h3 {
+    font-size: 5cqb;
 }
 
 
@@ -122,9 +123,6 @@ h4 {
     width: 100%;
 }
 
-.landingPageBox h3 {
-    font-size: 5cqb;
-}
 
 
 
@@ -191,8 +189,8 @@ h4 {
     text-align: right;
     padding: 2cqb;
     width: 100%;
-    max-width: 50cqw;
-    margin: 100px 10px 0px 0px;
+    max-width: 40cqw;
+    margin: 100px 100px 10px 100px;
     border-radius: 3px;
 }
 
@@ -202,6 +200,16 @@ h4 {
 
 }
 
+.modal-content {
+    border-radius: 5px;
+}
+
+.formButtom {
+    width: 100%;
+    box-shadow: 2px 2px 3px black;
+    border-radius: 3px;
+
+}
 
 .imageBG {
 
@@ -214,6 +222,51 @@ h4 {
 }
 
 
+
+
+.footerContainer {
+    display: block;
+    background-color: var(--alviesDarkBlue);
+    font-family: 'unpretentious', sans-serif;
+    color: aliceblue;
+    min-height: max-content;
+    
+}
+
+footer a {
+    display: block;
+    color: aliceblue;
+    text-decoration: none;
+
+    font-size: 2.5cqh;
+
+}
+
+footer ul {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+}
+
+footer a:hover {
+    color: var(--alviesBlue);
+}
+
+footer li {
+    list-style: none;
+    padding: 10px;
+    justify-content: flex-end;
+}
+
+footer .socials {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    flex: 1 0 ;
+}
 
 @media screen and (max-width: 1200px) {
 
@@ -228,6 +281,12 @@ h4 {
 }
 
 @media screen and (max-width: 980px) {
+    footer ul {
+        flex-direction: column;
+        padding: auto;
+        overflow: scroll;
+    }
+
 
     .pblock {
         text-align: center;
