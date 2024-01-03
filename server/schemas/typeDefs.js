@@ -12,6 +12,7 @@ const typeDefs = gql`
   input UserInput {
     email: String!
     password: String!
+    customerProfile: CustomerInput
   }
   
 
@@ -65,6 +66,7 @@ const typeDefs = gql`
     bootName: String
     shoeSize: String
     shoeWidth: String
+    bootImgSrc: String
   }
 
   input CustomerInput {
@@ -75,6 +77,7 @@ const typeDefs = gql`
     bootName: String
     shoeSize: String
     shoeWidth: String
+    bootImgSrc: String
   }
 
   type Auth {

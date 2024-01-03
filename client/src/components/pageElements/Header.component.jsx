@@ -4,6 +4,7 @@ import { useQuery } from '@apollo/client';
 import { QUERY_ME } from '../../util/queries';
 import LoginSignup from './LoginSignup.component';
 
+
 const Header = () => {
   
   const { loading, data } = useQuery(QUERY_ME);
@@ -28,21 +29,33 @@ const Header = () => {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             
-        <Nav className="me-auto">
-          
-          <Nav.Link href="/book" style={{width: "100%", textAlign: "right"}}>Book a Party</Nav.Link>
-          <Nav.Link href="/manage" style={{width: "100%", textAlign: "right"}}>Manage a Party</Nav.Link>
-          
-          <Nav.Link href="#deets" style={{width: "100%", textAlign: "right"}}>FAQ / CONTACT</Nav.Link>
-          <Nav.Link eventKey={2} href="#memes" style={{width: "100%", textAlign: "right"}}>
+        <Nav style={{display: "flex", justifyContent: "end", width: "100%"}}>
+          <Nav.Link 
+            eventKey={1} 
+            href="https://alvies.com" 
+            style={{
+              margin: "5px", 
+              flex: "0 1 25cqw", 
+              width: "100%", 
+              maxHeight: "50px", 
+              textAlign: "center", 
+              color: "aliceBlue", 
+              backgroundColor: "var(--alviesDarkBlue)" 
+          }}>
             SHOP ALVIES
           </Nav.Link>
+
           <Nav.Link 
             eventKey={2} 
-
             onClick={() => setShowLoginSignup(true)} 
-            style={{width: "100%", textAlign: "right"}}>
-            login  
+            style={{margin: "5px", 
+              flex: "0 1 25cqw", 
+              width: "100%", 
+              maxHeight: "50px", 
+              textAlign: "center", 
+              border: "4px solid var(--alviesBlue)"
+          }}>
+            sign in / up
           </Nav.Link>  
           
         </Nav>

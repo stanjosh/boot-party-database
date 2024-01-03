@@ -5,22 +5,9 @@ import { CustomerForm, EventForm } from '../components/forms';
 
 
 const CreateEventPage = () => {
-  const [currentStep, setCurrentStep] = useState('newCustomer');
-
-  const getCurrentStep = () => {
-    let component;
-    switch (currentStep){
-        case 'newCustomer' :
-            component = <CustomerForm success={() => {setCurrentStep('newEvent')}} />;
-            break;
-        case 'newEvent' :
-            component = <EventForm create={true}  />;
-            break;
-        default:
-            component = <CustomerForm success={() => setCurrentStep('newEvent')}/>;
-    }
-    return component;
-}
+  const [customerId, setCustomerId] = useState('');
+  
+  
 
   return (
     <div style={{ minHeight: "780px", textAlign: "center", marginTop: "25px", width: "100%", display: "flex", alignContent: "center", justifyContent: "center"}}>
@@ -34,7 +21,10 @@ const CreateEventPage = () => {
           borderRadius: "3px",
           padding: "15px",
         }}>
-        {getCurrentStep()}
+        {customerId         
+          ? <EventForm customerId={customerId} create/>
+          : <CustomerForm success={(customerId) => setCustomerId(customerId)}/>
+        }
         </div>
     </div>
   );
