@@ -87,8 +87,13 @@ const CustomerForm = ({ customer, eventId, formTitle, submitText, success, updat
 
 
   return (
-    <Form onSubmit={handleSubmit} ref={customerFormRef} >
-        {<h4 style={{color: "aliceblue", marginBottom: "15px", marginTop: "15px", fontSize: "3cqb" }}>{formTitle}</h4> || <h1 style={{fontSize: "5cqh" }}>Who are you?</h1>}
+    <Form onSubmit={handleSubmit} ref={customerFormRef} className='main-form'>
+        
+        {formTitle 
+            ? <h4 className='formTitle'>{formTitle}</h4> 
+            : <h1 style={{fontSize: "5cqh" }}>Who are you?</h1>
+        }
+
         <Form.Group controlId="formCustomerInfo" >
             <Form.Control
                 type="text"
@@ -118,19 +123,26 @@ const CustomerForm = ({ customer, eventId, formTitle, submitText, success, updat
             />
             </Form.Group>
         <Form.Group >
+            <div>You can pick your boots later if you're not sure.</div>
             <SizeSelect formData={{ shoeWidth, shoeSize, bootSku }} handleInputChange={handleInputChange} />
+            
             <BootSelect formData={{ shoeWidth, shoeSize, bootImgSrc, bootName, bootSku}} setFormData={setFormData} scrollBackTo={scrollto} />
         </Form.Group>
 
         <div style={{display: "flex", flexWrap: "nowrap", justifyContent:"flex-end", width: "100%"}}>
-        { admin && eventId && customer?._id && <RemoveGuestButton customerId={customer?._id} eventId={eventId}/> }
         
-        <Form.Group controlId="formSubmit"  style={{flex: "0 1 60%", padding: "5px"}}>
+        { (admin && eventId && customer?._id) 
+            ? <RemoveGuestButton customerId={customer?._id} eventId={eventId}/> 
+            : null
+        }
         
-        <Button type="submit" disabled={ loading || addGuestLoading } className='formButtom'>
-            {submitText || <h3 style={{fontSize : "2.5cqh", color: "aliceblue", marginBottom : "0"}}>LET'S GO</h3>}
-        </Button>
-            
+        <Form.Group controlId="formSubmit"  style={{flex: "0 1 50%", padding: "5px"}}>
+            <Button type="submit" disabled={ loading } className='formButton'>
+                {submitText 
+                    ? submitText
+                    : <h3 style={{fontSize : "2.5cqh", color: "aliceblue", marginBottom : "0"}}>LET'S GO</h3>
+                }
+            </Button>
         </Form.Group>
         
         
