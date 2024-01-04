@@ -15,6 +15,7 @@ mutation CreateUser($userInput: UserInput!) {
         shoeWidth
         bootName
         bootSku
+        bootImgSrc
       }
     }
     token
@@ -36,6 +37,7 @@ export const LOGIN_USER = gql`
         shoeWidth
         bootName
         bootSku
+        bootImgSrc
       }
     }
     token
@@ -57,6 +59,7 @@ mutation CreateCustomer($customerInput: CustomerInput) {
         shoeWidth
         bootName
         bootSku
+        bootImgSrc
       }
     }
   }
@@ -77,6 +80,7 @@ mutation CreateEvent($eventInput: EventInput!, $userId: ID) {
       bootSku
       shoeWidth
       shoeSize
+      bootImgSrc
     }
     eventTitle
     eventLeadEmployee
@@ -90,6 +94,7 @@ mutation CreateEvent($eventInput: EventInput!, $userId: ID) {
       bootSku
       shoeWidth
       shoeSize
+      bootImgSrc
     }
     eventNotes
     eventPartyType
@@ -114,6 +119,7 @@ mutation UpdateEvent($eventId: ID!, $updateEventInput: UpdateEventInput) {
       bootSku
       shoeWidth
       shoeSize
+      bootImgSrc
     }
     eventTitle
     eventLeadEmployee
@@ -127,6 +133,7 @@ mutation UpdateEvent($eventId: ID!, $updateEventInput: UpdateEventInput) {
       bootSku
       shoeWidth
       shoeSize
+      bootImgSrc
     }
     eventNotes
     eventPartyType
@@ -151,6 +158,7 @@ mutation EventAddSignup($eventId: ID!, $customerId: ID!) {
       bootSku
       shoeWidth
       shoeSize
+      bootImgSrc
     }
     eventTitle
     eventLeadEmployee
@@ -164,6 +172,7 @@ mutation EventAddSignup($eventId: ID!, $customerId: ID!) {
       bootSku
       shoeWidth
       shoeSize
+      bootImgSrc
     }
     eventNotes
     eventPartyType
@@ -188,6 +197,7 @@ mutation EventRemoveSignup($eventId: ID!, $customerId: ID!) {
       bootSku
       shoeWidth
       shoeSize
+      bootImgSrc
     }
     eventTitle
     eventLeadEmployee
@@ -201,6 +211,7 @@ mutation EventRemoveSignup($eventId: ID!, $customerId: ID!) {
       bootSku
       shoeWidth
       shoeSize
+      bootImgSrc
     }
     eventNotes
     eventPartyType
@@ -211,9 +222,9 @@ mutation EventRemoveSignup($eventId: ID!, $customerId: ID!) {
 }
 `;
 
-export const EDIT_CUSTOMER = gql`
-mutation editCustomer( $customerInput: CustomerInput!) {
-  editCustomer( customerInput: $customerInput) {
+export const UPDATE_CUSTOMER = gql`
+mutation updateCustomer( $customerInput: CustomerInput!) {
+  updateCustomer( customerInput: $customerInput) {
     _id
     name
     email
@@ -222,6 +233,7 @@ mutation editCustomer( $customerInput: CustomerInput!) {
     bootSku
     shoeWidth
     shoeSize
+    bootImgSrc
   }
 }
 `;

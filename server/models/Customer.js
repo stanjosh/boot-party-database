@@ -38,6 +38,11 @@ const customerSchema = new Schema({
         required: false,
         trim: true
     },
+    bootImgSrc: {
+        type: String,
+        required: false,
+        trim: true
+    },
 
 
     

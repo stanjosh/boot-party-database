@@ -4,7 +4,8 @@ const useForm = (initialState = {}, onSubmit) => {
     const [formData, setFormData] = useState(initialState);
 
     const handleInputChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value })
+        setFormData({ ...formData, [e.target.name]: e.target.value})
+        console.log(formData)
     }
 
     const handleSubmit = (e) => {
@@ -12,7 +13,7 @@ const useForm = (initialState = {}, onSubmit) => {
         onSubmit?.(formData);
     }
 
-    return { formData, handleInputChange, handleSubmit };
+    return { formData, handleInputChange, handleSubmit, setFormData };
 }
 
 export default useForm;

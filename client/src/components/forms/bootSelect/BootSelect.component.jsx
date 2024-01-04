@@ -5,17 +5,12 @@ import { useShopifyBoots } from '../../../util/hooks';
 const menBootDataURL = "https://rickshaw-boots.myshopify.com/collections/mens-boots/products.json";
 const womenBootDataURL = "https://rickshaw-boots.myshopify.com/collections/womens-boots/products.json";
 
-const menSizes = [8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 14, 15];
-const womenSizes = [5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12];
 
-const BootSelect = ({ customerData, scrollBackTo }) => {
-    console.log(customerData)
+
+const BootSelect = ({ formData, setFormData, scrollBackTo }) => {
     const [showBoots, setShowBoots] = useState(false);
-    const [selectedBootSku, setSelectedBootSku] = useState(customerData?.bootSku);
-    const [selectedBootName, setSelectedBootName] = useState(customerData?.bootName);
+    const {shoeWidth, shoeSize, bootImgSrc, bootName, bootSku} = formData;
 
-    const [shoeWidth, setShoeWidth] = useState(customerData?.shoeWidth);
-    const [shoeSize, setShoeSize] = useState(customerData?.shoeSize);
     const { bootData } = useShopifyBoots({shoeSize, shoeWidth});
 
     useEffect(() => {
@@ -25,20 +20,14 @@ const BootSelect = ({ customerData, scrollBackTo }) => {
         }
     }, [shoeSize, shoeWidth]);
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        if (name === "shoeWidth") {
-            setShoeWidth(value);
-            setShoeSize('');
-        } else if (name === "shoeSize") {
-            setShoeSize(value);
-        }
-    }
-
     const handleSelectBoot = (e) => {
-      
-        setSelectedBootSku(e.currentTarget.dataset.bootsku);
-        setSelectedBootName(`${e.currentTarget.dataset.bootmodel} / ${e.currentTarget.dataset.bootname}`);
+        const { bootsku, bootname, bootimgsrc } = e.currentTarget.dataset;
+        setFormData({
+            ...formData,
+            bootSku: bootsku,
+            bootName: bootname,
+            bootImgSrc: bootimgsrc,
+        });
         scrollBackTo();
         setShowBoots(false);
         
@@ -47,57 +36,13 @@ const BootSelect = ({ customerData, scrollBackTo }) => {
 
   return (
     <>
-        {!showBoots && !selectedBootSku 
-          ? <div style={{color: "aliceblue", height: "100%", padding: "20px"}}>Select the boots you want to check out?</div>
-          : null }
-        <Form.Group hidden={selectedBootSku} style={{
-            display: "flex", 
-            flexWrap: "nowrap", 
-            textAlign: "right", 
-            justifyContent: "center", 
-            alignContent: "center",
-            verticalAlign: "center",
-            width: "100%"
-        }} >
-            
-            <Form.Select 
-                id="shoeWidth" 
-                
-                aria-label="Boot Width"
-                placeholder="Boot Width"
-                onChange={handleInputChange}
-                defaultChecked={shoeWidth}
-                name="shoeWidth"
-                value={shoeWidth}
-                style={{margin: "15px", maxWidth: "150px" }}
-            >
-                <option value={null}>Boot Width</option>
-                <option value="B">B (Women)</option>
-                <option value="D">D (Men)</option>
-                <option value="EE">EE (Men Wide)</option>
 
-            </Form.Select> 
-            <Form.Select 
-                id="shoeSize" 
-                aria-label="Boot Sizes"
-                placeholder="Boot Sizes"
-                onChange={handleInputChange}
-                defaultValue={shoeSize}
-                name="shoeSize"
-                value={shoeSize}
-                style={{margin: "15px", maxWidth: "150px"}}
-            >
-                <option value={null}>Boot Size</option>
-                    {(shoeWidth === "B" ? womenSizes : menSizes).map((size) =>               
-                        <option value={size} key={size}>{size}</option>
-                )}
-            </Form.Select>
-        </Form.Group>
+
     
-    {(selectedBootName || customerData?.selectedBootName) && 
+    {(bootName) && 
         <Form.Group style={{display: "flex", flexWrap: "nowrap", width: "100%", alignItems: "center", justifyContent: "end", padding: "15px"}} >
-            <Form.Control type="hidden" name="bootSku" value={selectedBootSku} />
-            <Form.Control type="hidden" name="bootName" value={selectedBootName} />
+            <Form.Control type="hidden" name="bootSku" value={bootSku} />
+            <Form.Control type="hidden" name="bootName" value={bootName} />
 
             <Form.Text style={{
                 fontSize: "2cqh", 
@@ -108,7 +53,7 @@ const BootSelect = ({ customerData, scrollBackTo }) => {
                 verticalAlign: "center", 
                 borderRadius: "4px", 
                 margin: "5px"}}>
-                Boot: {selectedBootName}
+                Boot: {bootName}
             </Form.Text>
             <Button variant="danger" style={{height: "100%", verticalAlign: "center", padding: "10px"}} onClick={() => {setSelectedBootSku(''); setSelectedBootName(''); setShowBoots(true);}}>X</Button>
         </Form.Group>}
@@ -117,7 +62,7 @@ const BootSelect = ({ customerData, scrollBackTo }) => {
     
     {showBoots ? 
     <>
-    <div style={{position: "static", bottom: "0", zIndex: "1"}}>
+    <div style={{position: "fixed", bottom: "0", zIndex: "1"}}>
     <Alert dismissible>
         { bootData?.length > 0 && shoeSize && shoeWidth 
             ? <> These are the styles we have in your size. </>
@@ -137,8 +82,10 @@ const BootSelect = ({ customerData, scrollBackTo }) => {
             alt={boot.title} 
             data-bootmodel={boot.alt} 
             data-bootsku={boot.sku} 
-            data-bootname={boot.title} 
+            data-bootname={boot.title}
+            data-bootimgsrc={boot.featured_image.src}
             onClick={handleSelectBoot}
+            value={boot.sku}
             style={{
                 flex: "1 0 340px", 
                 backgroundColor: "#FFFFFF", 

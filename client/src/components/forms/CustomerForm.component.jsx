@@ -1,36 +1,45 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
-import { EDIT_CUSTOMER, EVENT_ADD_SIGNUP } from '../../util/mutations';
+import { UPDATE_CUSTOMER, EVENT_ADD_SIGNUP } from '../../util/mutations';
 import { RemoveGuestButton } from './buttons';
 import { BootSelect } from '.';
 import { useForm } from '../../util/hooks';
+import SizeSelect from './bootSelect/SizeSelect.component';
 
-const CustomerForm = ({ customer, eventId, formTitle, submitText, success, updating, admin }) => {
-    const [editCustomer, { loading, error }] = useMutation(EDIT_CUSTOMER);
+const CustomerForm = ({ customer, eventId, formTitle, submitText, success, updating, joining, admin }) => {
+    const [updateCustomer, { loading, error }] = useMutation(UPDATE_CUSTOMER);
     const [addGuest, { loading: addGuestLoading, error: addGuestError }] = useMutation(EVENT_ADD_SIGNUP);
    
     
     
 
     const customerFormRef = useRef(null)
-    const { formData, handleInputChange, handleSubmit } = useForm({
-            name: customer?.name ?? '',
-            email: customer?.email ?? '',
-            phone: customer?.phone ?? '',
-            bootName: customer?.bootName ?? '',
-            shoeWidth: customer?.shoeWidth ?? '',
-            shoeSize: customer?.shoeSize ?? '',
-            bootSku: customer?.bootSku ?? '',
+    const { formData, handleInputChange, handleSubmit, setFormData } = useForm({
+            name: customer?.name,
+            email: customer?.email,
+            phone: customer?.phone,
+            bootName: customer?.bootName,
+            shoeWidth: customer?.shoeWidth ,
+            shoeSize: customer?.shoeSize,
+            bootSku: customer?.bootSku,
+            bootImgSrc: customer?.bootImgSrc,
         },
         (formData) => writeCustomer(formData)
     );
     
-    const { name, email, phone, bootName, shoeWidth, shoeSize, bootSku } = formData;
+
+    useEffect(() => {
+        
+    })
+
+    console.log(formData)
+
+    const { name, email, phone, shoeWidth, shoeSize, bootImgSrc, bootName, bootSku } = formData;
 
     const writeCustomer = async (formData) => {
         
-        await editCustomer({
+        await updateCustomer({
             variables: {
                 customerInput: { ...formData },           
             }
@@ -39,10 +48,10 @@ const CustomerForm = ({ customer, eventId, formTitle, submitText, success, updat
     
             console.log('Customer created: ', res.data);
             localStorage.setItem('customer', JSON.stringify(res.data.editCustomer));
-            if (eventId) {
-                addGuestToParty(res.data.editCustomer._id);
+            if (eventId && joining) {
+                addGuestToParty(res.data.updateCustomer._id);
             } else {
-                success();
+                success(res.data.updateCustomer._id);
             }
         })
         .catch((err) => {
@@ -109,7 +118,8 @@ const CustomerForm = ({ customer, eventId, formTitle, submitText, success, updat
             />
             </Form.Group>
         <Form.Group >
-            <BootSelect customerData={formData} handleInputChange={handleInputChange} scrollBackTo={scrollto} />
+            <SizeSelect formData={{ shoeWidth, shoeSize, bootSku }} handleInputChange={handleInputChange} />
+            <BootSelect formData={{ shoeWidth, shoeSize, bootImgSrc, bootName, bootSku}} setFormData={setFormData} scrollBackTo={scrollto} />
         </Form.Group>
 
         <div style={{display: "flex", flexWrap: "nowrap", justifyContent:"flex-end", width: "100%"}}>

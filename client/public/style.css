@@ -191,11 +191,11 @@ h4 {
     border-radius: 5px;
 }
 
-.formButtom {
+.formButton {
     width: 100%;
     box-shadow: 2px 2px 3px black;
     border-radius: 3px;
-
+    margin: 5px;
 }
 
 .imageBG {

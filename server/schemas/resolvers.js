@@ -81,7 +81,6 @@ const resolvers = {
     createUser: async (parent, { userInput }, context) => {
       const user = await User.create({
         ...userInput,
-        customerProfile: { email: userInput.email }
       });
       const token = signToken(user);
       return { token, user };
