@@ -12,13 +12,11 @@ const resolvers = {
       throw new AuthenticationError('You need to be logged in!');
     },
 
-    findAllEvents: async (date) => {
+    findAllEvents: async () => {
   
-      return await Event.find({
-        eventTime: {
-          $gt: new Date().setDate(date) || Date.now()
-        }
-      }).sort({ date: -1 })
+      return await Event.find().sort({ date: -1 })
+      .populate('eventSignups')
+      .populate('eventContact')
   
       },
 
