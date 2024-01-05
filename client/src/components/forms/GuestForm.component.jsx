@@ -1,72 +1,87 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
-import { UPDATE_CUSTOMER, EVENT_ADD_SIGNUP } from '../../util/mutations';
+import { UPDATE_GUEST, EVENT_ADD_SIGNUP } from '../../util/mutations';
 import { RemoveGuestButton } from './buttons';
 import { BootSelect } from '.';
-import { useForm } from '../../util/hooks';
+
 import SizeSelect from './bootSelect/SizeSelect.component';
 
-const CustomerForm = ({ customer, eventId, formTitle, submitText, success, updating, joining, admin }) => {
-    const [updateCustomer, { loading, error }] = useMutation(UPDATE_CUSTOMER);
+const GuestForm = ({ guest, eventId, formTitle, submitText, success, updating, joining, admin }) => {
+    const [updateGuest, { loading, error }] = useMutation(UPDATE_GUEST);
     const [addGuest, { loading: addGuestLoading, error: addGuestError }] = useMutation(EVENT_ADD_SIGNUP);
-   
-    
-    
 
-    const customerFormRef = useRef(null)
-    const { formData, handleInputChange, handleSubmit, setFormData } = useForm({
-            name: customer?.name,
-            email: customer?.email,
-            phone: customer?.phone,
-            bootName: customer?.bootName,
-            shoeWidth: customer?.shoeWidth ,
-            shoeSize: customer?.shoeSize,
-            bootSku: customer?.bootSku,
-            bootImgSrc: customer?.bootImgSrc,
-        },
-        (formData) => writeCustomer(formData)
-    );
-    
 
-    useEffect(() => {
-        
-    })
+    const guestFormRef = useRef(null)
+    
+    const  [formData, setFormData] = useState({
+        name: guest?.name ?? '',
+        email: guest?.email ?? '',
+        phone: guest?.phone ?? '',
+        shoeWidth: guest?.shoeWidth ?? '',
+        shoeSize: guest?.shoeSize ?? '',
+        bootSku: guest?.bootSku ?? '',
+        bootName: guest?.bootName ?? '',
+        bootImgSrc: guest?.bootImgSrc ?? '',
+    });
+
+    const handleInputChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value})
+    }
+
+    const handleSelectBoot = (e) => {
+        const { bootsku, bootname, bootimgsrc } = e.currentTarget.dataset;
+        console.log(bootsku, bootname, bootimgsrc)
+        setFormData({ ...formData, 
+            bootSku: bootsku, 
+            bootName: bootname, 
+            bootImgSrc: bootimgsrc 
+        });
+
+    }
+
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log('GuestForm: ', formData)
+        writeGuest(formData);
+    }
+
 
     console.log(formData)
 
     const { name, email, phone, shoeWidth, shoeSize, bootImgSrc, bootName, bootSku } = formData;
 
-    const writeCustomer = async (formData) => {
+    const writeGuest = async (formData) => {
         
-        await updateCustomer({
+        await updateGuest({
             variables: {
-                customerInput: { ...formData },           
+                guestInput: { ...formData },           
             }
         })
         .then((res) => {
     
-            console.log('Customer created: ', res.data);
-            localStorage.setItem('customer', JSON.stringify(res.data.editCustomer));
+            console.log('Guest created: ', res.data);
+            localStorage.setItem('guest', JSON.stringify(res.data.editGuest));
             if (eventId && joining) {
-                addGuestToParty(res.data.updateCustomer._id);
+                addGuestToParty(res.data.updateGuest._id);
             } else {
-                success(res.data.updateCustomer._id);
+                success(res.data.updateGuest._id);
             }
         })
         .catch((err) => {
-            alert('Error creating customer:', err);
-            console.error('Error creating customer:', err);
+            alert('Error updating guest:', err);
+            console.error('Error updating guest:', err);
          
         });
     
     };
 
-    const addGuestToParty = async (customerId) => {
+    const addGuestToParty = async (guestId) => {
         await addGuest({
             variables: {
                 eventId: eventId,
-                customerId: customerId,
+                guestId: guestId,
             }
         })
         .then((res) => {
@@ -80,16 +95,19 @@ const CustomerForm = ({ customer, eventId, formTitle, submitText, success, updat
     }
 
 
-    const scrollto = () => customerFormRef.current.scrollIntoView()    
+    const scrollto = () => guestFormRef.current.scrollIntoView()    
 
 
 
 
 
   return (
-    <Form onSubmit={handleSubmit} ref={customerFormRef} >
-        {<h4 style={{color: "aliceblue", marginBottom: "15px", marginTop: "15px", fontSize: "3cqb" }}>{formTitle}</h4> || <h1 style={{fontSize: "5cqh" }}>Who are you?</h1>}
-        <Form.Group controlId="formCustomerInfo" >
+    <Form onSubmit={handleSubmit} ref={guestFormRef} >
+        {formTitle 
+            ? <h4 style={{color: "aliceblue", marginBottom: "15px", marginTop: "15px", fontSize: "3cqb" }}> formTitle </h4>
+            : <h1 style={{fontSize: "5cqh" }}>Who are you?</h1>
+        }
+        <Form.Group controlId="formGuestInfo" >
             <Form.Control
                 type="text"
                 placeholder='name'
@@ -118,12 +136,13 @@ const CustomerForm = ({ customer, eventId, formTitle, submitText, success, updat
             />
             </Form.Group>
         <Form.Group >
+
             <SizeSelect formData={{ shoeWidth, shoeSize, bootSku }} handleInputChange={handleInputChange} />
-            <BootSelect formData={{ shoeWidth, shoeSize, bootImgSrc, bootName, bootSku}} setFormData={setFormData} scrollBackTo={scrollto} />
+            <BootSelect formData={{ shoeWidth, shoeSize, bootImgSrc, bootName, bootSku}} onSelectBoot={handleSelectBoot} scrollBackTo={scrollto} />
         </Form.Group>
 
         <div style={{display: "flex", flexWrap: "nowrap", justifyContent:"flex-end", width: "100%"}}>
-        { admin && eventId && customer?._id && <RemoveGuestButton customerId={customer?._id} eventId={eventId}/> }
+        { admin && eventId && guest?._id && <RemoveGuestButton guestId={guest?._id} eventId={eventId}/> }
         
         <Form.Group controlId="formSubmit"  style={{flex: "0 1 60%", padding: "5px"}}>
         
@@ -136,7 +155,7 @@ const CustomerForm = ({ customer, eventId, formTitle, submitText, success, updat
         
 
         </div>
-        {error && <Alert variant='danger'>Error updating customer</Alert>}
+        {error && <Alert variant='danger'>Error updating guest</Alert>}
                 
 
 
@@ -147,4 +166,4 @@ const CustomerForm = ({ customer, eventId, formTitle, submitText, success, updat
   );
 };
 
-export default CustomerForm;
+export default GuestForm;

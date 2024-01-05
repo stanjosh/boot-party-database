@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { CustomerForm, EventForm } from '../components/forms';
+import { GuestForm, EventForm } from '../components/forms';
 
 
 
 
 const CreateEventPage = () => {
-  const [customerId, setCustomerId] = useState('');
+  const [guestId, setGuestId] = useState('');
   
   
 
@@ -21,9 +21,9 @@ const CreateEventPage = () => {
           borderRadius: "3px",
           padding: "15px",
         }}>
-        {customerId         
-          ? <EventForm customerId={customerId} create/>
-          : <CustomerForm success={(customerId) => setCustomerId(customerId)}/>
+        {guestId         
+          ? <EventForm guestId={guestId} create/>
+          : <GuestForm success={(guestId) => setGuestId(guestId)}/>
         }
         </div>
     </div>

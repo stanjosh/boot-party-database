@@ -5,7 +5,7 @@ const eventSchema = new Schema({
     eventContact: {
         type: Schema.Types.ObjectId,
         required: true,
-        ref: 'Customer',
+        ref: 'Guest',
         autopopulate: true,
 
     },
@@ -37,7 +37,7 @@ const eventSchema = new Schema({
     },
     eventSignups: {
         type: [Schema.Types.ObjectId],
-        ref: 'Customer',
+        ref: 'Guest',
         autopopulate: true,
         
     },
