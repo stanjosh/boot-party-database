@@ -3,7 +3,7 @@ import { Button, Form } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
 import { EVENT_REMOVE_SIGNUP } from '../../../util/mutations';
 
-const RemoveGuestButton = ({eventId, customerId}) => {
+const RemoveGuestButton = ({eventId, guestId}) => {
     const [removeGuest, { loading, error }] = useMutation(EVENT_REMOVE_SIGNUP);
     const [confirm, setConfirm] = useState(false);
 
@@ -12,7 +12,7 @@ const RemoveGuestButton = ({eventId, customerId}) => {
         await removeGuest({
             variables: {
                 eventId: eventId,
-                customerId: customerId,           
+                guestId: guestId,           
                
             }
         })

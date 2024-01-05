@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Container, Alert, Button, Tabs, Tab, Modal } from 'react-bootstrap';
-import { CustomerForm, EventForm, EventAdminForm } from './forms';
+import { GuestForm, EventForm, EventAdminForm } from './forms';
 import { useQuery } from '@apollo/client';
 import { QUERY_EVENT } from '../util/queries';
 
@@ -40,7 +40,7 @@ const AdminParty = () => {
 
               <EventForm eventData={eventData} submitText={'save'} admin={true} />
 
-              <CustomerForm eventId={eventId} customer={eventData?.eventContact} submitText={'save'} formTitle={'event contact'}  />
+              <GuestForm eventId={eventId} guest={eventData?.eventContact} submitText={'save'} formTitle={'event contact'} success={() => console.log('success')}  />
             
             
           </Tab>
@@ -55,7 +55,7 @@ const AdminParty = () => {
               console.log(guest)
               return (
               <div key={guest?._id} style={{borderTop: "2px solid aliceblue", marginTop: "10px"}} >
-                <CustomerForm eventId={eventId} customer={guest} submitText={'save'} formTitle={'guest ' + (index + 1)} admin />
+                <GuestForm eventId={eventId} guest={guest} submitText={'save'} formTitle={'guest ' + (index + 1)} success={() => console.log('success')}admin />
               </div>
               )
           })}
@@ -65,7 +65,7 @@ const AdminParty = () => {
               <Modal.Title>add guest</Modal.Title>
             </Modal.Header>
             <Modal.Body  className='bg-dark text-light'>
-              <CustomerForm eventId={eventId} submitText={'add'} formTitle={'add guest'}  success={() => setNewShowGuestModal(false)}/>
+              <GuestForm  joining eventId={eventId} submitText={'add'} formTitle={'add guest'} success={() => setNewShowGuestModal(false)}/>
             </Modal.Body>
             <Modal.Footer  className='bg-dark text-light'>
             </Modal.Footer>

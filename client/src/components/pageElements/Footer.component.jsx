@@ -6,8 +6,8 @@ const Footer = () => {
 
         <div className="footerContainer">
 
-          <ul>
-            <li style={{justifyContent: "space-between"}}>
+          <ul >
+            <li className="socials">
               <a href="https://facebook.com/alviesboots" rel="noreferrer" target="_blank">
                 <Image src="/facebook-svgrepo-com.svg" height="40cqh" />
               </a>  

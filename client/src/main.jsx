@@ -12,7 +12,7 @@ import { setContext } from '@apollo/client/link/context';
 import { LandingPage, Booking, ShareParty, JoinParty, AdminParty } from './components/'
 import { BootSelect } from './components/pageElements/index.js';
 
-const host = '/graphql';
+const host = '/api';
 
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists

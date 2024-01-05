@@ -5,13 +5,14 @@ const typeDefs = gql`
     _id: ID!
     email: String!
     password: String!
-    customerProfile: Customer
+    guestProfile: Guest
     events: [Event]
   }
 
   input UserInput {
     email: String!
     password: String!
+    guestProfile: GuestInput
   }
   
 
@@ -19,13 +20,13 @@ const typeDefs = gql`
     _id: ID!
     eventLocation: String!
     eventTime: String!
-    eventContact: Customer!
+    eventContact: Guest!
 
     eventTitle: String 
     eventLeadEmployee: String
     eventLoadinTime: String
     eventDisplay: String
-    eventSignups: [Customer]
+    eventSignups: [Guest]
     eventNotes: String
     eventPartyType: String
     eventVan: Int
@@ -53,10 +54,10 @@ const typeDefs = gql`
     eventVan: Int
     eventTransferOrder: String
     eventHelpers: [String]
-    eventContact: CustomerInput
+    eventContact: GuestInput
   }
 
-  type Customer {
+  type Guest {
     _id: ID!
     name: String!
     email: String
@@ -65,9 +66,10 @@ const typeDefs = gql`
     bootName: String
     shoeSize: String
     shoeWidth: String
+    bootImgSrc: String
   }
 
-  input CustomerInput {
+  input GuestInput {
     name: String
     email: String
     phone: String
@@ -75,6 +77,7 @@ const typeDefs = gql`
     bootName: String
     shoeSize: String
     shoeWidth: String
+    bootImgSrc: String
   }
 
   type Auth {
@@ -86,14 +89,14 @@ const typeDefs = gql`
   type Query {
     me: User
     findAllEvents(date: String): [Event]
-    findCustomerByID(uuid: ID!): Customer
+    findGuestByID(uuid: ID!): Guest
     findEventByID(uuid: ID!): Event
     findEventByDate(date: String!): [Event]
-    findCustomerByFirstName(firstName: String!): [Customer]
-    findCustomerByLastName(lastName: String!): [Customer]
-    findCustomerByEmail(email: String!): [Customer]
-    findCustomerByPhone(phone: String!): [Customer]
-    findCustomerByShoeSize(shoeSize: Int!): [Customer]
+    findGuestByFirstName(firstName: String!): [Guest]
+    findGuestByLastName(lastName: String!): [Guest]
+    findGuestByEmail(email: String!): [Guest]
+    findGuestByPhone(phone: String!): [Guest]
+    findGuestByShoeSize(shoeSize: Int!): [Guest]
     findEventByEventTitle(eventTitle: String!): [Event]
     findEventByEventLeadEmployee(eventLeadEmployee: String!): [Event]
     findEventByEventContact(eventContact: String!): [Event]
@@ -111,10 +114,10 @@ const typeDefs = gql`
     updateUser(userId: ID!, userInput: UserInput!): User
     createEvent(eventInput: EventInput!, userId: ID): Event
     updateEvent(eventId: ID!, updateEventInput: UpdateEventInput!): Event
-    eventAddSignup(eventId: ID!, customerId: ID!): Event
-    eventRemoveSignup(eventId: ID!, customerId: ID!): Event
-    updateCustomer(customerInput: CustomerInput!): Customer
-    createCustomer(customerInput: CustomerInput!): Customer
+    eventAddSignup(eventId: ID!, guestId: ID!): Event
+    eventRemoveSignup(eventId: ID!, guestId: ID!): Event
+    updateGuest(guestInput: GuestInput!): Guest
+    createGuest(guestInput: GuestInput!): Guest
 
   }
 

@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 
 
 
-const customerSchema = new Schema({
+const guestSchema = new Schema({
     name: {
         type: String,
         required: true,
@@ -38,6 +38,11 @@ const customerSchema = new Schema({
         required: false,
         trim: true
     },
+    bootImgSrc: {
+        type: String,
+        required: false,
+        trim: true
+    },
 
 
     
@@ -46,8 +51,8 @@ const customerSchema = new Schema({
 
 
 
-const Customer = model('Customer', customerSchema);
+const Guest = model('Guest', guestSchema);
 
 
 
-module.exports = Customer;
+module.exports = Guest;

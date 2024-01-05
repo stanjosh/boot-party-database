@@ -63,7 +63,7 @@ app.get('*', (req, res) => {
 
 const startApolloServer = async () => {
   await server.start();
-  server.applyMiddleware({ app, path: '/graphql' });
+  server.applyMiddleware({ app, path: '/api' });
 
   db.once('open', () => {
     app.listen(parseInt(PORT), () => {

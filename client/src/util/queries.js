@@ -2,11 +2,11 @@ import { gql } from '@apollo/client';
 
 export const QUERY_ME = gql`
 query Me {
-  user {
+  me {
     _id
     email
     password
-    customerProfile {
+    guestProfile {
       _id
       name
       email
@@ -15,6 +15,7 @@ query Me {
       shoeWidth
       bootName
       bootSku
+      bootImgSrc
     }
   }
 }
@@ -35,6 +36,7 @@ query FindEventByID($uuid: ID!) {
       shoeWidth
       bootName
       bootSku
+      bootImgSrc
     }
     eventTitle
     eventLeadEmployee
@@ -49,6 +51,7 @@ query FindEventByID($uuid: ID!) {
       shoeWidth
       bootName
       bootSku
+      bootImgSrc
     }
     eventNotes
     eventPartyType
@@ -74,6 +77,7 @@ query FindAllEvents($date: String) {
       shoeWidth
       bootName
       bootSku
+      bootImgSrc
     }
     eventTitle
     eventLeadEmployee
@@ -88,6 +92,7 @@ query FindAllEvents($date: String) {
       shoeWidth
       bootName
       bootSku
+      bootImgSrc
     }
     eventNotes
     eventPartyType
