@@ -61,9 +61,9 @@ const ShareParty = () => {
       ) : (
         <EventDisplay eventData={data.findEventByID}/>
       )}
-
-      <GuestForm guestForm={ guestForm } setGuestFormData={ setGuestFormData } handleSubmit={ handleSubmit } loading={ joinPartyLoading } error={ joinPartyError } formTitle={'JOIN THE PARTY'}/>
-      
+      <div className='form-container'>
+        <GuestForm guestForm={ guestForm } setGuestFormData={ setGuestFormData } handleSubmit={ handleSubmit } loading={ joinPartyLoading } error={ joinPartyError } formTitle={'JOIN THE PARTY'}/>
+      </div>
       {success && <Alert >Thanks for joining! <Link to={`/party/${eventId}`}>Back to the party!</Link></Alert>}
       {joinPartyError && <Alert>Error joining! <Link to={'mailto:holler@alvies.com'}>get at us</Link></Alert>}
       </div>
