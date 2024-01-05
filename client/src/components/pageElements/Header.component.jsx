@@ -36,7 +36,7 @@ const Header = () => {
             style={{
               margin: "5px", 
               flex: "0 1 25cqw", 
-              width: "100%", 
+              width: "90%", 
               maxHeight: "50px", 
               textAlign: "center", 
               color: "aliceBlue", 
@@ -50,7 +50,7 @@ const Header = () => {
             onClick={() => setShowLoginSignup(true)} 
             style={{margin: "5px", 
               flex: "0 1 25cqw", 
-              width: "100%", 
+              width: "90%", 
               maxHeight: "50px", 
               textAlign: "center", 
               border: "4px solid var(--alviesBlue)"

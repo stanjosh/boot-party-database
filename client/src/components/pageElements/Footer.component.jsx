@@ -50,7 +50,7 @@ const Footer = () => {
           
         </div>
 
-    <div style={{width: "100%", textAlign: "end"}}>©2022 Alvies, LLC. All rights reserved.</div>
+    <div style={{width: "100%", textAlign: "end", fontSize: "1.5cqb"}}>©2022 Alvies, LLC. All rights reserved.</div>
     </footer>
   );
 };
