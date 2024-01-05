@@ -25,7 +25,7 @@ const CreateEventPage = () => {
           ? <EventForm guestId={guestId} create/>
           : <GuestForm success={(guestId) => setGuestId(guestId)}/>
         }
-        </div>
+      </div>
     </div>
   );
 };

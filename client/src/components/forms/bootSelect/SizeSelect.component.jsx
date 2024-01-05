@@ -12,49 +12,46 @@ const SizeSelect = ({ formData, handleInputChange }) => {
     const { shoeWidth, shoeSize, bootSku } = formData;
 
     return (
-        <>        {!bootSku 
-            ? <div style={{color: "aliceblue", height: "100%", padding: "20px"}}>Select the boots you want to check out?</div>
-            : null }
-    <Form.Group hidden={bootSku} style={{
-        display: "flex", 
-        flexWrap: "nowrap", 
-        textAlign: "right", 
-        justifyContent: "center", 
-        
-        
-        width: "100%"
-    }} >
+        <>        
 
-        <Form.Select 
-            id="shoeWidth" 
-            aria-label="Boot Width"
-            placeholder="Boot Width"
-            onChange={handleInputChange}
-            name="shoeWidth"
-            value={shoeWidth}
-            style={{margin: "15px", maxWidth: "150px" }}
-        >
-            <option value={null}>Boot Width</option>
-            <option value="B">B (Women)</option>
-            <option value="D">D (Men)</option>
-            <option value="EE">EE (Men Wide)</option>
+        <Form.Group hidden={bootSku} style={{
+            display: "flex", 
+            flexWrap: "wrap", 
+            textAlign: "right", 
+            justifyContent: "space-between", 
+            width: "100%",
+        }} >
 
-        </Form.Select> 
-        <Form.Select 
-            id="shoeSize" 
-            aria-label="Boot Sizes"
-            placeholder="Boot Sizes"
-            onChange={handleInputChange}
-            name="shoeSize"
-            value={shoeSize}
-            style={{margin: "15px", maxWidth: "150px"}}
-        >
-            <option value={null}>Boot Size</option>
-                {(shoeWidth === "B" ? womenSizes : menSizes).map((size) =>               
-                    <option value={size} key={size}>{size}</option>
-            )}
-        </Form.Select>
-    </Form.Group>
+            <Form.Select 
+                id="shoeWidth" 
+                aria-label="Boot Width"
+                placeholder="Boot Width"
+                onChange={handleInputChange}
+                name="shoeWidth"
+                value={shoeWidth}
+                style={{maxWidth: "150px", margin: "10px"}}
+            >
+                <option value={null}>Boot Width</option>
+                <option value="B">B (Women)</option>
+                <option value="D">D (Men)</option>
+                <option value="EE">EE (Men Wide)</option>
+
+            </Form.Select> 
+            <Form.Select 
+                id="shoeSize" 
+                aria-label="Boot Sizes"
+                placeholder="Boot Sizes"
+                onChange={handleInputChange}
+                name="shoeSize"
+                value={shoeSize}
+                style={{ maxWidth: "150px", margin: "10px"}}
+            >
+                <option value={null}>Boot Size</option>
+                    {(shoeWidth === "B" ? womenSizes : menSizes).map((size) =>               
+                        <option value={size} key={size}>{size}</option>
+                )}
+            </Form.Select>
+        </Form.Group>
     </>
     );
 }
