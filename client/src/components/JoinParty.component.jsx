@@ -6,12 +6,12 @@ import { useQuery } from '@apollo/client';
 import { QUERY_EVENT } from '../util/queries';
 import { useMutation } from '@apollo/client';
 import { EVENT_ADD_SIGNUP } from '../util/mutations';
-import { CustomerForm } from './forms';
+import { GuestForm } from './forms';
 import { Link } from 'react-router-dom';
 
 const ShareParty = () => {
   const { eventId } = useParams();
-  const [customerForm, setCustomerFormData] = useState({});
+  const [guestForm, setGuestFormData] = useState({});
   const [success, setSuccess] = useState(false);
   const [ joinParty, { loading: joinPartyLoading, error: joinPartyError }] = useMutation(EVENT_ADD_SIGNUP);
 
@@ -25,14 +25,14 @@ const ShareParty = () => {
     await joinParty({
         variables: {
             eventId: eventId,
-            customerInput: { ...customerForm },           
+            guestInput: { ...guestForm },           
            
         }
     })
     .then((res) => {
     // Handle success
     console.log('Event created:', res.data);
-    setCustomerFormData({ name: '', email: '', phone: '' });
+    setGuestFormData({ name: '', email: '', phone: '' });
     setSuccess(true);
     
     })
@@ -62,7 +62,7 @@ const ShareParty = () => {
         <EventDisplay eventData={data.findEventByID}/>
       )}
 
-      <CustomerForm customerForm={ customerForm } setCustomerFormData={ setCustomerFormData } handleSubmit={ handleSubmit } loading={ joinPartyLoading } error={ joinPartyError } formTitle={'JOIN THE PARTY'}/>
+      <GuestForm guestForm={ guestForm } setGuestFormData={ setGuestFormData } handleSubmit={ handleSubmit } loading={ joinPartyLoading } error={ joinPartyError } formTitle={'JOIN THE PARTY'}/>
       
       {success && <Alert >Thanks for joining! <Link to={`/party/${eventId}`}>Back to the party!</Link></Alert>}
       {joinPartyError && <Alert>Error joining! <Link to={'mailto:holler@alvies.com'}>get at us</Link></Alert>}

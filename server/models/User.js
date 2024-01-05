@@ -8,10 +8,10 @@ const userSchema = new Schema({
       required: true,
       trim: true
     },
-    customerProfile: {
+    guestProfile: {
       type: Schema.Types.ObjectId,
       required: true,
-      ref: 'Customer',
+      ref: 'Guest',
       autopopulate: true,
    },
     events : [{
