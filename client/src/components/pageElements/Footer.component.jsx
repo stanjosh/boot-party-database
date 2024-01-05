@@ -34,10 +34,10 @@ const Footer = () => {
                 Terms of Service
               </a>
             </li>
-              <li>
+            <li>
+            
+              <a href="https://bootparty.com/privacy-policy">
                   Privacy Policy
-            <a href="https://bootparty.com/privacy-policy">
-                Privacy Policy
               </a>
 
             </li>
