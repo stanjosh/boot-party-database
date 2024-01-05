@@ -11,7 +11,7 @@ const CreateEventPage = () => {
 
   return (
     <div style={{display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", width: "100%", minHeight: "70vh"}}>
-    <div style={{textAlign: "center", padding: "15px", marginTop: "25px", width: "100%", maxWidth: "780px", display: "flex", alignContent: "center", justifyContent: "center", backgroundColor: "var(--alviesBlue)" }}>
+    <div style={{textAlign: "center", padding: "15px", marginTop: "25px", width: "100%", maxWidth: "780px", display: "flex", alignContent: "center", justifyContent: "center", backgroundColor: "var(--alviesBlue)",  borderRadius: "3px" }}>
         
         {guestId         
           ? <EventForm guestId={guestId} create/>

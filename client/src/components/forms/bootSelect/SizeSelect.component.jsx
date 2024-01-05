@@ -20,6 +20,7 @@ const SizeSelect = ({ formData, handleInputChange }) => {
             textAlign: "right", 
             justifyContent: "space-between", 
             width: "100%",
+            marginBottom: "15px"
         }} >
 
             <Form.Select 
@@ -29,7 +30,7 @@ const SizeSelect = ({ formData, handleInputChange }) => {
                 onChange={handleInputChange}
                 name="shoeWidth"
                 value={shoeWidth}
-                style={{maxWidth: "150px", margin: "10px"}}
+                style={{flex: "1 0 125px", marginRight: "10px"}}
             >
                 <option value={null}>Boot Width</option>
                 <option value="B">B (Women)</option>
@@ -44,7 +45,7 @@ const SizeSelect = ({ formData, handleInputChange }) => {
                 onChange={handleInputChange}
                 name="shoeSize"
                 value={shoeSize}
-                style={{ maxWidth: "150px", margin: "10px"}}
+                style={{flex: "1 0 125px", marginLeft: "10px"}}
             >
                 <option value={null}>Boot Size</option>
                     {(shoeWidth === "B" ? womenSizes : menSizes).map((size) =>               
