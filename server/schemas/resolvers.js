@@ -1,7 +1,7 @@
 const { AuthenticationError } = require('apollo-server-express');
 const { Event, Guest, User } = require('../models');
 const { signToken } = require('../utils/auth');
-
+const { Types }  = require('mongoose');
 
 const resolvers = {
   Query: {
@@ -169,7 +169,7 @@ const resolvers = {
 
     updateGuest: async (parent, { guestInput }, context) => {
       const guest = await Guest.findOneAndUpdate(
-        guestInput._id ? { _id: guestInput._id } : null,
+        { _id: guestInput._id || new Types.ObjectId() },
         { 
           ...guestInput
         },

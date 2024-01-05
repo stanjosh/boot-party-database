@@ -104,7 +104,7 @@ const GuestForm = ({ guest, eventId, formTitle, submitText, success, updating, j
   return (
     <Form onSubmit={handleSubmit} ref={guestFormRef} >
         {formTitle 
-            ? <h4 style={{color: "aliceblue", marginBottom: "15px", marginTop: "15px", fontSize: "3cqb" }}> formTitle </h4>
+            ? <h4 style={{color: "aliceblue", marginBottom: "15px", marginTop: "15px", fontSize: "3cqb" }}> {formTitle} </h4>
             : <h1 style={{fontSize: "5cqh" }}>Who are you?</h1>
         }
         <Form.Group controlId="formGuestInfo" >

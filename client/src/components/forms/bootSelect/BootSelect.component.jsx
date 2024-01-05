@@ -50,8 +50,8 @@ const BootSelect = ({ formData, onSelectBoot, scrollBackTo }) => {
 
                 <Button style={{width: "5cqb", height: "5cqb", padding: "0", alignSelf:  "end" }} variant="danger"  onClick={() => {handleSelectBoot();}}>X</Button>    
                 
-                <div>
-                <Image src={bootImgSrc} alt={bootName} style={{flex: "1 1 100%", maxWidth: "70cqw"}} />
+                <div style={{display: "flex", flexWrap: "wrap"}}>
+                <Image src={bootImgSrc} alt={bootName} style={{flex: "0 1 100%", width: "100%"}} />
                 <h2 style={{fontSize: "3cqb"}}>{bootName}</h2>
                 </div>
             </div>

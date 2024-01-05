@@ -10,22 +10,15 @@ const CreateEventPage = () => {
   
 
   return (
-    <div style={{ minHeight: "780px", textAlign: "center", marginTop: "25px", width: "100%", display: "flex", alignContent: "center", justifyContent: "center"}}>
-        <div style={{
-          justifyContent: "center", 
-          backgroundColor: "var(--alviesBlue)", 
-          width: "100%", 
-          height: "100%",
-          maxWidth: "780px", 
-          marginBottom: "25px",
-          borderRadius: "3px",
-          padding: "15px",
-        }}>
+    <div style={{display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", width: "100%", minHeight: "70vh"}}>
+    <div style={{textAlign: "center", padding: "15px", marginTop: "25px", width: "100%", maxWidth: "780px", display: "flex", alignContent: "center", justifyContent: "center", backgroundColor: "var(--alviesBlue)" }}>
+        
         {guestId         
           ? <EventForm guestId={guestId} create/>
           : <GuestForm success={(guestId) => setGuestId(guestId)}/>
         }
-      </div>
+      
+    </div>
     </div>
   );
 };

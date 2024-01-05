@@ -16,15 +16,15 @@ const ShareParty = () => {
   console.log(data)
   return (
     <>
-      <Container fluid style={{ minHeight: '70cqh' }}>
+      <Container fluid style={{ minHeight: '70cqh', maxWidth: "650px", marginTop: "15px", marginBottom: "15px" }}>
         
         {loading ? (
           <div>Loading...</div>
         ) : (
-          <>
+          <div style={{backgroundColor: "var(--alviesBlue)", padding: "5px", borderRadius: "3px"}}>
             <EventDisplay eventData={data?.findEventByID}/>
             <GuestsDisplay eventData={data?.findEventByID}/>
-          </>
+          </div>
         )}
 
 

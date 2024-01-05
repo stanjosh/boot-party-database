@@ -16,8 +16,9 @@ const EventDisplay = ( { eventData } ) => {
 
     return (
         <>
-        <Card style={{marginTop: "15px", border: "4px solid var(--alviesDarkBlue)"}}>
-            <Card.Body style={{display: "flex", width: "100%", flexWrap: "wrap", justifyContent: "space-around" }}>
+
+        <Card>
+            <Card.Body style={{display: "flex", width: "100%", flexWrap: "wrap", justifyContent: "space-around", alignItems: "center"}}>
 
                     
  
@@ -42,9 +43,7 @@ const EventDisplay = ( { eventData } ) => {
                     
                     
                     <div style={{display: "flex", flexDirection:"column", flexWrap: "wrap", flex: "1 0 25%", justifyContent: "space-around"}}>
-                        <Button className='formButton' href={`mailto: ${eventData?.eventContact.email}`}>EMAIL</Button>
-                        <Button className='formButton' href={`tel: ${eventData?.eventContact.phone}`}>CALL</Button>
-                        <Button className='formButton' onClick={() => navigator.clipboard.writeText(`${window.location.origin}/join/${eventData?._id}`)}>COPY LINK</Button>
+                        <Button className='formButton' href={`${window.location.origin}/join/${eventData?._id}`}>JOIN</Button>
                         <Button className='formButton' onClick={() => navigator.share(shareData)}>SHARE</Button>
                     </div>
 
