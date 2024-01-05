@@ -1,25 +1,32 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
-  type me {
+  type User {
     _id: ID!
-    username: String!
     email: String!
     password: String!
-   
+    guestProfile: Guest
+    events: [Event]
   }
+
+  input UserInput {
+    email: String!
+    password: String!
+    guestProfile: GuestInput
+  }
+  
 
   type Event {
     _id: ID!
     eventLocation: String!
     eventTime: String!
-    eventContact: Customer!
+    eventContact: Guest!
 
     eventTitle: String 
     eventLeadEmployee: String
     eventLoadinTime: String
     eventDisplay: String
-    eventSignups: [Customer]
+    eventSignups: [Guest]
     eventNotes: String
     eventPartyType: String
     eventVan: Int
@@ -31,16 +38,8 @@ const typeDefs = gql`
     eventLocation: String!
     eventTime: String!
     eventContact: String!
-
-    eventTitle: String 
-    eventLeadEmployee: String
-    eventLoadinTime: String
-    eventDisplay: String
     eventNotes: String
-    eventPartyType: String
-    eventVan: Int
-    eventTransferOrder: String
-    eventHelpers: [String]
+    eventTitle: String 
   }
 
   input UpdateEventInput {
@@ -55,43 +54,49 @@ const typeDefs = gql`
     eventVan: Int
     eventTransferOrder: String
     eventHelpers: [String]
-    eventContact: CustomerInput
+    eventContact: GuestInput
   }
 
-  type Customer {
+  type Guest {
     _id: ID!
     name: String!
-    email: String!
+    email: String
     phone: String
     bootSku: String
     bootName: String
     shoeSize: String
     shoeWidth: String
+    bootImgSrc: String
   }
 
-  input CustomerInput {
-    name: String!
-    email: String!
+  input GuestInput {
+    name: String
+    email: String
     phone: String
     bootSku: String
     bootName: String
     shoeSize: String
     shoeWidth: String
+    bootImgSrc: String
   }
 
+  type Auth {
+    token: ID!
+    user: User
+  }
 
 
   type Query {
-    me(uuid: ID!): me
+    me: User
     findAllEvents(date: String): [Event]
-    findCustomerByID(uuid: ID!): Customer
+    findGuestByID(uuid: ID!): Guest
     findEventByID(uuid: ID!): Event
     findEventByDate(date: String!): [Event]
-    findCustomerByFirstName(firstName: String!): [Customer]
-    findCustomerByLastName(lastName: String!): [Customer]
-    findCustomerByEmail(email: String!): [Customer]
-    findCustomerByPhone(phone: String!): [Customer]
-    findCustomerByShoeSize(shoeSize: Int!): [Customer]
+    findGuestByFirstName(firstName: String!): [Guest]
+    findGuestByLastName(lastName: String!): [Guest]
+    findGuestByEmail(email: String!): [Guest]
+    findGuestByPhone(phone: String!): [Guest]
+    findGuestByShoeSize(shoeSize: Int!): [Guest]
     findEventByEventTitle(eventTitle: String!): [Event]
     findEventByEventLeadEmployee(eventLeadEmployee: String!): [Event]
     findEventByEventContact(eventContact: String!): [Event]
@@ -104,13 +109,16 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    createEvent(eventInput: EventInput): Event
-    updateEvent(eventId: ID!, updateEventInput: UpdateEventInput  ): Event
-    eventAddSignup(eventId: ID!, customerId: ID!): Event
-    eventRemoveSignup(eventId: ID!, customerId: ID!): Event
-    editCustomer(customerInput: CustomerInput!): Customer
-    createCustomer(customerInput: CustomerInput): Customer
-    
+    createUser(userInput: UserInput!): Auth
+    loginUser(email: String!, password: String!): Auth
+    updateUser(userId: ID!, userInput: UserInput!): User
+    createEvent(eventInput: EventInput!, userId: ID): Event
+    updateEvent(eventId: ID!, updateEventInput: UpdateEventInput!): Event
+    eventAddSignup(eventId: ID!, guestId: ID!): Event
+    eventRemoveSignup(eventId: ID!, guestId: ID!): Event
+    updateGuest(guestInput: GuestInput!): Guest
+    createGuest(guestInput: GuestInput!): Guest
+
   }
 
 `;

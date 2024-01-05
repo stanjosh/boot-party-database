@@ -1,44 +1,66 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Card } from 'react-bootstrap';
+import { Card, Button } from 'react-bootstrap';
 
 
 const EventDisplay = ( { eventData } ) => {
-    
-    const prettyTime = new Date(parseInt(eventData.eventTime)).toLocaleString('en-US', { month: "long", day: "numeric", weekday: "long", hour: 'numeric', minute: 'numeric', hour12: true })  
+    console.log(eventData)
+    const prettyTime = new Date(parseInt(eventData?.eventTime)).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })  
+    const prettyDate = new Date(parseInt(eventData?.eventTime)).toLocaleString('en-US', { month: "long", day: "numeric", weekday: "long" })
+
+    const shareData = {
+        title: "Alvies Boot Party",
+        text: "Check out my Alvies Boot Party!",
+        url: `${window.location.origin}/join/${eventData?._id}`,
+      };
 
     return (
         <>
-        <Card style={{marginTop: "15px"}}>
-            <Card.Body>
-                <Card.Title>
-                    <h3 style={{ fontSize: '3.5cqb' }}>
-                    {eventData.eventTitle ? eventData.eventTitle : 'Boot Party'}
-                    </h3>
-                </Card.Title>
-                <Card.Text>
-                    {console.log(eventData)}
-                    <strong>location:</strong> { eventData.eventLocation }<br />
-                    <strong>time:</strong> { prettyTime }<br />
-                    
-                    <strong>host name:</strong> { eventData.eventContact.name}<br />
-                    <strong>email:</strong> { eventData.eventContact.email}<br />
-                    <strong>phone:</strong> { eventData.eventContact.phone ? eventData.eventContact.phone : 'not provided' }<br />
-                    
 
-                    {eventData.eventNotes
+        <Card>
+            <Card.Body style={{display: "flex", width: "100%", flexWrap: "wrap", justifyContent: "space-around", alignItems: "center"}}>
+
+                    
+ 
+
+
+                <div style={{flex: "1 1 75%", textAlign: "center"}}>
+                    <h2 style={{fontSize: "3cqb"}}>{prettyDate}</h2>
+                    <h1 className="landingPageTitle" style={{ fontSize: '5cqb' }}>
+                    {eventData?.eventTitle ? eventData.eventTitle : 'Boot Party'}
+                    </h1>
+                    <h3 style={{fontSize: "3cqb"}}>{prettyTime} at { eventData?.eventLocation }</h3>
+                    <div style={{display: "flex", flex: "0 1 45cqw", minHeight: "100%"}}>
+                     
+                     </div>
+                </div>
+                
+                
+                
+                    
+                   
+
+                    
+                    
+                    <div style={{display: "flex", flexDirection:"column", flexWrap: "wrap", flex: "1 0 25%", justifyContent: "space-around"}}>
+                        <Button className='formButton' href={`${window.location.origin}/join/${eventData?._id}`}>JOIN</Button>
+                        <Button className='formButton' onClick={() => navigator.share(shareData)}>SHARE</Button>
+                    </div>
+
+
+                        
+                        <br />
+                    {eventData?.eventNotes
                         ? <><strong>notes:</strong> {eventData.eventNotes}</>
                         : null
                     }
                     
-                    {eventData.eventNotes 
-                        ? <><strong>guests:</strong> {eventData.eventSignups.length}</>
-                        : null
-                    }
+
+
+
                 
-                
-                </Card.Text>
             </Card.Body>
+            
         </Card>
 
         </>

@@ -8,6 +8,8 @@
 :root {
     --alviesBlue: #009ceb;
     --alviesDarkBlue: #002952;
+    --lightText: aliceblue;
+    --alviesYellow: #f4a836;
 }
 
 body {
@@ -17,22 +19,23 @@ body {
     max-width: 100%;
     display: block;
     box-sizing: border-box;
-    background-color: aliceblue;
+    color: var(--lightText);
     font-size: 16px;
     line-height: 1.5;
     overflow-x: hidden;
     scroll-behavior: smooth;
 }
+
 header {
     background-color: #333;
-    color: #fff;
+    color: var(--lightText);
     text-align: cover;
     padding: 10px;
 }
 
 ul {
     list-style: none;
-    padding: 0;
+
 }
 li {
     display: flex;
@@ -84,13 +87,18 @@ main {
     text-align: center;
     min-height: 100cqh;
     padding: 10px;
-    max-width: 500px;
+    
     width: 100%;
+    max-width: 500px;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     background-attachment: fixed;
-;
+
+}
+
+.landingPageBox h3 {
+    font-size: 5cqb;
 }
 
 
@@ -100,7 +108,7 @@ h1 {
     font-weight: 600;
     font-family: 'unpretentious', sans-serif;
     letter-spacing: .5cqw;
-    color: aliceblue;
+    color: var(--lightText);
     filter: drop-shadow(0px 0px 3px black) drop-shadow(2px 2px 3px black) drop-shadow(-2px -2px 3px black);
 }
 
@@ -114,7 +122,7 @@ h1 {
 }
 
 h4 {
-    color: aliceblue;;
+    color: var(--lightText);
     font-size: 5cqb;
     font-family: 'unpretentious', sans-serif;
     letter-spacing: .3cqw;
@@ -122,15 +130,12 @@ h4 {
     width: 100%;
 }
 
-.landingPageBox h3 {
-    font-size: 5cqb;
-}
 
 
 
 .navbar-header {
     background-color: var(--alviesBlue);
-    color: white;
+    color: var(--lightText);
    
 }
 
@@ -138,7 +143,7 @@ h4 {
     background-color: var(--alviesBlue);
     font-family: 'unpretentious', sans-serif;
     letter-spacing: 0;
-    color: white;
+    color: var(--lightText);
     border: none;
     padding: 15px 10px;
     cursor: pointer;
@@ -153,7 +158,7 @@ h4 {
 }
 
 .landingPageButton:hover {
-    background-color: #f4a836;
+    background-color: var(--alviesYellow)
 }
 
 
@@ -172,7 +177,7 @@ h4 {
 
 
 .card {
-    background-color: aliceblue;
+    background-color: var(--lightText);
 }
 
 .card .h1 .h2 .h3 .h4 {
@@ -187,21 +192,44 @@ h4 {
     font-style: normal;
     font-size: 2cqh;
     letter-spacing: .1cqw;
-    color: aliceblue;
+    color: var(--lightText);
     text-align: right;
     padding: 2cqb;
     width: 100%;
-    max-width: 50cqw;
-    margin: 100px 10px 0px 0px;
+    max-width: 40cqw;
+    margin: 100px 100px 10px 100px;
     border-radius: 3px;
 }
 
 .pblock a {
-    color: aliceblue;
+    color: var(--lightText);
     text-decoration: none;
 
 }
 
+.modal-content {
+    border-radius: 5px;
+}
+
+
+.formTitle {
+    font-family: 'unpretentious', sans-serif;
+    font-size: 3cqb;
+    color: var(--lightText);
+    letter-spacing: .5cqw;
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+    margin: 15px;
+
+}
+
+.formButton {
+    box-shadow: 2px 2px 3px black;
+    border-radius: 3px;
+    margin: 5px;
+    width: 100%;
+}
 
 .imageBG {
 
@@ -213,7 +241,65 @@ h4 {
 
 }
 
+.main-form {
+    width: 100%;
+    max-width: 480px;
+}
 
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+
+    background-color: var(--alviesBlue);
+    padding: 15px;
+    border-radius: 3px;
+}
+
+.footerContainer {
+    display: block;
+    background-color: var(--alviesDarkBlue);
+    font-family: 'unpretentious', sans-serif;
+    color: var(--lightText);
+    min-height: max-content;
+    
+}
+
+footer a {
+    display: block;
+    color: var(--lightText);
+    text-decoration: none;
+
+    font-size: 2.5cqh;
+
+}
+
+footer ul {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+}
+
+footer a:hover {
+    color: var(--alviesBlue);
+}
+
+footer li {
+    list-style: none;
+    padding: 10px;
+    justify-content: flex-end;
+}
+
+footer .socials {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    flex: 1 0 ;
+}
 
 @media screen and (max-width: 1200px) {
 
@@ -228,6 +314,12 @@ h4 {
 }
 
 @media screen and (max-width: 980px) {
+    footer ul {
+        flex-direction: column;
+        padding: auto;
+        overflow: scroll;
+    }
+
 
     .pblock {
         text-align: center;

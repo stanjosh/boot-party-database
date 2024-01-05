@@ -1,8 +1,7 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { Event, Customer } = require('../models');
-const { Mongoose } = require('mongoose');
-
-
+const { Event, Guest, User } = require('../models');
+const { signToken } = require('../utils/auth');
+const { Types }  = require('mongoose');
 
 const resolvers = {
   Query: {
@@ -23,14 +22,14 @@ const resolvers = {
   
       },
 
-
+    
     
 
-    findCustomerByID: async (uuid) => {
-      return await Customer.findOne(uuid);
+    findGuestByID: async (uuid) => {
+      return await Guest.findOne(uuid);
     },
-    findCustomerByEmail: async (parent, { email }, context) => {
-      return await Customer.findOne({ email: email });
+    findGuestByEmail: async (parent, { email }, context) => {
+      return await Guest.findOne({ email: email });
     },
 
     findEventByID: async (parent, { uuid }, context) => {
@@ -78,27 +77,71 @@ const resolvers = {
   },
 
   Mutation: {
-    createCustomer: async (parent, { customerInput }, context) => {
-      console.log( customerInput );
-      const customer = await Customer.create( customerInput );
-      console.log(customer);
-      return customer;
+
+    createUser: async (parent, { userInput }, context) => {
+      const user = await User.create({
+        ...userInput,
+      });
+      const token = signToken(user);
+      return { token, user };
     },
 
-    createEvent: async (parent, { eventInput }, context) => {
-      return await Event.create( eventInput )
+    updateUser: async (parent, { userInput }, context) => {
+      if (context.user && context.user._id === userInput._id) {
+
+        const user = await User.findOneAndUpdate(
+          userInput._id ? { _id: userInput._id } : null,
+          { 
+            ...userInput 
+          },
+          { 
+            new: true, upsert: true
+          }
+        );
+        return user;
+      } else {
+        throw new AuthenticationError('You need to be logged in!');
+      }
     },
 
+    loginUser: async (parent, { email, password }) => {
+      const user = await User.findOne({ email: email })
+
+      if (!user) {
+        throw new AuthenticationError('No user with this email found!');
+      }
+
+      const correctPw = await user.isCorrectPassword(password);
+
+      if (!correctPw) {
+        throw new AuthenticationError('Incorrect password!');
+      }
+
+      const token = signToken(user);
+      return { token, user };
+    },
+
+    createEvent: async (parent, { eventInput, userId }, context) => {
+      const event = Event.create( eventInput )
+      if (userId) {
+        await User.findOneAndUpdate(
+          { _id: userId },
+          { $addToSet: { events: event._id } },
+          { new: true }
+        );
+      }
+      return event;
+    },
 
     updateEvent: async (parent, { eventId, updateEventInput }, context) => {
       return await Event.findOneAndUpdate({ _id: eventId }, { ...updateEventInput}, { new: true });
     },
 
-    eventAddSignup: async (parent, { eventId, customerId }, context) => {
+    eventAddSignup: async (parent, { eventId, guestId }, context) => {
       const event = await Event.findOneAndUpdate({ _id: eventId },
         {
           $push: {
-            eventSignups: customerId
+            eventSignups: guestId
           },
                 
         });
@@ -106,28 +149,37 @@ const resolvers = {
         ;
     },
 
-    eventRemoveSignup: async (parent, { eventId, customerId }, context) => {
+    eventRemoveSignup: async (parent, { eventId, guestId }, context) => {
       const event = await Event.findOneAndUpdate({ _id: eventId },
         {
           $pull:{
-            eventSignups: customerId
+            eventSignups: guestId
             }
           }
         );
         return event;
     },
 
-    editCustomer: async (parent, { customerInput }, context) => {
-      const customer = await Customer.findOneAndUpdate(
-        customerInput._id ? { _id: customerInput._id } : null,
+    createGuest: async (parent, { guestInput }, context) => {
+      console.log( guestInput );
+      const guest = await Guest.create( guestInput );
+      console.log(guest);
+      return guest;
+    },
+
+    updateGuest: async (parent, { guestInput }, context) => {
+      const guest = await Guest.findOneAndUpdate(
+        { _id: guestInput._id || new Types.ObjectId() },
         { 
-          ...customerInput 
+          ...guestInput
         },
         { 
           new: true, upsert: true
         });
-      return customer;
-    }
+      return guest;
+    },
+
+
   }
 };
 

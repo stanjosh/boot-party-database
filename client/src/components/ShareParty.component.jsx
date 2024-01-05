@@ -12,33 +12,25 @@ const ShareParty = () => {
     variables: { uuid : eventId }, 
   });
 
+
   console.log(data)
   return (
     <>
-      <Container fluid style={{ minHeight: '70cqh' }}>
+      <Container fluid style={{ minHeight: '70cqh', maxWidth: "650px", marginTop: "15px", marginBottom: "15px" }}>
         
         {loading ? (
           <div>Loading...</div>
         ) : (
-          <>
+          <div style={{backgroundColor: "var(--alviesBlue)", padding: "5px", borderRadius: "3px"}}>
             <EventDisplay eventData={data?.findEventByID}/>
             <GuestsDisplay eventData={data?.findEventByID}/>
-          </>
+          </div>
         )}
 
 
       </Container>
       
       
-      <Form style={{backgroundColor: 'aliceblue', width: '100%', textAlign: 'center', position: 'sticky', bottom: '0', padding: "8cqw", marginTop: "15px"}}>
-        <Form.Group className="mb-3" controlId="formBasicEmail" style={{display: 'flex', alignContent: 'center', height: '5cqb' }}>
-          <Form.Label><h2 style={{ fontSize: '3cqb'}}>Share</h2></Form.Label>
-          <Form.Control type="email" placeholder={`${window.location.origin}/join/${eventId}`} style={{width: '60%'}}/>
-          <Button style={{width: '40%'}} onClick={() => navigator.clipboard.writeText(`${window.location.origin}/join/${eventId}`)}>Copy</Button>
-          
-        </Form.Group>
-        <Link to={`/join/${eventId}`}><h3 style={{fontSize: '2cqb'}}>(or go there yourself to add your friends manually)</h3></Link>
-      </Form>
     </>
   );
 };

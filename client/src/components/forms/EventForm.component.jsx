@@ -6,22 +6,19 @@ import { useForm } from '../../util/hooks';
 import { useMutation } from '@apollo/client';
 import { CREATE_EVENT } from '../../util/mutations';
 
-const EventForm = ({ eventData, formTitle, submitText, admin }) => {
-    const [eventTime, setEventTime] = useState(new Date());
-    console.log(eventData)
+const EventForm = ({ eventData, formTitle, submitText, guestId, admin }) => {
+    const [eventTime, setEventTime] = useState(new Date().setDate(parseInt(eventData?.eventTime)) || new Date());
+    console.log(guestId)
     const { formData, handleInputChange, handleSubmit } = useForm({
         eventTime: eventTime,
         eventLocation: eventData?.eventLocation ?? '',
         eventTitle: eventData?.eventTitle ?? '',
         eventNotes: eventData?.eventNotes ?? '',
-        eventLead: eventData?.eventLead ?? '',
-        eventHelpers: eventData?.eventHelpers ?? '',
-        eventDisplay: eventData?.eventDisplay ?? '',
       },
       (formData) => writeEvent(formData)
     );
  
-    const { eventLocation, eventTitle, eventNotes, eventLead, eventHelpers, eventDisplay } = formData;
+    const { eventLocation, eventTitle, eventNotes } = formData;
 
     const [createEvent, { loading, error }] = useMutation(CREATE_EVENT);
   
@@ -30,10 +27,11 @@ const EventForm = ({ eventData, formTitle, submitText, admin }) => {
     const writeEvent = async (formData) => {
       await createEvent({
           variables: {
-              eventInput: { ...formData, 
-                eventContact: JSON.parse(localStorage.getItem('customer'))._id,
+              eventInput: { ...formData,
+
+                eventContact: guestId,
               },
-  
+
           }
       })
       .then((res) => {
@@ -111,44 +109,6 @@ const EventForm = ({ eventData, formTitle, submitText, admin }) => {
           onChange={handleInputChange}
       />
       </Form.Group>
-
-
-      
-      <div hidden={!admin} style={{marginBottom: "15px"}}>
-      <h4 style={{color: "aliceblue", marginBottom: "15px", marginTop: "15px", fontSize: "3cqb" }}>alvies details</h4>
-      <Form.Group controlId="formEventLead"  style={{marginBottom: "10px"}}>
-      <Form.Label>lead</Form.Label>
-      <Form.Control
-          type="text"
-          placeholder=""
-          name="eventLead"
-          value={eventLead}
-          onChange={handleInputChange}
-      />
-      </Form.Group>
-      <Form.Group controlId="formEventHelpers" style={{marginBottom: "10px"}} >
-      <Form.Label>helpers</Form.Label>
-      <Form.Control
-          as="textarea"
-          rows={4}
-          placeholder=""
-          name="eventHelpers"
-          value={eventHelpers}
-          onChange={handleInputChange}
-      />
-      </Form.Group>
-      <Form.Group controlId="formEventDisplay" style={{marginBottom: "10px"}} >
-      {admin ? <Form.Label>display</Form.Label> : null}
-      <Form.Control
-          as="textarea"
-          rows={4}
-          placeholder=""
-          name="eventDisplay"
-          value={eventDisplay}
-          onChange={handleInputChange}
-      />
-      </Form.Group>
-      </div>
 
     <Form.Group controlId="formSubmit" style={{width: "100%", marginRight: "15px", alignItems:"flex-end"}}>
         <Button type="submit" disabled={ loading } style={{

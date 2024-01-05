@@ -2,12 +2,12 @@ import { Image } from "react-bootstrap";
 
 const Footer = () => {
   return (
+    <footer>
 
-      <div>
-        <div>
+        <div className="footerContainer">
 
-          <ul>
-            <li style={{justifyContent: "space-between"}}>
+          <ul >
+            <li className="socials">
               <a href="https://facebook.com/alviesboots" rel="noreferrer" target="_blank">
                 <Image src="/facebook-svgrepo-com.svg" height="40cqh" />
               </a>  
@@ -28,11 +28,7 @@ const Footer = () => {
                 512-619-7000
               </a>
             </li>
-            <li>
-              <a href="https://alvies.com/" target="_blank">
-                Alvies.com
-              </a>
-            </li>
+
             <li>
               <a href="https://bootparty.com/terms-of-service">
                 Terms of Service
@@ -43,13 +39,19 @@ const Footer = () => {
             <a href="https://bootparty.com/privacy-policy">
                 Privacy Policy
               </a>
-            </li>
-           
-          </ul>
-        </div>
-        ©2022 Alvies, LLC. All rights reserved.
-      </div>
 
+            </li>
+            <li>
+              <a href="https://alvies.com/" target="_blank" rel="noreferrer">
+                Alvies.com
+              </a>
+            </li>
+          </ul>
+          
+        </div>
+
+    <div style={{width: "100%", textAlign: "end"}}>©2022 Alvies, LLC. All rights reserved.</div>
+    </footer>
   );
 };
 

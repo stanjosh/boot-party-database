@@ -3,8 +3,11 @@ import { useState } from 'react';
 const useForm = (initialState = {}, onSubmit) => {
     const [formData, setFormData] = useState(initialState);
 
-    const handleInputChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value })
+    const handleInputChange = (e, moreData = {}) => {
+        console.log(e.target, moreData)
+        const { name, value } = e.target;
+        setFormData({ ...formData, ...moreData, [name]: value})
+        console.log(formData)
     }
 
     const handleSubmit = (e) => {
@@ -12,7 +15,7 @@ const useForm = (initialState = {}, onSubmit) => {
         onSubmit?.(formData);
     }
 
-    return { formData, handleInputChange, handleSubmit };
+    return { formData, handleInputChange, handleSubmit, setFormData };
 }
 
 export default useForm;

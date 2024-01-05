@@ -1,30 +1,22 @@
 import { gql } from '@apollo/client';
 
 
-export const SAVE_USER = gql`
-mutation SaveUser($username: String!, $email: String!, $password: String!) {
-  saveUser(username: $username, email: $email, password: $password) {
+export const CREATE_USER = gql`
+mutation CreateUser($userInput: UserInput!) {
+  createUser(userInput: $userInput) {
     user {
-      inventories {
-        products {
-          _id
-          UPC
-          brand
-          price
-          description
-          name
-          image
-          link
-          category
-          
-        }
-        priceTotal
-        inventoryName
-        _id
-      }
-      email
       _id
-      username
+      email
+      guestProfile {
+        _id
+        name
+        phone
+        shoeSize
+        shoeWidth
+        bootName
+        bootSku
+        bootImgSrc
+      }
     }
     token
   }
@@ -36,24 +28,16 @@ export const LOGIN_USER = gql`
     loginUser(email: $email, password: $password) {
     user {
       _id
-      username
       email
-      inventories {
+      guestProfile {
         _id
-        inventoryName
-        priceTotal
-        products {
-          _id
-          UPC
-          brand
-          price
-          description
-          name
-          image
-          link
-          category
-          
-        }
+        name
+        phone
+        shoeSize
+        shoeWidth
+        bootName
+        bootSku
+        bootImgSrc
       }
     }
     token
@@ -61,22 +45,30 @@ export const LOGIN_USER = gql`
 }
 `;
 
-export const CREATE_CUSTOMER = gql`
-mutation CreateCustomer($customerInput: CustomerInput) {
-  createCustomer(customerInput: $customerInput) {
-    _id
-    name
-    email
-    phone
-    bootName
-    bootSku
+export const CREATE_GUEST = gql`
+mutation CreateGuest($guestInput: GuestInput) {
+  createGuest(guestInput: $guestInput) {
+    user {
+      _id
+      email
+      guestProfile {
+        _id
+        name
+        phone
+        shoeSize
+        shoeWidth
+        bootName
+        bootSku
+        bootImgSrc
+      }
+    }
   }
 }
 `;
 
 export const CREATE_EVENT = gql`
-mutation CreateEvent($eventInput: EventInput) {
-  createEvent(eventInput: $eventInput) {
+mutation CreateEvent($eventInput: EventInput!, $userId: ID) {
+  createEvent(eventInput: $eventInput, userId: $userId) {
     _id
     eventLocation
     eventTime
@@ -86,6 +78,9 @@ mutation CreateEvent($eventInput: EventInput) {
       phone
       bootName
       bootSku
+      shoeWidth
+      shoeSize
+      bootImgSrc
     }
     eventTitle
     eventLeadEmployee
@@ -97,6 +92,9 @@ mutation CreateEvent($eventInput: EventInput) {
       phone
       bootName
       bootSku
+      shoeWidth
+      shoeSize
+      bootImgSrc
     }
     eventNotes
     eventPartyType
@@ -119,6 +117,9 @@ mutation UpdateEvent($eventId: ID!, $updateEventInput: UpdateEventInput) {
       phone
       bootName
       bootSku
+      shoeWidth
+      shoeSize
+      bootImgSrc
     }
     eventTitle
     eventLeadEmployee
@@ -130,6 +131,9 @@ mutation UpdateEvent($eventId: ID!, $updateEventInput: UpdateEventInput) {
       phone
       bootName
       bootSku
+      shoeWidth
+      shoeSize
+      bootImgSrc
     }
     eventNotes
     eventPartyType
@@ -141,8 +145,8 @@ mutation UpdateEvent($eventId: ID!, $updateEventInput: UpdateEventInput) {
 `;
 
 export const EVENT_ADD_SIGNUP = gql`
-mutation EventAddSignup($eventId: ID!, $customerId: ID!) {
-  eventAddSignup(eventId: $eventId, customerId: $customerId) {
+mutation EventAddSignup($eventId: ID!, $guestId: ID!) {
+  eventAddSignup(eventId: $eventId, guestId: $guestId) {
     _id
     eventLocation
     eventTime
@@ -152,6 +156,9 @@ mutation EventAddSignup($eventId: ID!, $customerId: ID!) {
       phone
       bootName
       bootSku
+      shoeWidth
+      shoeSize
+      bootImgSrc
     }
     eventTitle
     eventLeadEmployee
@@ -163,6 +170,9 @@ mutation EventAddSignup($eventId: ID!, $customerId: ID!) {
       phone
       bootName
       bootSku
+      shoeWidth
+      shoeSize
+      bootImgSrc
     }
     eventNotes
     eventPartyType
@@ -174,8 +184,8 @@ mutation EventAddSignup($eventId: ID!, $customerId: ID!) {
 `;
 
 export const EVENT_REMOVE_SIGNUP = gql`
-mutation EventRemoveSignup($eventId: ID!, $customerId: ID!) {
-  eventRemoveSignup(eventId: $eventId, customerId: $customerId) {
+mutation EventRemoveSignup($eventId: ID!, $guestId: ID!) {
+  eventRemoveSignup(eventId: $eventId, guestId: $guestId) {
     _id
     eventLocation
     eventTime
@@ -185,6 +195,9 @@ mutation EventRemoveSignup($eventId: ID!, $customerId: ID!) {
       phone
       bootName
       bootSku
+      shoeWidth
+      shoeSize
+      bootImgSrc
     }
     eventTitle
     eventLeadEmployee
@@ -196,6 +209,9 @@ mutation EventRemoveSignup($eventId: ID!, $customerId: ID!) {
       phone
       bootName
       bootSku
+      shoeWidth
+      shoeSize
+      bootImgSrc
     }
     eventNotes
     eventPartyType
@@ -206,15 +222,18 @@ mutation EventRemoveSignup($eventId: ID!, $customerId: ID!) {
 }
 `;
 
-export const EDIT_CUSTOMER = gql`
-mutation editCustomer( $customerInput: CustomerInput!) {
-  editCustomer( customerInput: $customerInput) {
+export const UPDATE_GUEST = gql`
+mutation updateGuest( $guestInput: GuestInput!) {
+  updateGuest( guestInput: $guestInput) {
     _id
     name
     email
     phone
     bootName
     bootSku
+    shoeWidth
+    shoeSize
+    bootImgSrc
   }
 }
 `;
