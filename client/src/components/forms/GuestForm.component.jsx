@@ -146,7 +146,7 @@ const GuestForm = ({ guest, eventId, formTitle, submitText, success, updating, j
         
         <Form.Group controlId="formSubmit"  style={{flex: "0 1 60%", padding: "5px"}}>
         
-        <Button type="submit" disabled={ loading || addGuestLoading } className='formButtom'>
+        <Button type="submit" disabled={ !formData.name || !formData.email || loading || addGuestLoading } className='formButtom'>
             {submitText || <h3 style={{fontSize : "2.5cqh", color: "aliceblue", marginBottom : "0"}}>LET'S GO</h3>}
         </Button>
             
