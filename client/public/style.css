@@ -48,11 +48,6 @@ li {
 
 
 
-footer {
-    background-color: var(--alviesDarkBlue);
-    font-family: 'unpretentious', sans-serif;
-    color: aliceblue;
-}
 
 footer a {
     display: block;
