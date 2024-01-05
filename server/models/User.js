@@ -33,27 +33,6 @@ const userSchema = new Schema({
   }
 );
 
-userSchema.virtual('inventoryCount').get(function () {
-  return this.inventories.length;
-});
-
-userSchema.virtual('productCount').get(function () {
-  let total = 0;
-  this.inventories.forEach(inventory => {
-    total += inventory.products.length;
-  });
-  return total;
-});
-
-userSchema.virtual('priceTotal').get(function () {
-  let total = 0;
-  this.inventories.forEach(inventory => {
-    inventory.products.forEach(product => {
-      total += product.price;
-    });
-  });
-  return `${total.toFixed(2)}`;
-});
 
 // hash user password
 userSchema.pre('save', async function (next) {
