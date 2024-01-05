@@ -6,7 +6,7 @@ query Me {
     _id
     email
     password
-    customerProfile {
+    guestProfile {
       _id
       name
       email
