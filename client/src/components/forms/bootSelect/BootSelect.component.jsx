@@ -42,7 +42,7 @@ const BootSelect = ({ formData, onSelectBoot, scrollBackTo }) => {
                 backgroundColor: "#FFFFFF",  
 
                 padding: "10px", 
-
+                justifyContent: "center",
                 borderRadius: "4px", 
                 margin: "5px"}}>
                 
@@ -50,9 +50,9 @@ const BootSelect = ({ formData, onSelectBoot, scrollBackTo }) => {
 
                 <Button style={{width: "5cqb", height: "5cqb", padding: "0", alignSelf:  "end" }} variant="danger"  onClick={() => {handleSelectBoot();}}>X</Button>    
                 
-                <div style={{display: "flex", flexWrap: "wrap"}}>
-                <Image src={bootImgSrc} alt={bootName} style={{flex: "0 1 100%", width: "100%"}} />
-                <h2 style={{fontSize: "3cqb"}}>{bootName}</h2>
+                <div style={{justifyContent: "center"}}>
+                    <Image src={bootImgSrc} alt={bootName} style={{maxWidth: "250px"}} />
+                    <h2 style={{fontSize: "3cqb"}}>{bootName}</h2>
                 </div>
             </div>
             
@@ -61,13 +61,14 @@ const BootSelect = ({ formData, onSelectBoot, scrollBackTo }) => {
         
         : 
         <>
-        <div style={{position: "fixed", bottom: "0", zIndex: "1"}}>
-        <Alert dismissible>
-            { bootData?.length > 0 && shoeSize && shoeWidth 
-                ? <> These are the styles we have in your size. </>
-                : <> Looks like we don't have anything in that size. (Try a half size down!) </>
+        <div style={{position: "sticky", top: "15px", zIndex: "1"}}>
+        
+            { bootData && shoeSize && shoeWidth 
+                ? <Alert dismissible> These are the styles we have in that size. Pick one!</Alert>
+                : bootData && shoeSize && shoeWidth  && bootData.length <= 0 ? <Alert dismissible> We don't have any boots in that size. </Alert> 
+                : bootData.length > 0 && <Alert dismissible> Select a size to see available styles.</Alert>
             }
-        </Alert>
+        
         </div>
             <Container fluid style={{display: "flex", flexWrap: "wrap", flexDirection: "row"}}>
                 {bootData?.map((boot) => (

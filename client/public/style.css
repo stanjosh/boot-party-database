@@ -46,6 +46,28 @@ li {
 }
 
 
+
+footer {
+    background-color: var(--alviesDarkBlue);
+    font-family: 'unpretentious', sans-serif;
+    color: aliceblue;
+}
+
+footer a {
+    display: block;
+    color: aliceblue;
+    text-decoration: none;
+    font-size: 3.5cqh;
+
+}
+
+footer ul li {
+    font-size: 2.5cqh;
+    justify-content: flex-end;
+
+}
+
+
 main {
     display: inline-block;
     width: 100%;
