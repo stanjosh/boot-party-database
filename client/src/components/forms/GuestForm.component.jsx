@@ -30,14 +30,21 @@ const GuestForm = ({ guest, eventId, formTitle, submitText, success, updating, j
     }
 
     const handleSelectBoot = (e) => {
-        const { bootsku, bootname, bootimgsrc } = e.currentTarget.dataset;
-        console.log(bootsku, bootname, bootimgsrc)
-        setFormData({ ...formData, 
-            bootSku: bootsku, 
-            bootName: bootname, 
-            bootImgSrc: bootimgsrc 
-        });
+        if (e) {
+            const { bootsku, bootname, bootimgsrc } = e.currentTarget.dataset;
+            setFormData({ ...formData, 
+                bootSku: bootsku, 
+                bootName: bootname, 
+                bootImgSrc: bootimgsrc 
+            });
+        } else {
+            setFormData({ ...formData, 
+                bootSku: '', 
+                bootName: '', 
+                bootImgSrc: '' 
+            });
 
+        }
     }
 
 
