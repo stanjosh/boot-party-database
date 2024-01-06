@@ -33,6 +33,8 @@ const userSchema = new Schema({
   }
 );
 
+userSchema.plugin(require('mongoose-autopopulate'));
+
 userSchema.virtual('inventoryCount').get(function () {
   return this.inventories.length;
 });

@@ -16,6 +16,7 @@ const SignupForm = () => {
     const [ signupForm, setSignupForm ] = useState({
         email: '',
         password: '',
+        name: '',
     });
 
     const handleInputChange = (e) => {
@@ -74,8 +75,23 @@ const SignupForm = () => {
                 Something went wrong with your login credentials!
 
             </Alert>
+
             <Form.Group className='mb-3'>
-            <Form.Label htmlFor='email'>Email</Form.Label>
+            <Form.Label htmlFor='name' visuallyHidden>Name</Form.Label>
+            <Form.Control
+                type='text'
+                placeholder='Your name'
+                name='name'
+                onChange={handleInputChange}
+                value={signupForm.name}
+                required
+                autoComplete='off'
+            />
+            <Form.Control.Feedback type='invalid'>Email is required!</Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group className='mb-3'>
+            <Form.Label htmlFor='email' visuallyHidden>Email</Form.Label>
             <Form.Control
                 type='text'
                 placeholder='Your email'
@@ -85,14 +101,15 @@ const SignupForm = () => {
                 required
                 autoComplete='off'
             />
-            <Form.Control.Feedback type='invalid'>Email is required!</Form.Control.Feedback>
+            <Form.Control.Feedback type='invalid' >Email is required!</Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group className='mb-3'>
-            <Form.Label htmlFor='password'>Password</Form.Label>
+            <Form.Label htmlFor='password' visuallyHidden>Password</Form.Label>
             <Form.Control
                 type='password'
                 name='password'
+                placeholder='password'
                 onChange={handleInputChange}
                 value={signupForm.password}
                 required
@@ -103,12 +120,13 @@ const SignupForm = () => {
 
 
             <Form.Group className='mb-3'>
-            <Form.Label htmlFor='password'>Check Password</Form.Label>
+            <Form.Label htmlFor='password' visuallyHidden>Confirm Password</Form.Label>
 
                         <Form.Control
                 type='password'
 
                 name='passwordCheck'
+                placeholder='confirm password'
                 onChange={(e) => setPasswordCheck(e.target.value)}
                 value={passwordCheck}
                 required
