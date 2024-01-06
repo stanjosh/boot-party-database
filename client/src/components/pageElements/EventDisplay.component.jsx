@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Card, Button } from 'react-bootstrap';
 
 
-const EventDisplay = ( { eventData } ) => {
+const EventDisplay = ( { eventData, admin } ) => {
     console.log(eventData)
     const prettyTime = new Date(parseInt(eventData?.eventTime)).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })  
     const prettyDate = new Date(parseInt(eventData?.eventTime)).toLocaleString('en-US', { month: "long", day: "numeric", weekday: "long" })
@@ -43,6 +43,7 @@ const EventDisplay = ( { eventData } ) => {
                     
                     
                     <div style={{display: "flex", flexDirection:"column", flexWrap: "wrap", flex: "1 0 25%", justifyContent: "space-around"}}>
+                        <Button className='formButton' href={`${window.location.origin}/admin/${eventData?._id}`}>Admin</Button>
                         <Button className='formButton' href={`${window.location.origin}/join/${eventData?._id}`}>JOIN</Button>
                         <Button className='formButton' onClick={() => navigator.share(shareData)}>SHARE</Button>
                     </div>
