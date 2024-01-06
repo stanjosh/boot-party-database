@@ -14,6 +14,12 @@ const userSchema = new Schema({
       ref: 'Guest',
       autopopulate: true,
    },
+
+    admin: {
+      type: Boolean,
+      default: false,
+    },
+
     events : [{
       type: Schema.Types.ObjectId,
       ref: 'Event',
@@ -33,29 +39,10 @@ const userSchema = new Schema({
   }
 );
 
+
 userSchema.plugin(require('mongoose-autopopulate'));
 
-userSchema.virtual('inventoryCount').get(function () {
-  return this.inventories.length;
-});
 
-userSchema.virtual('productCount').get(function () {
-  let total = 0;
-  this.inventories.forEach(inventory => {
-    total += inventory.products.length;
-  });
-  return total;
-});
-
-userSchema.virtual('priceTotal').get(function () {
-  let total = 0;
-  this.inventories.forEach(inventory => {
-    inventory.products.forEach(product => {
-      total += product.price;
-    });
-  });
-  return `${total.toFixed(2)}`;
-});
 
 // hash user password
 userSchema.pre('save', async function (next) {
