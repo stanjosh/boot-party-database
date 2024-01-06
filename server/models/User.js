@@ -14,6 +14,12 @@ const userSchema = new Schema({
       ref: 'Guest',
       autopopulate: true,
    },
+
+    admin: {
+      type: Boolean,
+      default: false,
+    },
+
     events : [{
       type: Schema.Types.ObjectId,
       ref: 'Event',
