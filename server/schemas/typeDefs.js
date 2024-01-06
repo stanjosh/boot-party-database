@@ -6,13 +6,14 @@ const typeDefs = gql`
     email: String!
     password: String!
     guestProfile: Guest
+    admin: Boolean
     events: [Event]
   }
 
   input UserInput {
     email: String!
     password: String!
-    guestProfile: GuestInput
+    name: String
   }
   
 
