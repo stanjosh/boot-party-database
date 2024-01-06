@@ -79,9 +79,21 @@ const resolvers = {
   Mutation: {
 
     createUser: async (parent, { userInput }, context) => {
-      const user = await User.create({
-        ...userInput,
+      const user = await Guest.findOneAndUpdate(
+        {email: userInput.email},
+        { email: userInput.email,
+          name: userInput.name},
+        {new: true, upsert: true}
+      )
+      .then( guest => {
+        return User.create({ 
+          ...userInput, 
+          guestProfile: guest._id
+        })})
+        .catch(err => {
+          console.log(err);
       });
+
       const token = signToken(user);
       return { token, user };
     },

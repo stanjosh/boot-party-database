@@ -45,6 +45,13 @@ const Header = () => {
             SHOP ALVIES
           </Nav.Link>
 
+          {userData?._id 
+            ?
+            <>
+            logged in as {userData?.guestProfile.name}
+            </>
+
+            :
           <Nav.Link 
             eventKey={2} 
             onClick={() => setShowLoginSignup(true)} 
@@ -57,7 +64,7 @@ const Header = () => {
           }}>
             sign in / up
           </Nav.Link>  
-          
+          }
         </Nav>
 
       </Navbar.Collapse>
