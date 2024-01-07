@@ -1,21 +1,18 @@
-import { useEffect, useState } from 'react';
-import { Button, Navbar, Nav, NavDropdown, Container, Modal, Alert, Offcanvas } from 'react-bootstrap';
-import { useQuery } from '@apollo/client';
-import { QUERY_ME } from '../../util/queries';
+import { useContext, useState } from 'react';
+import { Navbar, Nav, Container } from 'react-bootstrap';
 import LoginSignup from './LoginSignup.component';
-
+import { UserContext } from '../../util/context/UserContext';
 
 const Header = () => {
   
-  const { loading, data } = useQuery(QUERY_ME);
-  const [userData, setUserData] = useState(data?.me);
-  const [showLoginSignup, setShowLoginSignup] = useState(false);
 
-  useEffect(() => { 
-    if (data?.me) {
-      setUserData(data?.me)
-    }
-  }  , [userData, data, loading])
+
+    const [showLoginSignup, setShowLoginSignup] = useState(false);
+
+
+
+    const { userData }  = useContext(UserContext);
+    console.log(userData) 
 
     return(   
   
