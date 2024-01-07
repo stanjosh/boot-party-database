@@ -18,12 +18,9 @@ export const UserContextProvider = ({ children }) => {
         if (data?.me) {
           setUserData(data?.me)
         }
-        
-  
       }  , [userData, data, loading])
 
-
-	return (
+      return (
 		<UserContext.Provider value={{ userData, loading }}>
 			{children}
 		</UserContext.Provider>
