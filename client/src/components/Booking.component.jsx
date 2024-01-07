@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { GuestForm, EventForm } from '../components/forms';
-
+import { UserContext } from '../util/context/UserContext';
 
 
 
 const CreateEventPage = () => {
   const [guestId, setGuestId] = useState('');
   
+  const { userData } = useContext(UserContext);
   
 
   return (
@@ -15,7 +16,7 @@ const CreateEventPage = () => {
         
         {guestId         
           ? <EventForm guestId={guestId} create/>
-          : <GuestForm success={(guestId) => setGuestId(guestId)}/>
+          : <GuestForm guest={userData.guestProfile} success={(guestId) => setGuestId(guestId)}/>
         }
       
     </div>
