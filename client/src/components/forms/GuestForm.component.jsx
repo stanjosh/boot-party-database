@@ -7,23 +7,35 @@ import { BootSelect } from '.';
 
 import SizeSelect from './bootSelect/SizeSelect.component';
 
-const GuestForm = ({ guest, eventId, formTitle, submitText, success, updating, joining, admin }) => {
+const GuestForm = ({ guest, eventId, formTitle, submitText, success, joining, admin }) => {
     const [updateGuest, { loading, error }] = useMutation(UPDATE_GUEST);
     const [addGuest, { loading: addGuestLoading, error: addGuestError }] = useMutation(EVENT_ADD_SIGNUP);
-
-
+    const [guestData, setGuestData] = useState(guest);
     const guestFormRef = useRef(null)
-    
+    console.log(guest)
+
     const  [formData, setFormData] = useState({
-        name: guest?.name ?? '',
-        email: guest?.email ?? '',
-        phone: guest?.phone ?? '',
-        shoeWidth: guest?.shoeWidth ?? '',
-        shoeSize: guest?.shoeSize ?? '',
-        bootSku: guest?.bootSku ?? '',
-        bootName: guest?.bootName ?? '',
-        bootImgSrc: guest?.bootImgSrc ?? '',
+        name: guestData?.name || '',
+        email: guestData?.email || '',
+        phone: '',
+        shoeWidth: '',
+        shoeSize: '',
+        bootSku: '',
+        bootName: '',
+        bootImgSrc: '',
     });
+
+
+    useEffect(() => { 
+        if (guest) {
+            setFormData({
+                name: guest?.name || '',
+                email: guest?.email || '',
+                phone: guest?.phone || '',
+            })
+        }
+    }, [guest])
+    
 
     const handleInputChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value})
@@ -31,7 +43,8 @@ const GuestForm = ({ guest, eventId, formTitle, submitText, success, updating, j
 
     const handleSelectBoot = (e) => {
         if (e) {
-            const { bootsku, bootname, bootimgsrc } = e.currentTarget.dataset;
+            const { bootsku, bootname, bootimgsrc, nearSizes } = e.currentTarget.dataset;
+            console.log(nearSizes)
             setFormData({ ...formData, 
                 bootSku: bootsku, 
                 bootName: bootname, 
@@ -47,15 +60,20 @@ const GuestForm = ({ guest, eventId, formTitle, submitText, success, updating, j
         }
     }
 
+    const clearSelectedBoot = () => {
+        setFormData({ ...formData, 
+            bootSku: '', 
+            bootName: '', 
+            bootImgSrc: '' 
+        });
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('GuestForm: ', formData)
+        console.log('guestDataForm: ', formData)
         writeGuest(formData);
     }
 
-
-    console.log(formData)
 
     const { name, email, phone, shoeWidth, shoeSize, bootImgSrc, bootName, bootSku } = formData;
 
@@ -145,7 +163,7 @@ const GuestForm = ({ guest, eventId, formTitle, submitText, success, updating, j
         <Form.Group >
 
             <SizeSelect formData={{ shoeWidth, shoeSize, bootSku }} handleInputChange={handleInputChange} />
-            <BootSelect formData={{ shoeWidth, shoeSize, bootImgSrc, bootName, bootSku}} onSelectBoot={handleSelectBoot} scrollBackTo={scrollto} />
+            <BootSelect formData={{ shoeWidth, shoeSize, bootImgSrc, bootName, bootSku}} onSelectBoot={handleSelectBoot} clearSelection={clearSelectedBoot} scrollBackTo={scrollto} />
         </Form.Group>
 
         <div style={{display: "flex", flexWrap: "nowrap", justifyContent:"flex-end", width: "100%"}}>

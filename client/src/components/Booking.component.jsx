@@ -8,7 +8,11 @@ const CreateEventPage = () => {
   const [guestId, setGuestId] = useState('');
   
   const { userData } = useContext(UserContext);
-  
+
+  const guestData = userData?.guestProfile;
+
+
+
 
   return (
     <div style={{display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", width: "100%", minHeight: "70vh"}}>
@@ -16,7 +20,7 @@ const CreateEventPage = () => {
         
         {guestId         
           ? <EventForm guestId={guestId} create/>
-          : <GuestForm guest={userData.guestProfile} success={(guestId) => setGuestId(guestId)}/>
+          : <GuestForm guest={guestData} success={(guestId) => setGuestId(guestId)}/>
         }
       
     </div>

@@ -9,14 +9,29 @@ const womenBootDataURL = "https://rickshaw-boots.myshopify.com/collections/women
 
 
 
-const BootSelect = ({ formData, onSelectBoot, scrollBackTo }) => {
+const BootSelect = ({ formData, onSelectBoot, clearSelection, scrollBackTo }) => {
 
     const { shoeWidth, shoeSize, bootSku, bootName, bootImgSrc } = formData;
-    const { bootData } = useShopifyBoots({shoeSize, shoeWidth});
+    const { bootData, error } = useShopifyBoots({shoeSize, shoeWidth});
 
+    const [nearSizeBootData, setNearSizeBootData] = useState([]);
 
+    
 
     const handleSelectBoot = (e) => {
+        if (!e) {
+            clearSelection();
+            scrollBackTo();
+            return;
+        }
+        const { nearsizes } = e.currentTarget.dataset;
+        if (nearsizes) {
+            console.log(nearsizes)
+            setNearSizeBootData(JSON.parse(nearsizes));
+            console.log(nearSizeBootData)
+        } else {
+            setNearSizeBootData([]);
+        }
         onSelectBoot(e);    
         scrollBackTo();
     }
@@ -53,6 +68,7 @@ const BootSelect = ({ formData, onSelectBoot, scrollBackTo }) => {
                 <div style={{justifyContent: "center"}}>
                     <Image src={bootImgSrc} alt={bootName} style={{maxWidth: "250px"}} />
                     <h2 style={{fontSize: "3cqb"}}>{bootName}</h2>
+                    {nearSizeBootData && <div>we&apos;ll also bring these sizes: {nearSizeBootData.map((boot) => `${boot.option1 + boot.option2} `)}</div> }
                 </div>
             </div>
             
@@ -64,9 +80,12 @@ const BootSelect = ({ formData, onSelectBoot, scrollBackTo }) => {
         <div style={{position: "sticky", top: "15px", zIndex: "1"}}>
         
             { bootData && shoeSize && shoeWidth 
+                ? error ? <Alert dismissible> Something went wrong. Try again later.</Alert>
+                : bootData && shoeSize && shoeWidth && bootData.length > 0
                 ? <Alert dismissible> These are the styles we have in that size. Pick one!</Alert>
                 : bootData && shoeSize && shoeWidth  && bootData.length <= 0 ? <Alert dismissible> We don't have any boots in that size. </Alert> 
                 : bootData.length > 0 && <Alert dismissible> Select a size to see available styles.</Alert>
+                : <Alert dismissible> Select a size to see available styles.</Alert>
             }
         
         </div>
@@ -80,6 +99,7 @@ const BootSelect = ({ formData, onSelectBoot, scrollBackTo }) => {
                         data-bootsku={boot.sku} 
                         data-bootname={boot.title}
                         data-bootimgsrc={boot.featured_image.src}
+                        data-nearsizes={JSON.stringify(boot.nearSizes)}
                         onClick={handleSelectBoot}
                         value={boot.sku}
                         style={{
