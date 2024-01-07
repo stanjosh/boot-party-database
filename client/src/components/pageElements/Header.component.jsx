@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { Navbar, Nav, Container } from 'react-bootstrap';
+import { Navbar, Nav, Container, Image } from 'react-bootstrap';
 import LoginSignup from './LoginSignup.component';
 import { UserContext } from '../../util/context/UserContext';
 
@@ -31,37 +31,61 @@ const Header = () => {
             eventKey={1} 
             href="https://alvies.com" 
             style={{
+              display: "flex",
+              
               margin: "5px", 
-              flex: "0 1 25cqw", 
-              width: "90%", 
+              flex: "0 1 150px", 
+              
               maxHeight: "50px", 
-              textAlign: "center", 
+              maxWidth: "150px",
+              
               color: "aliceBlue", 
+              alignItems: "center",
+              justifyContent: "center",
               backgroundColor: "var(--alviesDarkBlue)" 
           }}>
             SHOP ALVIES
           </Nav.Link>
 
-          {userData?._id 
-            ?
-            <>
-            logged in as {userData?.guestProfile.name}
-            </>
-
-            :
+          {!userData?._id ? (
           <Nav.Link 
             eventKey={2} 
             onClick={() => setShowLoginSignup(true)} 
             style={{margin: "5px", 
-              flex: "0 1 25cqw", 
-              width: "90%", 
+              flex: "0 1 150px", 
+              width: "150px", 
+              maxWidth: "50%",
               maxHeight: "50px", 
               textAlign: "center", 
-              border: "4px solid var(--alviesBlue)"
+              justifyContent: "space-between",
+              border: "4px solid var(--alviesBlue)",
+              padding: "5px",
+              
           }}>
             sign in / up
-          </Nav.Link>  
-          }
+            </Nav.Link>  
+          ) : (
+          <Nav.Link 
+            eventKey={3} 
+            href='/user'
+            style={{margin: "5px", 
+              flex: "1 1 150px", 
+              width: "150px", 
+              maxWidth: "50%",
+              maxHeight: "50px", 
+              textAlign: "center", 
+              justifyContent: "space-between",
+              border: "4px solid var(--alviesBlue)",
+              padding: "5px",
+              
+          }}>
+              { userData?.guestProfile.name }
+              <Image src="/user.svg" style={{maxHeight: "40px"}} />
+          
+            
+            </Nav.Link>  
+          )}
+          
         </Nav>
 
       </Navbar.Collapse>
