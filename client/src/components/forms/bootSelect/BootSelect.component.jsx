@@ -12,11 +12,23 @@ const womenBootDataURL = "https://rickshaw-boots.myshopify.com/collections/women
 const BootSelect = ({ formData, onSelectBoot, clearSelection, scrollBackTo }) => {
 
     const { shoeWidth, shoeSize, bootSku, bootName, bootImgSrc } = formData;
-    const { bootData, error } = useShopifyBoots({shoeSize, shoeWidth});
-
+    const { bootData, error, loading: bootDataLoading } = useShopifyBoots({shoeSize, shoeWidth});
+    const [imagesLoaded, setImagesLoaded] = useState(false);
     const [nearSizeBootData, setNearSizeBootData] = useState([]);
 
     
+
+    const [imagesLoading, setImagesLoading] = useState(true);
+    
+
+    const handleloadImage = (e) => {
+        setImagesLoaded(false);
+        setImagesLoading([...imagesLoading, e.target.src]);
+        if (imagesLoading.length === bootData.length) {
+            setImagesLoaded(true);
+        }
+    }
+
 
     const handleSelectBoot = (e) => {
         if (!e) {
@@ -79,13 +91,13 @@ const BootSelect = ({ formData, onSelectBoot, clearSelection, scrollBackTo }) =>
         <>
         <div style={{position: "sticky", top: "15px", zIndex: "1"}}>
         
-            { bootData && shoeSize && shoeWidth 
-                ? error ? <Alert dismissible> Something went wrong. Try again later.</Alert>
-                : bootData && shoeSize && shoeWidth && bootData.length > 0
-                ? <Alert dismissible> These are the styles we have in that size. Pick one!</Alert>
-                : bootData && shoeSize && shoeWidth  && bootData.length <= 0 ? <Alert dismissible> We don't have any boots in that size. </Alert> 
-                : bootData.length > 0 && <Alert dismissible> Select a size to see available styles.</Alert>
-                : <Alert dismissible> Select a size to see available styles.</Alert>
+            { shoeSize && shoeWidth &&
+                bootData.length > 0 ? <Alert variant="success" style={{textAlign: "center", fontSize: "2cqh"}}>We have {bootData.length} styles in {shoeSize + shoeWidth}. Pick one! </Alert>
+                : !imagesLoaded && !bootDataLoading && shoeSize && shoeWidth ? <Alert variant="info" style={{textAlign: "center", fontSize: "2cqh"}}>Loading...</Alert>
+                : shoeSize && shoeWidth && bootData.length <= 0 ? <Alert variant="danger" style={{textAlign: "center", fontSize: "2cqh"}}>We don&apos;t have any boots in {shoeSize + shoeWidth} </Alert>
+                : error ? <Alert variant="danger" style={{textAlign: "center", fontSize: "2cqh"}}>Something went wrong. Please try again later.</Alert>
+                : null
+                
             }
         
         </div>
@@ -101,6 +113,7 @@ const BootSelect = ({ formData, onSelectBoot, clearSelection, scrollBackTo }) =>
                         data-bootimgsrc={boot.featured_image.src}
                         data-nearsizes={JSON.stringify(boot.nearSizes)}
                         onClick={handleSelectBoot}
+                        onLoad={handleloadImage}
                         value={boot.sku}
                         style={{
                             flex: "1 0 340px", 
