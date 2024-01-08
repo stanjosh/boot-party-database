@@ -8,6 +8,7 @@ const womenBootDataURL = "https://rickshaw-boots.myshopify.com/collections/women
 const useShopifyBoots = ({shoeSize, shoeWidth }) => {
 
     const [bootData, setBootData] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     const sizeUp = (shoeSize == 14 || shoeSize ==  15 || shoeSize == 13) ? 1 + parseFloat(shoeSize) : 0.5 + parseFloat(shoeSize);
     const sizeDown = (shoeSize == 14 || shoeSize ==  15) ? -1 + parseFloat(shoeSize) : -0.5 + parseFloat(shoeSize);
@@ -24,6 +25,7 @@ const useShopifyBoots = ({shoeSize, shoeWidth }) => {
             try {
                 
                 const bootDataURL = shoeWidth === "B" ? womenBootDataURL : menBootDataURL;
+                setLoading(true);
                 fetch(bootDataURL)
                     .then((response) => response.json())
                     .then((data) => {
@@ -44,10 +46,12 @@ const useShopifyBoots = ({shoeSize, shoeWidth }) => {
                                     })
                                 }
                             }))
+                        setLoading(false);
                         setBootData(filteredBoots);
                         console.log('Boots fetched:', filteredBoots);
                     });
             } catch (error) {
+                setLoading(false);
                 console.error('Error fetching boots:', error);
             }
         };
