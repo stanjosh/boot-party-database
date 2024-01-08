@@ -93,7 +93,7 @@ const BootSelect = ({ formData, onSelectBoot, clearSelection, scrollBackTo }) =>
         
             { shoeSize && shoeWidth &&
                 bootData.length > 0 ? <Alert variant="success" style={{textAlign: "center", fontSize: "2cqh"}}>We have {bootData.length} styles in {shoeSize + shoeWidth}. Pick one! </Alert>
-                : !imagesLoaded && !bootDataLoading && shoeSize && shoeWidth ? <Alert variant="info" style={{textAlign: "center", fontSize: "2cqh"}}>Loading...</Alert>
+                : !imagesLoaded || !bootDataLoading && shoeSize && shoeWidth ? <Alert variant="info" style={{textAlign: "center", fontSize: "2cqh"}}>Loading...</Alert>
                 : shoeSize && shoeWidth && bootData.length <= 0 ? <Alert variant="danger" style={{textAlign: "center", fontSize: "2cqh"}}>We don&apos;t have any boots in {shoeSize + shoeWidth} </Alert>
                 : error ? <Alert variant="danger" style={{textAlign: "center", fontSize: "2cqh"}}>Something went wrong. Please try again later.</Alert>
                 : null

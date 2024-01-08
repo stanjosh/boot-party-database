@@ -72,6 +72,16 @@ const GuestForm = ({ guest, eventId, formTitle, submitText, success, joining, ad
         e.preventDefault();
         console.log('guestDataForm: ', formData)
         writeGuest(formData);
+        setFormData({
+            name: guestData?.name || '',
+            email: guestData?.email || '',
+            phone: '',
+            shoeWidth: '',
+            shoeSize: '',
+            bootSku: '',
+            bootName: '',
+            bootImgSrc: '',
+        })
     }
 
 
