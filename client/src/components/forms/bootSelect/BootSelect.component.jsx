@@ -13,19 +13,29 @@ const BootSelect = ({ formData, onSelectBoot, clearSelection, scrollBackTo }) =>
 
     const { shoeWidth, shoeSize, bootSku, bootName, bootImgSrc } = formData;
     const { bootData, error, loading: bootDataLoading } = useShopifyBoots({shoeSize, shoeWidth});
-    const [imagesLoaded, setImagesLoaded] = useState(false);
+    const [imagesLoading, setImagesLoading] = useState(false);
     const [nearSizeBootData, setNearSizeBootData] = useState([]);
 
     
 
-    const [imagesLoading, setImagesLoading] = useState(true);
+    const [imagesLoaded, setImagesLoaded] = useState([]);
     
 
+
+    useEffect(() => {
+        if (bootData) {
+            setImagesLoading(true);
+            
+        }
+
+
+    }, [bootData])
+
     const handleloadImage = (e) => {
-        setImagesLoaded(false);
-        setImagesLoading([...imagesLoading, e.target.src]);
-        if (imagesLoading.length === bootData.length) {
-            setImagesLoaded(true);
+        setImagesLoading(!(imagesLoaded.length === bootData.length));
+        setImagesLoaded([...imagesLoaded, e.target.src]);
+        if (imagesLoaded.length === bootData.length) {
+            setImagesLoading(false);
         }
     }
 
@@ -91,13 +101,16 @@ const BootSelect = ({ formData, onSelectBoot, clearSelection, scrollBackTo }) =>
         <>
         <div style={{position: "sticky", top: "15px", zIndex: "1"}}>
         
-            { shoeSize && shoeWidth &&
-                bootData.length > 0 ? <Alert variant="success" style={{textAlign: "center", fontSize: "2cqh"}}>We have {bootData.length} styles in {shoeSize + shoeWidth}. Pick one! </Alert>
-                : !imagesLoaded || !bootDataLoading && shoeSize && shoeWidth ? <Alert variant="info" style={{textAlign: "center", fontSize: "2cqh"}}>Loading...</Alert>
-                : shoeSize && shoeWidth && bootData.length <= 0 ? <Alert variant="danger" style={{textAlign: "center", fontSize: "2cqh"}}>We don&apos;t have any boots in {shoeSize + shoeWidth} </Alert>
-                : error ? <Alert variant="danger" style={{textAlign: "center", fontSize: "2cqh"}}>Something went wrong. Please try again later.</Alert>
-                : null
+            { console.log(bootData.length, imagesLoaded.length, imagesLoading, bootDataLoading) }
+            {
                 
+             
+                
+                error ? <Alert variant="danger" style={{textAlign: "center", fontSize: "2cqh"}}>Something went wrong. Please try again later.</Alert>
+                : shoeSize && shoeWidth && ( imagesLoading || bootDataLoading ) ? <Alert variant="info" style={{textAlign: "center", fontSize: "2cqh"}}>Loading...</Alert>
+                : shoeSize && shoeWidth && (!imagesLoading || !bootDataLoading) && bootData.length <= 0  ? <Alert variant="danger" style={{textAlign: "center", fontSize: "2cqh"}}>We don&apos;t have any boots in {shoeSize + shoeWidth} </Alert>
+                : shoeSize && shoeWidth && (!imagesLoading || !bootDataLoading) ? <Alert variant="success" style={{textAlign: "center", fontSize: "2cqh"}}>We have {bootData.length} styles in {shoeSize + shoeWidth}. Pick one! </Alert>
+                : null                
             }
         
         </div>
