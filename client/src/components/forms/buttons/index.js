@@ -1,4 +1,4 @@
 import RemoveGuestButton from "./RemoveGuestButton.component";
-import LogoutButton from "./logoutButton";
+import LogoutButton from "./LogoutButton.component";
 
 export { RemoveGuestButton, LogoutButton };
