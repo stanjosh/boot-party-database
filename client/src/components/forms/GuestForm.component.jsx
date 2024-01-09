@@ -20,9 +20,7 @@ const GuestForm = ({ guest, eventId, formTitle, submitText, success, joining, ad
         phone: '',
         shoeWidth: '',
         shoeSize: '',
-        bootSku: '',
-        bootName: '',
-        bootImgSrc: '',
+        boots: []
     });
 
 
@@ -32,6 +30,9 @@ const GuestForm = ({ guest, eventId, formTitle, submitText, success, joining, ad
                 name: guest?.name || '',
                 email: guest?.email || '',
                 phone: guest?.phone || '',
+                shoeWidth: guest?.shoeWidth || '',
+                shoeSize: guest?.shoeSize || '',
+                boots: guest?.boots || []
             })
         }
     }, [guest])
@@ -78,9 +79,7 @@ const GuestForm = ({ guest, eventId, formTitle, submitText, success, joining, ad
             phone: '',
             shoeWidth: '',
             shoeSize: '',
-            bootSku: '',
-            bootName: '',
-            bootImgSrc: '',
+            boots :[]
         })
     }
 
