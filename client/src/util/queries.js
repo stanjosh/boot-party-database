@@ -63,8 +63,8 @@ query FindEventByID($uuid: ID!) {
 `;
 
 export const QUERY_EVENTS = gql`
-query FindAllEvents($date: String) {
-  findAllEvents(date: $date) {
+query FindAllEvents {
+  findAllEvents {
     _id
     eventLocation
     eventTime

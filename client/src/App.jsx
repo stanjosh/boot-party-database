@@ -1,22 +1,31 @@
+import React from "react";
 import Header from "./components/pageElements/Header.component";
 import Footer from "./components/pageElements/Footer.component";
 import { Outlet } from "react-router-dom"
+import { UserContextProvider, UserContext } from "./util/context/UserContext";
 
 
 
 function App() {
+
+
+
   return (
+    <UserContextProvider>
     <>
-
-        <Header />
-
+        <UserContext.Consumer>
+          {({user}) => <Header user={user}/>}
+        </UserContext.Consumer>
       <main>
-        <Outlet />
+        <UserContext.Consumer>
+          {({user}) => <Outlet user={user}/>}
+        </UserContext.Consumer>
       </main>
 
         <Footer />
 
     </>
+    </UserContextProvider>
   );
 }
 

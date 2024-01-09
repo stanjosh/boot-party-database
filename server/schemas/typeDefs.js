@@ -6,13 +6,14 @@ const typeDefs = gql`
     email: String!
     password: String!
     guestProfile: Guest
+    admin: Boolean
     events: [Event]
   }
 
   input UserInput {
     email: String!
     password: String!
-    guestProfile: GuestInput
+    name: String
   }
   
 
@@ -88,7 +89,7 @@ const typeDefs = gql`
 
   type Query {
     me: User
-    findAllEvents(date: String): [Event]
+    findAllEvents: [Event]
     findGuestByID(uuid: ID!): Guest
     findEventByID(uuid: ID!): Event
     findEventByDate(date: String!): [Event]
