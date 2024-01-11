@@ -16,6 +16,12 @@ const typeDefs = gql`
     name: String
   }
   
+  type Partner {
+    _id: ID!
+    name: String!
+    events: [Event]
+    users: [User]
+  }
 
   type Event {
     _id: ID!

@@ -1,8 +1,8 @@
 
 import React from "react"
 import { useQuery } from '@apollo/client';
-import { QUERY_EVENTS } from '../util/queries';
-import { EventDisplay } from "./pageElements";
+import { QUERY_EVENTS } from '../../util/queries';
+import { EventDisplay } from ".";
 
     
 const EventList = () => {
