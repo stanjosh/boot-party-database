@@ -12,7 +12,9 @@ const BootSelect = ({ formData, onSelectBoot, clearSelection, scrollBackTo }) =>
 
     useEffect(() => {
         if (!shoeSize || !shoeWidth) return;
-
+        if (bootSku && bootName) {
+            handleSelectBoot();
+        }
   
     }, [bootData, shoeSize, shoeWidth])
 
@@ -45,11 +47,6 @@ const BootSelect = ({ formData, onSelectBoot, clearSelection, scrollBackTo }) =>
     {( bootSku && bootName ) 
         
         ?   
-        (shoeSize && shoeWidth)
-        &&
-        
-
-            
             <div style={{
                 display: "flex",
                 flexDirection: "column",
