@@ -15,14 +15,16 @@ const GuestForm = ({ guest, eventId, formTitle, submitText, success, joining, ad
 
 
     const  [formData, setFormData] = useState({
+
         name: guest?.name || '',
         email: guest?.email || '',
         phone: guest?.phone || '',
         shoeWidth: guest?.shoeWidth || '',
         shoeSize: guest?.shoeSize ||'',
-        bootSku: guest?.bootSku ||'',
-        bootName: guest?.bootName ||'',
-        bootImgSrc: guest?.bootImgSrc ||'',
+        boots : {
+              ...guest?.boots || '',
+        }
+
     });
 
 
@@ -32,6 +34,9 @@ const GuestForm = ({ guest, eventId, formTitle, submitText, success, joining, ad
                 name: guest?.name || '',
                 email: guest?.email || '',
                 phone: guest?.phone || '',
+                shoeWidth: guest?.shoeWidth || '',
+                shoeSize: guest?.shoeSize || '',
+                boots: guest?.boots || []
             })
         }
     }, [guest])
@@ -77,9 +82,7 @@ const GuestForm = ({ guest, eventId, formTitle, submitText, success, joining, ad
             phone: '',
             shoeWidth: '',
             shoeSize: '',
-            bootSku: '',
-            bootName: '',
-            bootImgSrc: '',
+            boots :[]
         })
     }
 

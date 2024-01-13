@@ -30,22 +30,19 @@ const useShopifyBoots = ({shoeSize, shoeWidth }) => {
                     .then((response) => response.json())
                     .then((data) => {
                         const filteredBoots = []
-                        data.products?.forEach((style) =>
+                        data.products?.forEach((style) => {
 
-                            style.variants.forEach((variant) => {
-                                if (variant.available === true && variant.option1 === shoeSize && variant.option2 === shoeWidth ) {
-                                    variant.alt = style.title
-                                    variant.nearSizes = []
-                                    filteredBoots.push(variant)
-                                    style.variants.forEach((nearSizeVariant) => {
-                                        const { available, option1, option2, option3 } = nearSizeVariant;
-                                        if (available == true && option3 === variant.option3 && (option1 == sizeUp || option1 == sizeDown) && option2 === shoeWidth ) {
-                                            nearSizeVariant.alt = style.title
-                                            variant.nearSizes.push(nearSizeVariant)
-                                        }
-                                    })
-                                }
-                            }))
+                            const boot = style.variants.filter((variant) => {
+                                const { available, option1: size, option2 : width, option3 : color } = variant;
+                                return available == true && width === shoeWidth && (size == shoeSize || size == sizeUp || size == sizeDown)
+                            })
+
+                        
+                            if (boot.length > 0) {
+                                filteredBoots.push(boot)
+                            }
+                            
+                        });
                         setLoading(false);
                         setBootData(filteredBoots);
                         console.log('Boots fetched:', filteredBoots);

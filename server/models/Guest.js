@@ -28,8 +28,7 @@ const guestSchema = new Schema({
         required: false,
         trim: true
     },
-    boots: [ 
-        { 
+    boots: [ {
             bootSku: {
                 type: String,
                 required: false,
@@ -45,11 +44,8 @@ const guestSchema = new Schema({
                 required: false,
                 trim: true
             },
-        }
-    ]
-
-
-    
+        } ],
+            
 });
 
 
