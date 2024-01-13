@@ -56,7 +56,7 @@ const useShopifyBoots = ({shoeSize, shoeWidth }) => {
         fetchBoots();
     }, [shoeSize, shoeWidth]);
 
-    return { bootData };
+    return { bootData, loading };
 };
 
 export default useShopifyBoots;

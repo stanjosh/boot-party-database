@@ -12,15 +12,19 @@ const GuestForm = ({ guest, eventId, formTitle, submitText, success, joining, ad
     const [addGuest, { loading: addGuestLoading, error: addGuestError }] = useMutation(EVENT_ADD_SIGNUP);
     const [guestData, setGuestData] = useState(guest);
     const guestFormRef = useRef(null)
-    console.log(guest)
+
 
     const  [formData, setFormData] = useState({
-        name: guestData?.name || '',
-        email: guestData?.email || '',
-        phone: '',
-        shoeWidth: '',
-        shoeSize: '',
-        boots: []
+
+        name: guest?.name || '',
+        email: guest?.email || '',
+        phone: guest?.phone || '',
+        shoeWidth: guest?.shoeWidth || '',
+        shoeSize: guest?.shoeSize ||'',
+        boots : {
+              ...guest?.boots || '',
+        }
+
     });
 
 
@@ -44,8 +48,7 @@ const GuestForm = ({ guest, eventId, formTitle, submitText, success, joining, ad
 
     const handleSelectBoot = (e) => {
         if (e) {
-            const { bootsku, bootname, bootimgsrc, nearSizes } = e.currentTarget.dataset;
-            console.log(nearSizes)
+            const { bootsku, bootname, bootimgsrc } = e.currentTarget.dataset;
             setFormData({ ...formData, 
                 bootSku: bootsku, 
                 bootName: bootname, 
@@ -71,11 +74,11 @@ const GuestForm = ({ guest, eventId, formTitle, submitText, success, joining, ad
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('guestDataForm: ', formData)
+        
         writeGuest(formData);
         setFormData({
-            name: guestData?.name || '',
-            email: guestData?.email || '',
+            name: guest?.name || '',
+            email: guest?.email || '',
             phone: '',
             shoeWidth: '',
             shoeSize: '',

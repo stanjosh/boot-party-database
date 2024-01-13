@@ -1,33 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Form, Image, Container, Alert, Button } from 'react-bootstrap';
 import { useShopifyBoots } from '../../../util/hooks';
-import { selectHttpOptionsAndBody } from '@apollo/client';
-
-
-const menBootDataURL = "https://rickshaw-boots.myshopify.com/collections/mens-boots/products.json";
-const womenBootDataURL = "https://rickshaw-boots.myshopify.com/collections/womens-boots/products.json";
-
 
 
 const BootSelect = ({ formData, onSelectBoot, clearSelection, scrollBackTo }) => {
 
     const { shoeWidth, shoeSize, bootSku, bootName, bootImgSrc } = formData;
     const { bootData, error, loading: bootDataLoading } = useShopifyBoots({shoeSize, shoeWidth});
-    const [imagesLoaded, setImagesLoaded] = useState(false);
     const [nearSizeBootData, setNearSizeBootData] = useState([]);
 
-    
 
-    const [imagesLoading, setImagesLoading] = useState(true);
-    
+    useEffect(() => {
+        if (!shoeSize || !shoeWidth) return;
 
-    const handleloadImage = (e) => {
-        setImagesLoaded(false);
-        setImagesLoading([...imagesLoading, e.target.src]);
-        if (imagesLoading.length === bootData.length) {
-            setImagesLoaded(true);
-        }
-    }
+  
+    }, [bootData, shoeSize, shoeWidth])
+
+
 
 
     const handleSelectBoot = (e) => {
@@ -75,7 +64,7 @@ const BootSelect = ({ formData, onSelectBoot, clearSelection, scrollBackTo }) =>
                 
 
 
-                <Button style={{width: "5cqb", height: "5cqb", padding: "0", alignSelf:  "end" }} variant="danger"  onClick={() => {handleSelectBoot();}}>X</Button>    
+                <Button style={{width: "5cqb", height: "5cqb", padding: "0", alignSelf:  "end" }} variant="danger"  onClick={handleSelectBoot}>X</Button>    
                 
                 <div style={{justifyContent: "center"}}>
                     <Image src={bootImgSrc} alt={bootName} style={{maxWidth: "250px"}} />
@@ -91,13 +80,15 @@ const BootSelect = ({ formData, onSelectBoot, clearSelection, scrollBackTo }) =>
         <>
         <div style={{position: "sticky", top: "15px", zIndex: "1"}}>
         
-            { shoeSize && shoeWidth &&
-                bootData.length > 0 ? <Alert variant="success" style={{textAlign: "center", fontSize: "2cqh"}}>We have {bootData.length} styles in {shoeSize + shoeWidth}. Pick one! </Alert>
-                : !imagesLoaded || !bootDataLoading && shoeSize && shoeWidth ? <Alert variant="info" style={{textAlign: "center", fontSize: "2cqh"}}>Loading...</Alert>
-                : shoeSize && shoeWidth && bootData.length <= 0 ? <Alert variant="danger" style={{textAlign: "center", fontSize: "2cqh"}}>We don&apos;t have any boots in {shoeSize + shoeWidth} </Alert>
-                : error ? <Alert variant="danger" style={{textAlign: "center", fontSize: "2cqh"}}>Something went wrong. Please try again later.</Alert>
-                : null
+            {
                 
+             
+                
+                error ? <Alert variant="danger" style={{textAlign: "center", fontSize: "2cqh"}}>Something went wrong. Please try again later.</Alert>
+                : ( shoeSize && shoeWidth ) && bootDataLoading  ? <Alert variant="info" style={{textAlign: "center", fontSize: "2cqh"}}>Loading...</Alert>
+                : ( shoeSize && shoeWidth ) && !bootDataLoading && bootData.length <= 0  ? <Alert variant="danger" style={{textAlign: "center", fontSize: "2cqh"}}>We don&apos;t have any boots in {shoeSize + shoeWidth} </Alert>
+                : ( shoeSize && shoeWidth ) && !bootDataLoading ? <Alert variant="success" style={{textAlign: "center", fontSize: "2cqh"}}>We have {bootData.length} styles in {shoeSize + shoeWidth}. Pick one! </Alert>
+                : null                
             }
         
         </div>
@@ -113,8 +104,9 @@ const BootSelect = ({ formData, onSelectBoot, clearSelection, scrollBackTo }) =>
                         data-bootimgsrc={boot.featured_image.src}
                         data-nearsizes={JSON.stringify(boot.nearSizes)}
                         onClick={handleSelectBoot}
-                        onLoad={handleloadImage}
+                        
                         value={boot.sku}
+                        
                         style={{
                             flex: "1 0 340px", 
                             backgroundColor: "#FFFFFF", 
