@@ -28,24 +28,24 @@ const guestSchema = new Schema({
         required: false,
         trim: true
     },
-    bootSku: {
-        type: String,
-        required: false,
-        trim: true
-    },
-    bootName: {
-        type: String,
-        required: false,
-        trim: true
-    },
-    bootImgSrc: {
-        type: String,
-        required: false,
-        trim: true
-    },
-
-
-    
+    boots: [ {
+            bootSku: {
+                type: String,
+                required: false,
+                trim: true
+            },
+            bootName: {
+                type: String,
+                required: false,
+                trim: true
+            },
+            bootImgSrc: {
+                type: String,
+                required: false,
+                trim: true
+            },
+        } ],
+            
 });
 
 
