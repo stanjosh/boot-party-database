@@ -14,6 +14,8 @@ const LoginForm = () => {
         password: '',
     });
 
+    const { email, password } = loginForm;
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setLoginForm({
@@ -23,7 +25,7 @@ const LoginForm = () => {
     };
     
     const [validated] = useState(false);
-    const [showAlert, setShowAlert] = useState(false);
+    
 
     
     const handleLogin = async (e) => {
@@ -33,14 +35,15 @@ const LoginForm = () => {
                 variables: { ...loginForm }
             });
             Auth.login(user.data.loginUser.token);
+            setLoginSuccess(true);
+            setLoginForm({
+                email: '',
+                password: '',
+            });
             } catch (e) {
                 console.error(e);
             }
-                setLoginSuccess(true);
-                setLoginForm({
-                    email: '',
-                    password: '',
-                });
+
             
     }
 
@@ -55,10 +58,9 @@ const LoginForm = () => {
                         padding: "20px", 
                         backgroundColor: "var(--alviesBlue)",
                         borderRadius: "3px"
-                        }}>
-            <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
-            Something went wrong with your login credentials!
-            </Alert>
+                    }
+            }>
+
             <Form.Group className='mb-3'>
             <Form.Label htmlFor='email' visuallyHidden>Email</Form.Label>
             <Form.Control
@@ -66,7 +68,7 @@ const LoginForm = () => {
                 placeholder='email'
                 name='email'
                 onChange={handleInputChange}
-                value={loginForm.email}
+                value={email}
                 autoComplete='current-email'
                 required
             />
@@ -75,27 +77,30 @@ const LoginForm = () => {
 
             <Form.Group className='mb-3'>
             <Form.Label htmlFor='password'visuallyHidden>Password</Form.Label>
+            
             <Form.Control
                 type='password'
                 placeholder='password'
                 name='password'
                 onChange={handleInputChange}
-                value={loginForm.password}
+                value={password}
                 autoComplete='current-password'
                 required
             />
             <Form.Control.Feedback type='invalid'>Password is required!</Form.Control.Feedback>
             </Form.Group>
             <Button
-                disabled={!(loginForm.email && loginForm.password)}
+                disabled={!(email && password)}
                 type='submit'
                 className='formButtom'>
                 log in
             </Button>
+            
             <Container>
                 {error && <Alert variant='danger'>Error logging in!</Alert>}
                 {loginSuccess && <Alert variant='success'>Success!</Alert>}
             </Container>
+        
         </Form>
 
 

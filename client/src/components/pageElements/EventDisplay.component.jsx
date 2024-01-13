@@ -51,7 +51,7 @@ const EventDisplay = ( { eventData, admin } ) => {
                     
                     
                     <div style={{display: "flex", flexDirection:"column", flexWrap: "wrap", flex: "1 0 25%", justifyContent: "space-around"}}>
-                        {admin ? <Button className='formButton' href={`${window.location.origin}/admin/${eventData?._id}`} >Admin</Button> : null }
+                        {admin ? <Button className='formButton' href={`${window.location.origin}/admin/party/${eventData?._id}`} >Admin</Button> : null }
                         <Button className='formButton' onClick={() => setShowNewGuestModal(true)}>JOIN</Button>
                         <Button className='formButton' onClick={() => navigator.share(shareData)}>SHARE</Button>
                     </div>

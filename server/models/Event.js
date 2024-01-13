@@ -64,6 +64,11 @@ const eventSchema = new Schema({
     eventHelpers: {
         type: [String],
         trim: true
+    },
+    eventPartner : {
+        type: Schema.Types.ObjectId,
+        ref: 'Partner',
+        autopopulate: true,
     }
     
 });

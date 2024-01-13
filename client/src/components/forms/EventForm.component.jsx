@@ -47,7 +47,7 @@ const EventForm = ({ eventData, formTitle, submitText, guestId, admin }) => {
 
   return (
     <Form onSubmit={handleSubmit} >
-      <h4 style={{color: "aliceblue", marginBottom: "15px", fontSize: "3cqb" }}>event details</h4>
+      <h4 style={{color: "aliceblue", marginBottom: "15px", fontSize: "3cqb" }}>{formTitle ? formTitle : 'event details'}</h4>
       <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "15px"}}>
       
       

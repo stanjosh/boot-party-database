@@ -19,6 +19,11 @@ const userSchema = new Schema({
       type: Boolean,
       default: false,
     },
+    partner : {
+      type: Schema.Types.ObjectId,
+      ref: 'Partner',
+      autopopulate: true,
+    },
 
     events : [{
       type: Schema.Types.ObjectId,

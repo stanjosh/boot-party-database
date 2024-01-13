@@ -6,6 +6,7 @@ const typeDefs = gql`
     email: String!
     password: String!
     guestProfile: Guest
+    partner: Partner
     admin: Boolean
     events: [Event]
   }
@@ -28,7 +29,6 @@ const typeDefs = gql`
     eventLocation: String!
     eventTime: String!
     eventContact: Guest!
-
     eventTitle: String 
     eventLeadEmployee: String
     eventLoadinTime: String
@@ -39,6 +39,7 @@ const typeDefs = gql`
     eventVan: Int
     eventTransferOrder: String
     eventHelpers: [String]
+    eventPartner: Partner
   }
 
   input EventInput {
