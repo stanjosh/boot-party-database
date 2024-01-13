@@ -21,9 +21,7 @@ const GuestForm = ({ guest, eventId, formTitle, submitText, success, joining, ad
         phone: guest?.phone || '',
         shoeWidth: guest?.shoeWidth || '',
         shoeSize: guest?.shoeSize ||'',
-        boots : {
-              ...guest?.boots || '',
-        }
+        boots : guest?.boots || [],
 
     });
 
@@ -87,7 +85,7 @@ const GuestForm = ({ guest, eventId, formTitle, submitText, success, joining, ad
     }
 
 
-    const { name, email, phone, shoeWidth, shoeSize, bootImgSrc, bootName, bootSku } = formData;
+    const { name, email, phone } = formData;
 
     const writeGuest = async (formData) => {
         
@@ -174,8 +172,8 @@ const GuestForm = ({ guest, eventId, formTitle, submitText, success, joining, ad
             </Form.Group>
         <Form.Group >
 
-            <SizeSelect formData={{ shoeWidth, shoeSize, bootSku }} handleInputChange={handleInputChange} />
-            <BootSelect formData={{ shoeWidth, shoeSize, bootImgSrc, bootName, bootSku}} onSelectBoot={handleSelectBoot} clearSelection={clearSelectedBoot} scrollBackTo={scrollto} />
+            <SizeSelect formData={ formData } handleInputChange={handleInputChange} />
+            <BootSelect formData={ formData } onSelectBoot={handleSelectBoot} clearSelection={clearSelectedBoot} scrollBackTo={scrollto} />
         </Form.Group>
 
         <div style={{display: "flex", flexWrap: "nowrap", justifyContent:"flex-end", width: "100%"}}>

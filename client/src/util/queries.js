@@ -5,7 +5,86 @@ query Me {
   me {
     _id
     email
-    password
+    admin
+    events {
+      _id
+      eventLocation
+      eventTime
+      eventContact {
+        _id
+        name
+        email
+        phone
+        shoeSize
+        shoeWidth
+        bootName
+        bootSku
+        bootImgSrc
+      }
+      eventTitle
+      eventLeadEmployee
+      eventLoadinTime
+      eventDisplay
+      eventSignups {
+        _id
+        name
+        email
+        phone
+        shoeSize
+        shoeWidth
+        bootName
+        bootSku
+        bootImgSrc
+      }
+      eventNotes
+      eventPartyType
+      eventVan
+      eventTransferOrder
+      eventHelpers
+    }
+
+
+    partner {
+      _id
+      name
+      events {
+        _id
+        eventLocation
+        eventTime
+        eventContact {
+          _id
+          name
+          email
+          phone
+          shoeSize
+          shoeWidth
+          bootName
+          bootSku
+          bootImgSrc
+        }
+        eventTitle
+        eventLeadEmployee
+        eventLoadinTime
+        eventDisplay
+        eventSignups {
+          _id
+          name
+          email
+          phone
+          shoeSize
+          shoeWidth
+          bootName
+          bootSku
+          bootImgSrc
+        }
+        eventNotes
+        eventPartyType
+        eventVan
+        eventTransferOrder
+        eventHelpers
+      }
+    }
+
     guestProfile {
       _id
       name
@@ -58,6 +137,10 @@ query FindEventByID($uuid: ID!) {
     eventVan
     eventTransferOrder
     eventHelpers
+    eventPartner {
+      _id
+      name
+    }
   }
 }
 `;
@@ -99,6 +182,10 @@ query FindAllEvents {
     eventVan
     eventTransferOrder
     eventHelpers
+    eventPartner {
+      _id
+      name
+    }
   }
 }
 `;

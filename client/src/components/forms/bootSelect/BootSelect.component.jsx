@@ -12,7 +12,9 @@ const BootSelect = ({ formData, onSelectBoot, clearSelection, scrollBackTo }) =>
 
     useEffect(() => {
         if (!shoeSize || !shoeWidth) return;
-
+        if (bootSku && bootName) {
+            handleSelectBoot();
+        }
   
     }, [bootData, shoeSize, shoeWidth])
 
@@ -25,11 +27,11 @@ const BootSelect = ({ formData, onSelectBoot, clearSelection, scrollBackTo }) =>
             scrollBackTo();
             return;
         }
-        const { nearsizes } = e.currentTarget.dataset;
+        const { nearsizes, bootcolor } = e.currentTarget.dataset;
         if (nearsizes) {
-            console.log(nearsizes)
-            setNearSizeBootData(JSON.parse(nearsizes));
-            console.log(nearSizeBootData)
+            const nearSizesData = JSON.parse(nearsizes);
+            const nearSizes = nearSizesData.filter((boot) => boot.option3 == bootcolor )
+            setNearSizeBootData(nearSizes);
         } else {
             setNearSizeBootData([]);
         }
@@ -45,11 +47,6 @@ const BootSelect = ({ formData, onSelectBoot, clearSelection, scrollBackTo }) =>
     {( bootSku && bootName ) 
         
         ?   
-        (shoeSize && shoeWidth)
-        &&
-        
-
-            
             <div style={{
                 display: "flex",
                 flexDirection: "column",
@@ -95,17 +92,18 @@ const BootSelect = ({ formData, onSelectBoot, clearSelection, scrollBackTo }) =>
             <Container fluid style={{display: "flex", flexWrap: "wrap", flexDirection: "row"}}>
                 {bootData?.map((boot) => (
                     <Card 
-                        key={boot.id} 
-                        id={boot.sku}
-                        alt={boot.title} 
-                        data-bootmodel={boot.alt} 
-                        data-bootsku={boot.sku} 
-                        data-bootname={boot.title}
-                        data-bootimgsrc={boot.featured_image.src}
-                        data-nearsizes={JSON.stringify(boot.nearSizes)}
+                        key={boot[0].id} 
+                        id={boot[0].sku}
+                        alt={boot[0].title} 
+                        data-bootmodel={boot[0].alt} 
+                        data-bootsku={boot[0].sku} 
+                        data-bootname={boot[0].title}
+                        data-color={boot[0].option3}
+                        data-bootimgsrc={boot[0].featured_image.src}
+                        data-nearsizes={JSON.stringify(boot)}
                         onClick={handleSelectBoot}
                         
-                        value={boot.sku}
+                        value={boot[0].sku}
                         
                         style={{
                             flex: "1 0 340px", 
@@ -118,16 +116,16 @@ const BootSelect = ({ formData, onSelectBoot, clearSelection, scrollBackTo }) =>
                 
                         
                         <Card.Title style={{textAlign: "left"}}>
-                            <h2 style={{fontSize: "2cqh", fontStyle: "italic"}}>{boot.alt}</h2>
+                            <h2 style={{fontSize: "2cqh", fontStyle: "italic"}}>{boot[0].alt}</h2>
                         </Card.Title>
                         <Card.Body style={{margin: "0", padding: "0"}} >
-                            <Image width={"100%"} src={boot.featured_image.src} alt={boot.option3} />
+                            <Image width={"100%"} src={boot[0].featured_image.src} alt={boot[0].option3} />
                         </Card.Body>
                         <Card.Footer style={{margin: "0", padding: "0"}}>
-                            <a href={`https://rickshaw-boots.myshopify.com/variants/${boot.id}`} target="_blank" rel="noreferrer" style={{position: "absolute", top: "0", right: "0", margin: "10px", fontSize: "2cqh"}}>
+                            <a href={`https://rickshaw-boots.myshopify.com/variants/${boot[0].id}`} target="_blank" rel="noreferrer" style={{position: "absolute", top: "0", right: "0", margin: "10px", fontSize: "2cqh"}}>
                                 <img src="/external-link.svg" alt="alvies.com" style={{height: "4cqh", width: "3.5cqh"}} loading='lazy'/>
                             </a>
-                            <h3 style={{fontSize: "2cqh", textAlign: "right", color: "var(--alviesDarkBlue"}}>{boot.option3}</h3>
+                            <h3 style={{fontSize: "2cqh", textAlign: "right", color: "var(--alviesDarkBlue"}}>{boot[0].option3}</h3>
                         </Card.Footer>
                     </Card>
                     ))}

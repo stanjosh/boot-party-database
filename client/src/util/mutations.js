@@ -13,9 +13,11 @@ mutation CreateUser($userInput: UserInput!) {
         phone
         shoeSize
         shoeWidth
-        bootName
-        bootSku
-        bootImgSrc
+        boots {
+          bootName
+          bootSku
+          bootImgSrc
+        }
       }
     }
     token
@@ -35,9 +37,11 @@ export const LOGIN_USER = gql`
         phone
         shoeSize
         shoeWidth
-        bootName
-        bootSku
-        bootImgSrc
+        boots {
+          bootName
+          bootSku
+          bootImgSrc
+        }
       }
     }
     token
@@ -57,9 +61,11 @@ mutation CreateGuest($guestInput: GuestInput) {
         phone
         shoeSize
         shoeWidth
-        bootName
-        bootSku
-        bootImgSrc
+        boots {
+          bootName
+          bootSku
+          bootImgSrc
+        }
       }
     }
   }
@@ -76,11 +82,13 @@ mutation CreateEvent($eventInput: EventInput!, $userId: ID) {
       email
       name
       phone
-      bootName
-      bootSku
       shoeWidth
       shoeSize
-      bootImgSrc
+      boots {
+          bootName
+          bootSku
+          bootImgSrc
+        }
     }
     eventTitle
     eventLeadEmployee
@@ -90,11 +98,13 @@ mutation CreateEvent($eventInput: EventInput!, $userId: ID) {
       name
       email
       phone
-      bootName
-      bootSku
       shoeWidth
       shoeSize
-      bootImgSrc
+      boots {
+          bootName
+          bootSku
+          bootImgSrc
+        }
     }
     eventNotes
     eventPartyType
@@ -115,11 +125,13 @@ mutation UpdateEvent($eventId: ID!, $updateEventInput: UpdateEventInput) {
       email
       name
       phone
-      bootName
-      bootSku
       shoeWidth
       shoeSize
-      bootImgSrc
+      boots {
+          bootName
+          bootSku
+          bootImgSrc
+        }
     }
     eventTitle
     eventLeadEmployee
@@ -129,11 +141,13 @@ mutation UpdateEvent($eventId: ID!, $updateEventInput: UpdateEventInput) {
       name
       email
       phone
-      bootName
-      bootSku
       shoeWidth
       shoeSize
-      bootImgSrc
+      boots {
+          bootName
+          bootSku
+          bootImgSrc
+        }
     }
     eventNotes
     eventPartyType
@@ -154,11 +168,13 @@ mutation EventAddSignup($eventId: ID!, $guestId: ID!) {
       email
       name
       phone
-      bootName
-      bootSku
       shoeWidth
       shoeSize
-      bootImgSrc
+      boots {
+          bootName
+          bootSku
+          bootImgSrc
+        }
     }
     eventTitle
     eventLeadEmployee
@@ -168,11 +184,13 @@ mutation EventAddSignup($eventId: ID!, $guestId: ID!) {
       name
       email
       phone
-      bootName
-      bootSku
       shoeWidth
       shoeSize
-      bootImgSrc
+      boots {
+          bootName
+          bootSku
+          bootImgSrc
+        }
     }
     eventNotes
     eventPartyType
@@ -193,11 +211,13 @@ mutation EventRemoveSignup($eventId: ID!, $guestId: ID!) {
       email
       name
       phone
-      bootName
-      bootSku
       shoeWidth
       shoeSize
-      bootImgSrc
+      boots {
+          bootName
+          bootSku
+          bootImgSrc
+        }
     }
     eventTitle
     eventLeadEmployee
@@ -207,11 +227,13 @@ mutation EventRemoveSignup($eventId: ID!, $guestId: ID!) {
       name
       email
       phone
-      bootName
-      bootSku
       shoeWidth
       shoeSize
-      bootImgSrc
+      boots {
+          bootName
+          bootSku
+          bootImgSrc
+        }
     }
     eventNotes
     eventPartyType
@@ -229,11 +251,13 @@ mutation updateGuest( $guestInput: GuestInput!) {
     name
     email
     phone
-    bootName
-    bootSku
     shoeWidth
     shoeSize
-    bootImgSrc
+    boots {
+          bootName
+          bootSku
+          bootImgSrc
+        }
   }
 }
 `;

@@ -85,6 +85,28 @@ const Header = () => {
             
             </Nav.Link>  
           )}
+
+          {userData?.admin ? (
+            <Nav.Link 
+            eventKey={4} 
+            href='/admin'
+            style={{margin: "5px", 
+              flex: "1 1 150px", 
+              width: "150px", 
+              maxWidth: "50%",
+              maxHeight: "50px", 
+              textAlign: "center", 
+              justifyContent: "space-between",
+              border: "4px solid var(--alviesBlue)",
+              padding: "5px",
+              
+          }}>
+              ADMIN
+             
+          
+            
+            </Nav.Link>  
+          ) : null}
           
         </Nav>
 

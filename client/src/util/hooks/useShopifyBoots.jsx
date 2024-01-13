@@ -19,6 +19,52 @@ const useShopifyBoots = ({shoeSize, shoeWidth }) => {
         // Fetch boots data from Shopify JSON
         
 
+
+        const filterAndSortBoots = (boots) => {
+            boots.products?.forEach((product) => {
+                product.variants.forEach((variant) => {
+                    variant.title = product.title;
+                })
+                
+            })
+
+            const variants = boots.products?.map((product) => product.variants)
+            
+            
+
+            const filteredBoots = variants
+                .flat()
+                .filter((b) => {
+                    return b.option2 == shoeWidth && (b.option1 == parseFloat(shoeSize) || b.option1 == sizeUp || b.option1 == sizeDown);
+                })
+                .reduce((acc = [], boot) => {
+                    if (!acc[boot['option3']]) { acc[boot['option3']] = [] }
+                    acc[boot['option3']].push(boot);
+                    return acc;
+                }, {})
+            
+            
+            //hidalgo honey hacking
+            filteredBoots['Hidalgo Honey'] = filteredBoots['Hidalgo Honey'].reduce((acc, boot) => {
+                if (!acc[boot['title']]) { acc[boot['title']] = [] }
+                acc[boot['title']].push(boot);
+                return acc;
+            }, {})
+
+            
+
+            
+
+            return Object.keys(filteredBoots).map((key) => {
+                return filteredBoots[key];
+            });
+
+        }
+
+
+
+
+
         console.log(sizeUp, sizeDown)
         const fetchBoots = async () => {
             if (!shoeSize || !shoeWidth) return;
@@ -26,27 +72,21 @@ const useShopifyBoots = ({shoeSize, shoeWidth }) => {
                 
                 const bootDataURL = shoeWidth === "B" ? womenBootDataURL : menBootDataURL;
                 setLoading(true);
+                
                 fetch(bootDataURL)
+
                     .then((response) => response.json())
                     .then((data) => {
-                        const filteredBoots = []
-                        data.products?.forEach((style) => {
-
-                            const boot = style.variants.filter((variant) => {
-                                const { available, option1: size, option2 : width, option3 : color } = variant;
-                                return available == true && width === shoeWidth && (size == shoeSize || size == sizeUp || size == sizeDown)
-                            })
-
                         
-                            if (boot.length > 0) {
-                                filteredBoots.push(boot)
-                            }
-                            
-                        });
+
+                        const filteredBoots = filterAndSortBoots(data)
+                        console.log(filteredBoots)
                         setLoading(false);
                         setBootData(filteredBoots);
                         console.log('Boots fetched:', filteredBoots);
-                    });
+                        
+                    })
+                        
             } catch (error) {
                 setLoading(false);
                 console.error('Error fetching boots:', error);
