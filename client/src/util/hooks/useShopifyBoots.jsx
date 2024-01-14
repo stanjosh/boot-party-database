@@ -115,7 +115,7 @@ const useShopifyBoots = ({shoeSize, shoeWidth }) => {
         };
 
         fetchBoots();
-    }, [shoeSize, shoeWidth]);
+    }, [shoeSize, shoeWidth, sizeDown, sizeUp]);
 
     return { bootData, loading };
 };
