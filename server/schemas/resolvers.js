@@ -18,15 +18,18 @@ const resolvers = {
       .populate('eventSignups')
       .populate('eventContact')
   
-      },
+    },
 
-      findAllUsers: async () => {
+    findAllUsers: async () => {
+
+      return await User.find()
+
   
-        return await User.find()
-
+    },
     
-        },
-    
+    findUsersBySearch: async (parent, { search }, context) => {
+      return await User.find({ $text: { $search: search } })
+    },
     
 
     findGuestByID: async (uuid) => {

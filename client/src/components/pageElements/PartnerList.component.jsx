@@ -7,10 +7,11 @@ import { QUERY_USERS_SEARCH } from '../../util/queries';
 
 
 
-const UsersList = () => {
+const PartnersList = () => {
 
     const [currentSearch, setCurrentSearch] = useState('');
-    const [ searchUsers, { loading, data, error }] = useLazyQuery(QUERY_USERS_SEARCH, {
+
+    const [ searchPartners, { loading, data, error }] = useLazyQuery(QUERY_PARTNERS_SEARCH, {
         variables: { search: currentSearch },
         
     });
@@ -19,12 +20,12 @@ const UsersList = () => {
     const handleSearchChange = (event) => {
         const { value } = event.target;
         setCurrentSearch(value);
-    }
+    };
 
     const handleSearchSubmit = (event) => {
         event.preventDefault();
-        searchUsers();
-    }
+        searchPartners();
+    };
 
     
 
@@ -49,7 +50,7 @@ const UsersList = () => {
             ) : (
                 <div style={{display: "flex", flexWrap: "wrap"}}>
                     
-                    {data?.findUsersBySearch?.map((userData, index) => <div key={index} style={{flex: "1 1 250px", maxHeight: "50%"}}> <UserDisplay userData={userData}  admin/> </div>)}
+                    {data?.findPartnersBySearch?.map((userData, index) => <div key={index} style={{flex: "1 1 250px", maxHeight: "50%"}}> <UserDisplay userData={userData}  admin/> </div>)}
                 </div>
             )}
         </div>
@@ -57,4 +58,4 @@ const UsersList = () => {
     )
 }
 
-export default UsersList
+export default PartnersList

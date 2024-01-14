@@ -48,6 +48,7 @@ const typeDefs = gql`
     eventContact: String!
     eventNotes: String
     eventTitle: String 
+    evventPartner: String
   }
 
   input UpdateEventInput {
@@ -63,6 +64,7 @@ const typeDefs = gql`
     eventTransferOrder: String
     eventHelpers: [String]
     eventContact: GuestInput
+    eventPartner: String
   }
 
   type Guest {
@@ -114,6 +116,7 @@ const typeDefs = gql`
     me: User
     findAllEvents: [Event]
     findAllUsers: [User]
+    findUsersBySearch(search: String!): [User]
     findGuestByID(uuid: ID!): Guest
     findEventByID(uuid: ID!): Event
     findEventByDate(date: String!): [Event]

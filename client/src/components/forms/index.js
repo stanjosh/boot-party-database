@@ -4,5 +4,6 @@ import BootSelect from './bootSelect/BootSelect.component';
 import EventAdminForm from './EventAdminForm.component';
 import LoginForm from './LoginForm.component';
 import SignupForm from './SignupForm.component';
+import UserForm from './UserForm.component';
 
-export { GuestForm, EventForm, BootSelect, EventAdminForm, LoginForm, SignupForm };
+export { GuestForm, EventForm, BootSelect, EventAdminForm, LoginForm, SignupForm, UserForm };

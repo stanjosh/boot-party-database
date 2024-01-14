@@ -44,6 +44,14 @@ const userSchema = new Schema({
   }
 );
 
+userSchema.index({
+    'email': 'text',
+    'guestProfile.name': 'text',
+    'guestProfile.phone': 'text',
+    'guestProfile.email': 'text',
+    'partner.name': 'text',
+    
+  });
 
 userSchema.plugin(require('mongoose-autopopulate'));
 

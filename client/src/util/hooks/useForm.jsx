@@ -7,7 +7,6 @@ const useForm = (initialState = {}, onSubmit) => {
         console.log(e.target, moreData)
         const { name, value } = e.target;
         setFormData({ ...formData, ...moreData, [name]: value})
-        console.log(formData)
     }
 
     const handleSubmit = (e) => {

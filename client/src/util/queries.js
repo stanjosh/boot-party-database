@@ -263,3 +263,170 @@ query FindAllEvents {
   }
 }
 `;
+
+export const QUERY_PARTNERS_SEARCH = gql`
+query FindPartnersBySearch($search: String!) {
+  findPartnersBySearch(search: $search) {
+    _id
+    name
+    events {
+      _id
+      eventLocation
+      eventTime
+      eventContact {
+        _id
+        name
+        email
+        phone
+        shoeSize
+        shoeWidth
+        boots { bootName
+                bootSku
+                bootImgSrc
+        }
+      }
+      eventTitle
+      eventLeadEmployee
+      eventLoadinTime
+      eventDisplay
+      eventSignups {
+        _id
+        name
+        email
+        phone
+        shoeSize
+        shoeWidth
+        boots { bootName
+                bootSku
+                bootImgSrc
+        }
+      }
+      eventNotes
+      eventPartyType
+      eventVan
+      eventTransferOrder
+      eventHelpers
+    }
+    users {
+      _id
+      email
+      admin
+      guestProfile {
+        _id
+        name
+        email
+        phone
+        shoeSize
+        shoeWidth
+        boots { bootName
+                bootSku
+                bootImgSrc
+        }
+      }
+      events {
+        _id
+        eventLocation
+        eventTime
+        eventContact {
+          _id
+          name
+          email
+          phone
+          shoeSize
+          shoeWidth
+          boots { bootName
+                bootSku
+                bootImgSrc
+        }
+        }
+        eventTitle
+        eventLeadEmployee
+        eventLoadinTime
+        eventDisplay
+        eventSignups {
+          _id
+          name
+          email
+          phone
+          shoeSize
+          shoeWidth
+          boots { bootName
+                bootSku
+                bootImgSrc
+        }
+        }
+        eventNotes
+        eventPartyType
+        eventVan
+        eventTransferOrder
+        eventHelpers
+      }
+    }
+  }
+}
+`;
+
+
+export const QUERY_USERS_SEARCH = gql`
+query FindUsersBySearch($search: String!) {
+  findUsersBySearch(search: $search) {
+    _id
+    email
+    admin
+    partner {
+      _id
+      name
+    }
+    guestProfile {
+      _id
+      name
+      email
+      phone
+      shoeSize
+      shoeWidth
+      boots { bootName
+                bootSku
+                bootImgSrc
+        }
+    }
+    events {
+      _id
+      eventLocation
+      eventTime
+      eventContact {
+        _id
+        name
+        email
+        phone
+        shoeSize
+        shoeWidth
+        boots { bootName
+                bootSku
+                bootImgSrc
+        }
+      }
+      eventTitle
+      eventLeadEmployee
+      eventLoadinTime
+      eventDisplay
+      eventSignups {
+        _id
+        name
+        email
+        phone
+        shoeSize
+        shoeWidth
+        boots { bootName
+                bootSku
+                bootImgSrc
+        }
+      }
+      eventNotes
+      eventPartyType
+      eventVan
+      eventTransferOrder
+      eventHelpers
+    }
+  }
+}
+`;

@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { GuestForm } from '../forms';
+import { UserForm } from '../forms';
 import { Card, Button, Modal } from 'react-bootstrap';
 
 
 
 const UserDisplay = ( { userData, admin } ) => {
     
+    const [show, setShow] = useState(false);
+
     return (
 
         
@@ -22,7 +24,7 @@ const UserDisplay = ( { userData, admin } ) => {
                     admin?: {userData?.admin ? 'yes' : 'no'} <br />
                     
 
-                    <Button className='formButton' href={`${window.location.origin}/admin/party/${userData?._id}`} >Admin</Button>
+                    {admin ? <Button className='formButton' onClick={() => setShow(true)} >Admin</Button> : null}
                     </div>   
                         
 
@@ -35,7 +37,16 @@ const UserDisplay = ( { userData, admin } ) => {
 
         </div>
 
-        
+        <Modal show={show} onHide={() => setShow(false)} centered>
+            <Modal.Header closeButton className='bg-dark text-light'>
+                <Modal.Title>Update User</Modal.Title>
+            </Modal.Header>
+            <Modal.Body className='bg-dark text-light'>
+                <UserForm userData={userData} formTitle={'edit user info'}/>
+             
+            </Modal.Body>
+
+        </Modal>
 
         </>
     );

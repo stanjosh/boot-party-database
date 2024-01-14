@@ -23,7 +23,7 @@ const partnerSchema = new Schema({
     
 });
 
-
+partnerSchema.plugin(require('mongoose-autopopulate'));
 
 
 const Partner = model('Partner',partnerSchema);

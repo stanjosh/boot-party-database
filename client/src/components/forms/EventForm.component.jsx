@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
@@ -7,8 +7,12 @@ import { useMutation } from '@apollo/client';
 import { CREATE_EVENT } from '../../util/mutations';
 
 const EventForm = ({ eventData, formTitle, submitText, guestId, admin }) => {
-    const [eventTime, setEventTime] = useState(new Date().setDate(parseInt(eventData?.eventTime)) || new Date());
-    console.log(guestId)
+    
+    const [eventTime, setEventTime] = useState(new Date());
+    const [createEvent, { loading, error }] = useMutation(CREATE_EVENT);
+
+    const today = new Date();
+    
     const { formData, handleInputChange, handleSubmit } = useForm({
         eventTime: eventTime,
         eventLocation: eventData?.eventLocation ?? '',
@@ -20,9 +24,14 @@ const EventForm = ({ eventData, formTitle, submitText, guestId, admin }) => {
  
     const { eventLocation, eventTitle, eventNotes } = formData;
 
-    const [createEvent, { loading, error }] = useMutation(CREATE_EVENT);
-  
-    const today = new Date();
+    const handleTimeChange = (date) => {
+        setEventTime(date);
+        handleInputChange({target: {name: 'eventTime', value: date}})
+        console.log('time changed', formData);
+    };
+
+
+
 
     const writeEvent = async (formData) => {
       await createEvent({
@@ -71,9 +80,9 @@ const EventForm = ({ eventData, formTitle, submitText, guestId, admin }) => {
         style={{flex: "0 1 60%", borderRadius: "3px"}}
         name='eventTime'
         excludeDates={[today.setDate(today.getDate()), today.setDate(today.getDate() + 1)]}
-        selected={eventTime}
-        onChange={(date) => setEventTime(date)}
-        value={eventTime}
+        selected={formData?.eventTime}
+        onChange={(date) => handleTimeChange(date)}
+        value={formData?.eventTime}
         showTodayButton={false}
         showIcon={true}
         minDate={new Date()}
