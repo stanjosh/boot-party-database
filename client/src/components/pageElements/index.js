@@ -5,5 +5,7 @@ import GuestsDisplay from './GuestsDisplay.component';
 import BootSelect from '../forms/bootSelect/BootSelect.component';
 import PolaroidDrop from './PolaroidDrop.component';
 import EventList from './EventList.component';
+import UsersList from './UsersList.component';
+import UserDisplay from './UserDisplay.component';
 
-export { Header, Footer, EventDisplay, GuestsDisplay, BootSelect, PolaroidDrop, EventList };
+export { Header, Footer, EventDisplay, GuestsDisplay, BootSelect, PolaroidDrop, EventList, UsersList, UserDisplay };

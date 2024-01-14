@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { GuestForm, EventForm } from '../components/forms';
-import { UserContext } from '../util/context/UserContext';
+import { GuestForm, EventForm } from '../forms';
+import { UserContext } from '../../util/context/UserContext';
 
 
 

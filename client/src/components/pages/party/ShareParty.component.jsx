@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Container, Alert } from 'react-bootstrap';
-import { EventDisplay, GuestsDisplay } from '../components/pageElements';
+import { EventDisplay, GuestsDisplay } from '../../pageElements';
 import { useQuery } from '@apollo/client';
-import { QUERY_EVENT } from '../util/queries';
+import { QUERY_EVENT } from '../../../util/queries';
 
 const ShareParty = () => {
   const { eventId } = useParams();

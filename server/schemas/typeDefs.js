@@ -70,22 +70,34 @@ const typeDefs = gql`
     name: String!
     email: String
     phone: String
-    bootSku: String
-    bootName: String
     shoeSize: String
     shoeWidth: String
-    bootImgSrc: String
+    boots: Boot
   }
+
+  type Boot {
+    bootImgSrc: String
+    bootSku: String
+    bootName: String
+  }
+
 
   input GuestInput {
     name: String
     email: String
     phone: String
-    bootSku: String
-    bootName: String
+    boots: [BootInput]
     shoeSize: String
     shoeWidth: String
     bootImgSrc: String
+  }
+
+  
+
+  input BootInput {
+    bootImgSrc: String
+    bootSku: String
+    bootName: String
   }
 
   type Auth {
@@ -97,6 +109,7 @@ const typeDefs = gql`
   type Query {
     me: User
     findAllEvents: [Event]
+    findAllUsers: [User]
     findGuestByID(uuid: ID!): Guest
     findEventByID(uuid: ID!): Event
     findEventByDate(date: String!): [Event]
@@ -112,6 +125,7 @@ const typeDefs = gql`
     findEventByEventTime(eventTime: String!): [Event]
     findEventByEventLocation(eventLocation: String!): [Event]
     findEventByEventTransferOrder(eventTransferOrder: String!): [Event]
+    
 
 
   }

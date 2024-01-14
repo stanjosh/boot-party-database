@@ -23,7 +23,8 @@ const useShopifyBoots = ({shoeSize, shoeWidth }) => {
         const filterAndSortBoots = (boots) => {
             boots.products?.forEach((product) => {
                 product.variants.forEach((variant) => {
-                    variant.title = product.title;
+                    variant.title = product?.title;
+                    variant.bootImgSrc = variant.featured_image?.src;
                 })
                 
             })
@@ -37,19 +38,30 @@ const useShopifyBoots = ({shoeSize, shoeWidth }) => {
                 .filter((b) => {
                     return b.option2 == shoeWidth && (b.option1 == parseFloat(shoeSize) || b.option1 == sizeUp || b.option1 == sizeDown);
                 })
+                
                 .reduce((acc = [], boot) => {
                     if (!acc[boot['option3']]) { acc[boot['option3']] = [] }
                     acc[boot['option3']].push(boot);
                     return acc;
                 }, {})
             
+
             
-            //hidalgo honey hacking
-            filteredBoots['Hidalgo Honey'] = filteredBoots['Hidalgo Honey'].reduce((acc, boot) => {
-                if (!acc[boot['title']]) { acc[boot['title']] = [] }
-                acc[boot['title']].push(boot);
-                return acc;
-            }, {})
+            //hidalgo honey hacking + night on the town
+            if (filteredBoots['Hidalgo Honey']) {
+                const nottboots = filteredBoots['Night on the Town'].filter((boot) => boot['title'] == 'Night on the Town')
+                const hhboots = filteredBoots['Hidalgo Honey'].reduce((acc, boot) => {
+                    if (!acc[boot['title']]) { acc[boot['title']] = [] }
+                    acc[boot['title']].push(boot);
+                    return acc;
+                }, {})
+                filteredBoots['The Comal Hidalgo Honey'] = hhboots['The Comal']
+                filteredBoots['The Lamar Hidalgo Honey'] = hhboots['The Lamar']
+                filteredBoots['The Stassney Night on the Town'] = nottboots['The Stassney']
+                filteredBoots['The Duval Night on the Town'] = nottboots['The Duval']
+                delete filteredBoots['Hidalgo Honey']
+                delete filteredBoots['Night on the Town']
+            }
 
             
 

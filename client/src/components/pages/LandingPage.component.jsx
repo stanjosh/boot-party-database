@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
-import { PolaroidDrop } from "./pageElements";
+import { PolaroidDrop } from "../pageElements";
 
 const LandingPage = () => {
     const [scrollY, setScrollY] = useState(0);

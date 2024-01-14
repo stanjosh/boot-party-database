@@ -9,8 +9,8 @@ import {
   createHttpLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import { LandingPage, Booking, ShareParty, AdminParty, UserProfile, AdminPage } from './components/'
-import { BootSelect } from './components/pageElements/index.js';
+import { LandingPage, Booking, ShareParty, AdminParty, AdminPage } from './components/'
+
 
 
 const host = '/api';
@@ -44,10 +44,6 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <LandingPage />
-      },
-      {
-        path: "/user",
-        element: <UserProfile />
       },
       {
         path: "/book",

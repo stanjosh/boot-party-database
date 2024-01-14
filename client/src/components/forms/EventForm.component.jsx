@@ -72,7 +72,7 @@ const EventForm = ({ eventData, formTitle, submitText, guestId, admin }) => {
         name='eventTime'
         excludeDates={[today.setDate(today.getDate()), today.setDate(today.getDate() + 1)]}
         selected={eventTime}
-        onChange={setEventTime}
+        onChange={(date) => setEventTime(date)}
         value={eventTime}
         showTodayButton={false}
         showIcon={true}

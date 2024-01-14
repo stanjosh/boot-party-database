@@ -1,6 +1,6 @@
 import React from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
-import { EventList } from './pageElements';
+import { EventList, UsersList } from '../../pageElements';
 
 const AdminPage = () => {
     return (
@@ -10,7 +10,7 @@ const AdminPage = () => {
                 < EventList />
             </Tab>
             <Tab eventKey="users" title="Users">
-                <h1>Users</h1>
+                < UsersList />
             </Tab>
             <Tab eventKey="partners" title="Partners">
                 <h1> Partners </h1>

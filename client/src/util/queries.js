@@ -17,9 +17,10 @@ query Me {
         phone
         shoeSize
         shoeWidth
-        bootName
-        bootSku
-        bootImgSrc
+        boots { bootName
+                bootSku
+                bootImgSrc
+        }
       }
       eventTitle
       eventLeadEmployee
@@ -32,9 +33,10 @@ query Me {
         phone
         shoeSize
         shoeWidth
-        bootName
-        bootSku
-        bootImgSrc
+        boots { bootName
+                bootSku
+                bootImgSrc
+        }
       }
       eventNotes
       eventPartyType
@@ -58,9 +60,10 @@ query Me {
           phone
           shoeSize
           shoeWidth
-          bootName
-          bootSku
-          bootImgSrc
+          boots { bootName
+                bootSku
+                bootImgSrc
+        }
         }
         eventTitle
         eventLeadEmployee
@@ -73,9 +76,10 @@ query Me {
           phone
           shoeSize
           shoeWidth
-          bootName
-          bootSku
-          bootImgSrc
+          boots { bootName
+                bootSku
+                bootImgSrc
+        }
         }
         eventNotes
         eventPartyType
@@ -92,13 +96,79 @@ query Me {
       phone
       shoeSize
       shoeWidth
-      bootName
-      bootSku
-      bootImgSrc
+      boots { bootName
+                bootSku
+                bootImgSrc
+        }
     }
   }
 }
 `;
+
+export const QUERY_USERS = gql`
+query FindAllUsers {
+  findAllUsers {
+    _id
+    email
+    admin
+    partner {
+      _id
+      name
+    }
+    guestProfile {
+      _id
+      name
+      email
+      phone
+      shoeSize
+      shoeWidth
+      boots { bootName
+                bootSku
+                bootImgSrc
+        }
+    }
+    events {
+      _id
+      eventLocation
+      eventTime
+      eventContact {
+        _id
+        name
+        email
+        phone
+        shoeSize
+        shoeWidth
+        boots { bootName
+                bootSku
+                bootImgSrc
+        }
+      }
+      eventTitle
+      eventLeadEmployee
+      eventLoadinTime
+      eventDisplay
+      eventSignups {
+        _id
+        name
+        email
+        phone
+        shoeSize
+        shoeWidth
+        boots { bootName
+                bootSku
+                bootImgSrc
+        }
+      }
+      eventNotes
+      eventPartyType
+      eventVan
+      eventTransferOrder
+      eventHelpers
+    }
+  }
+}
+`;
+
 
 export const QUERY_EVENT = gql`
 query FindEventByID($uuid: ID!) {
@@ -113,9 +183,10 @@ query FindEventByID($uuid: ID!) {
       phone
       shoeSize
       shoeWidth
-      bootName
-      bootSku
-      bootImgSrc
+      boots { bootName
+                bootSku
+                bootImgSrc
+        }
     }
     eventTitle
     eventLeadEmployee
@@ -128,9 +199,10 @@ query FindEventByID($uuid: ID!) {
       phone
       shoeSize
       shoeWidth
-      bootName
-      bootSku
-      bootImgSrc
+      boots { bootName
+                bootSku
+                bootImgSrc
+        }
     }
     eventNotes
     eventPartyType
@@ -158,9 +230,10 @@ query FindAllEvents {
       phone
       shoeSize
       shoeWidth
-      bootName
-      bootSku
-      bootImgSrc
+      boots { bootName
+                bootSku
+                bootImgSrc
+        }
     }
     eventTitle
     eventLeadEmployee
@@ -173,9 +246,10 @@ query FindAllEvents {
       phone
       shoeSize
       shoeWidth
-      bootName
-      bootSku
-      bootImgSrc
+      boots { bootName
+                bootSku
+                bootImgSrc
+        }
     }
     eventNotes
     eventPartyType

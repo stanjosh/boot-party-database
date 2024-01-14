@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { GuestForm } from '../forms/';
 import { Card, Button, Modal } from 'react-bootstrap';
+import dayjs from 'dayjs';
+
 
 
 const EventDisplay = ( { eventData, admin } ) => {
@@ -8,8 +10,8 @@ const EventDisplay = ( { eventData, admin } ) => {
 
 
 
-    const prettyTime = new Date(parseInt(eventData?.eventTime)).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })  
-    const prettyDate = new Date(parseInt(eventData?.eventTime)).toLocaleString('en-US', { month: "long", day: "numeric", weekday: "long" })
+    const prettyTime = dayjs(parseInt(eventData?.eventTime)).format('h:mm A')
+    const prettyDate = dayjs(parseInt(eventData?.eventTime)).format('dddd, MMMM D')
 
     const eventId = eventData?._id;
 
@@ -24,7 +26,7 @@ const EventDisplay = ( { eventData, admin } ) => {
 
         
         <>
-        
+        { !admin ? 
         <Card>
             <Card.Body style={{display: "flex", width: "100%", flexWrap: "wrap", justifyContent: "space-around", alignItems: "center"}}>
 
@@ -34,7 +36,7 @@ const EventDisplay = ( { eventData, admin } ) => {
 
                 <div style={{flex: "1 1 75%", textAlign: "center"}}>
                     <h2 style={{fontSize: "3cqb"}}>{prettyDate}</h2>
-                    <h1 className="landingPageTitle" style={{ fontSize: '5cqb' }}>
+                    <h1 className="landingPageTitle" style={{ fontSize: '4cqb' }}>
                     {eventData?.eventTitle ? eventData.eventTitle : 'Boot Party'}
                     </h1>
                     <h3 style={{fontSize: "3cqb"}}>{prettyTime} at { eventData?.eventLocation }</h3>
@@ -72,6 +74,32 @@ const EventDisplay = ( { eventData, admin } ) => {
             
         </Card>
 
+        :
+        <div style={{ backgroundColor: "aliceblue"}}> 
+            <ul>
+                <li>
+                    
+                    <div>
+                    {eventData?.eventTime ? <><strong>{prettyDate + ' ' + prettyTime}</strong> <br /> </>: null}
+                        
+                    {eventData?.eventTitle ? <><strong>"{eventData?.eventTitle}"</strong> <br /> </>: null}
+                        
+                    {eventData?.eventLocation ? <><strong>{eventData?.eventLocation}</strong> </> : null}
+
+                    <Button className='formButton' href={`${window.location.origin}/admin/party/${eventData?._id}`} >Admin</Button>
+                    </div>   
+                        
+
+                    
+
+                </li>
+
+
+            </ul>
+
+        </div>
+
+        }
         <Modal show={showNewGuestModal} onHide={() => setShowNewGuestModal(false)} >
             <Modal.Header closeButton className='bg-dark text-light'>
               <Modal.Title>add guest</Modal.Title>

@@ -20,6 +20,12 @@ const resolvers = {
   
       },
 
+      findAllUsers: async () => {
+  
+        return await User.find()
+
+    
+        },
     
     
 

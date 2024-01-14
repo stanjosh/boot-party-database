@@ -10,7 +10,6 @@ import SizeSelect from './bootSelect/SizeSelect.component';
 const GuestForm = ({ guest, eventId, formTitle, submitText, success, joining, admin }) => {
     const [updateGuest, { loading, error }] = useMutation(UPDATE_GUEST);
     const [addGuest, { loading: addGuestLoading, error: addGuestError }] = useMutation(EVENT_ADD_SIGNUP);
-    const [guestData, setGuestData] = useState(guest);
     const guestFormRef = useRef(null)
 
 
@@ -26,18 +25,7 @@ const GuestForm = ({ guest, eventId, formTitle, submitText, success, joining, ad
     });
 
 
-    useEffect(() => { 
-        if (guest) {
-            setFormData({
-                name: guest?.name || '',
-                email: guest?.email || '',
-                phone: guest?.phone || '',
-                shoeWidth: guest?.shoeWidth || '',
-                shoeSize: guest?.shoeSize || '',
-                boots: guest?.boots || []
-            })
-        }
-    }, [guest])
+
     
 
     const handleInputChange = (e) => {
@@ -45,13 +33,14 @@ const GuestForm = ({ guest, eventId, formTitle, submitText, success, joining, ad
     }
 
     const handleSelectBoot = (e) => {
-        if (e) {
-            const { bootsku, bootname, bootimgsrc } = e.currentTarget.dataset;
+        const boot = JSON.parse(e.currentTarget.dataset.boot);
+        console.log('bootdata', boot);
+        if (boot) {
+            
             setFormData({ ...formData, 
-                bootSku: bootsku, 
-                bootName: bootname, 
-                bootImgSrc: bootimgsrc 
+                boots: [...boot],
             });
+           
         } else {
             setFormData({ ...formData, 
                 bootSku: '', 
@@ -64,9 +53,7 @@ const GuestForm = ({ guest, eventId, formTitle, submitText, success, joining, ad
 
     const clearSelectedBoot = () => {
         setFormData({ ...formData, 
-            bootSku: '', 
-            bootName: '', 
-            bootImgSrc: '' 
+            boots: [],
         });
     }
 
@@ -74,14 +61,7 @@ const GuestForm = ({ guest, eventId, formTitle, submitText, success, joining, ad
         e.preventDefault();
         
         writeGuest(formData);
-        setFormData({
-            name: guest?.name || '',
-            email: guest?.email || '',
-            phone: '',
-            shoeWidth: '',
-            shoeSize: '',
-            boots :[]
-        })
+
     }
 
 
