@@ -6,16 +6,17 @@ import { useShopifyBoots } from '../../../util/hooks';
 const BootSelect = ({ formData, onSelectBoot, clearSelection, scrollBackTo }) => {
 
     const { shoeWidth, shoeSize, boots } = formData;
-    console.log(formData)
+
     const { bootSku, bootName, bootImgSrc } = boots[0] || {};
+    
     const { bootData, error, loading: bootDataLoading } = useShopifyBoots({shoeSize, shoeWidth});
-    const [nearSizeBootData, setNearSizeBootData] = useState([]);
+    
     
 
     useEffect(() => {
         if (!shoeSize || !shoeWidth) return;
-  
-    }, [bootData, shoeSize, shoeWidth])
+
+    }, [bootData, shoeSize, shoeWidth, boots])
 
   
 
@@ -56,12 +57,12 @@ const BootSelect = ({ formData, onSelectBoot, clearSelection, scrollBackTo }) =>
                 
 
 
-                <Button style={{width: "5cqb", height: "5cqb", padding: "0", alignSelf:  "end" }} variant="danger"  onClick={handleSelectBoot}>X</Button>    
+                <Button style={{width: "5cqb", height: "5cqb", padding: "0", alignSelf:  "end" }} variant="danger"  onClick={() => handleSelectBoot(null)}>X</Button>    
                 
                 <div style={{justifyContent: "center"}}>
                     <Image src={bootImgSrc} alt={bootName} style={{maxWidth: "250px"}} />
                     <h2 style={{fontSize: "3cqb"}}>{bootName}</h2>
-                    {nearSizeBootData && <div>we&apos;ll also bring these sizes: {nearSizeBootData.map((boot) => `${boot.option1 + boot.option2} `)}</div> }
+                    { boots ? ("We'll bring these sizes: " + boots?.map((b) => { return b.size + b.width }).join(', ') ) : null }
                 </div>
             </div>
             
@@ -91,14 +92,13 @@ const BootSelect = ({ formData, onSelectBoot, clearSelection, scrollBackTo }) =>
                 {bootData?.map((boot) => {
                     const { sku, title, bootImgSrc , option3 : color, id, alt } = boot[0];
 
-                    console.log(boot)
-
+ 
                     return (
                     <Card 
                         key={id} 
                         id={sku}
                         alt={title} 
-                        data-boot={JSON.stringify(boot.map((b) => { return { bootSku: b.sku, bootName: b.title, bootImgSrc: b.bootImgSrc } }))}
+                        data-boot={JSON.stringify(boot.map((b) => { return { bootSku: b.sku, bootName: b.title, bootImgSrc: b.bootImgSrc, size : b.option1, width: b.option2 } }))}
                         onClick={(e) => handleSelectBoot(e)}
                         
                         value={sku}

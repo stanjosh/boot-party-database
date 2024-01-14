@@ -35,12 +35,13 @@ const GuestForm = ({ guest, eventId, formTitle, submitText, success, joining, ad
     const handleSelectBoot = (e) => {
         const boot = JSON.parse(e.currentTarget.dataset.boot);
         console.log('bootdata', boot);
+        
         if (boot) {
             
             setFormData({ ...formData, 
                 boots: [...boot],
             });
-           
+            console.log('boot selected', formData);
         } else {
             setFormData({ ...formData, 
                 bootSku: '', 

@@ -49,7 +49,7 @@ const useShopifyBoots = ({shoeSize, shoeWidth }) => {
             
             //hidalgo honey hacking + night on the town
             if (filteredBoots['Hidalgo Honey']) {
-                const nottboots = filteredBoots['Night on the Town'].filter((boot) => boot['title'] == 'Night on the Town')
+
                 const hhboots = filteredBoots['Hidalgo Honey'].reduce((acc, boot) => {
                     if (!acc[boot['title']]) { acc[boot['title']] = [] }
                     acc[boot['title']].push(boot);
@@ -57,12 +57,22 @@ const useShopifyBoots = ({shoeSize, shoeWidth }) => {
                 }, {})
                 filteredBoots['The Comal Hidalgo Honey'] = hhboots['The Comal']
                 filteredBoots['The Lamar Hidalgo Honey'] = hhboots['The Lamar']
-                filteredBoots['The Stassney Night on the Town'] = nottboots['The Stassney']
-                filteredBoots['The Duval Night on the Town'] = nottboots['The Duval']
+
                 delete filteredBoots['Hidalgo Honey']
-                delete filteredBoots['Night on the Town']
+
             }
 
+            if (filteredBoots['Night on the Town']) {
+                const nottboots = filteredBoots['Night on the Town'].reduce((acc, boot) => {
+                    if (!acc[boot['title']]) { acc[boot['title']] = [] }
+                    acc[boot['title']].push(boot);
+                    return acc;
+                }, {})
+
+                filteredBoots['The Stassney Night on the Town'] = nottboots['The Stassney']
+                filteredBoots['The Duval Night on the Town'] = nottboots['The Duval']
+                delete filteredBoots['Night on the Town']
+            }
             
 
             
@@ -77,7 +87,6 @@ const useShopifyBoots = ({shoeSize, shoeWidth }) => {
 
 
 
-        console.log(sizeUp, sizeDown)
         const fetchBoots = async () => {
             if (!shoeSize || !shoeWidth) return;
             try {
@@ -92,7 +101,7 @@ const useShopifyBoots = ({shoeSize, shoeWidth }) => {
                         
 
                         const filteredBoots = filterAndSortBoots(data)
-                        console.log(filteredBoots)
+
                         setLoading(false);
                         setBootData(filteredBoots);
                         console.log('Boots fetched:', filteredBoots);
