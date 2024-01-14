@@ -72,13 +72,15 @@ const typeDefs = gql`
     phone: String
     shoeSize: String
     shoeWidth: String
-    boots: Boot
+    boots: [Boot]
   }
 
   type Boot {
-    bootImgSrc: String
-    bootSku: String
-    bootName: String
+    bootImgSrc: String!
+    bootSku: String!
+    bootName: String!
+    width: String
+    size: String
   }
 
 
@@ -98,6 +100,8 @@ const typeDefs = gql`
     bootImgSrc: String
     bootSku: String
     bootName: String
+    width: String
+    size: String
   }
 
   type Auth {

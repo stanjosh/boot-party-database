@@ -24,6 +24,7 @@ const useShopifyBoots = ({shoeSize, shoeWidth }) => {
             boots.products?.forEach((product) => {
                 product.variants.forEach((variant) => {
                     variant.title = product?.title;
+                    variant.bootName = product?.title + ' ' + variant?.option3; 
                     variant.bootImgSrc = variant.featured_image?.src;
                 })
                 

@@ -49,8 +49,8 @@ const GuestsDisplay = ( { eventData } ) => {
                     </Card.Title>
                     <Card.Text style={{display: "flex", flexWrap: "wrap", width: "100%", justifyContent: "space-evenly", alignItems: "center"}}>
                         <div style={{display: "flex", flexWrap: "wrap", alignItems: "center"}}>
-                        <Image src={signup.bootImgSrc} style={{maxHeight: "100px", maxWidth: "100px"}} />
-                        {signup.bootName}
+                        <Image src={signup.boots[0]?.bootImgSrc} style={{maxHeight: "100px", maxWidth: "100px"}} />
+                        {signup.boots[0]?.bootName}
                         </div>
                         <div style={{width: "100%", flex: "0 1 250px"}}>
                         

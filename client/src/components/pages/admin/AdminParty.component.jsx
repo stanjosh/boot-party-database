@@ -77,8 +77,23 @@ const AdminParty = () => {
             <EventAdminForm event={eventData} />
           </Tab>
 
+          <Tab eventKey="bootList" title="Boot List">
+            <table>
+            { eventData?.eventSignups?.map((guest, index) => {
+              return (
+                <tr key="index"><td style={{verticalAlign: "top"}}>{guest.name}</td>  { guest?.boots?.map((boot, i) => <tr key={i}>{boot.bootSku}</tr> ) }</tr>
+              )
+              
+
+            })}
+            </table>
+          </Tab>
+
+
           </Tabs>
         </Container>
+
+
 
       }
 
