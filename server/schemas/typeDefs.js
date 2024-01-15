@@ -13,13 +13,17 @@ const typeDefs = gql`
 
   input UserInput {
     email: String!
-    password: String!
+    password: String
     name: String
+    admin: Boolean
+    partner: ID
+    guestProfile: ID
   }
   
   type Partner {
     _id: ID!
     name: String!
+    imgSrc: String
     events: [Event]
     users: [User]
   }
@@ -96,7 +100,12 @@ const typeDefs = gql`
     bootImgSrc: String
   }
 
-  
+  input PartnerInput {
+    name: String!
+    imgSrc: String
+    events: [EventInput]
+    users: [UserInput]
+  }
 
   input BootInput {
     bootImgSrc: String
@@ -116,6 +125,8 @@ const typeDefs = gql`
     me: User
     findAllEvents: [Event]
     findAllUsers: [User]
+    findAllPartners: [Partner]
+    findPartnersBySearch(search: String!): [Partner]
     findUsersBySearch(search: String!): [User]
     findGuestByID(uuid: ID!): Guest
     findEventByID(uuid: ID!): Event
@@ -138,15 +149,17 @@ const typeDefs = gql`
   }
 
   type Mutation {
+    createPartner(partnerInput: PartnerInput!): Partner
     createUser(userInput: UserInput!): Auth
     loginUser(email: String!, password: String!): Auth
-    updateUser(userId: ID!, userInput: UserInput!): User
+    updateUser(userId: ID!, userInput: UserInput!, guestInput: GuestInput): User
     createEvent(eventInput: EventInput!, userId: ID): Event
     updateEvent(eventId: ID!, updateEventInput: UpdateEventInput!): Event
     eventAddSignup(eventId: ID!, guestId: ID!): Event
     eventRemoveSignup(eventId: ID!, guestId: ID!): Event
     updateGuest(guestInput: GuestInput!): Guest
     createGuest(guestInput: GuestInput!): Guest
+   
 
   }
 

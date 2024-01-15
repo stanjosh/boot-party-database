@@ -264,11 +264,32 @@ query FindAllEvents {
 }
 `;
 
+export const QUERY_PARTNERS = gql`
+query FindAllPartners {
+  findAllPartners {
+    _id
+    name
+    events {
+      _id
+      eventLocation
+      eventTime
+    }
+    users {
+      _id
+      email
+      admin
+    }
+  }
+}
+`;
+
+
 export const QUERY_PARTNERS_SEARCH = gql`
 query FindPartnersBySearch($search: String!) {
   findPartnersBySearch(search: $search) {
     _id
     name
+    imgSrc
     events {
       _id
       eventLocation

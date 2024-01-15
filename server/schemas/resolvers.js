@@ -1,5 +1,5 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { Event, Guest, User } = require('../models');
+const { Event, Guest, User, Partner } = require('../models');
 const { signToken } = require('../utils/auth');
 const { Types }  = require('mongoose');
 
@@ -26,7 +26,18 @@ const resolvers = {
 
   
     },
+
+    findAllPartners: async () => {
+
+      return await Partner.find()
+
+    },
     
+    findPartnersBySearch: async (parent, { search }, context) => {
+      return await Partner.find({ name:  search })
+    },
+
+
     findUsersBySearch: async (parent, { search }, context) => {
       return await User.find({ $text: { $search: search } })
     },
@@ -105,13 +116,20 @@ const resolvers = {
       return { token, user };
     },
 
-    updateUser: async (parent, { userInput }, context) => {
-      if (context.user && context.user._id === userInput._id) {
+    updateUser: async (parent, { userId, userInput, guestId, guestInput }, context) => {
+      console.log( context.user )
+      if (context.user && (context.user.admin || context.user?._id === userId) ) {
+        const guest = await Guest.findOneAndUpdate(
+          { email: guestInput.email || userInput.email },
+          { ...guestInput },
+          { new: true, upsert: true }
+        );
 
         const user = await User.findOneAndUpdate(
-          userInput._id ? { _id: userInput._id } : null,
+          userId ? { _id: userId } : null,
           { 
-            ...userInput 
+            ...userInput,
+            guestProfile: guest._id
           },
           { 
             new: true, upsert: true
@@ -150,6 +168,11 @@ const resolvers = {
         );
       }
       return event;
+    },
+
+    createPartner: async (parent, { partnerInput }, context) => {
+      const partner = await Partner.create( partnerInput );
+      return partner;
     },
 
     updateEvent: async (parent, { eventId, updateEventInput }, context) => {
