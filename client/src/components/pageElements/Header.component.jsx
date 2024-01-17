@@ -79,7 +79,8 @@ const Header = () => {
               padding: "5px",
               
           }}>
-              { userData?.guestProfile.name }
+              { userData?.guestProfile.name ? userData?.partner?.name ? `${userData?.guestProfile.name} & ${userData?.partner?.name}` : userData?.guestProfile.name : userData?.partner?.name
+              } 
               <Image src="/user.svg" style={{maxHeight: "40px"}} />
           
             

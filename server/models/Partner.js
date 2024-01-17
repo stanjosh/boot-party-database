@@ -8,6 +8,11 @@ const partnerSchema = new Schema({
         required: true,
         trim: true
     },
+    imgSrc: {
+        type: String,
+        required: true,
+        trim: true
+    },
     events : [{
       type: Schema.Types.ObjectId,
       ref: 'Event',

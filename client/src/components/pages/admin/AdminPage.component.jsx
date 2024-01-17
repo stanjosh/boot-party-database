@@ -1,11 +1,11 @@
 import React from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
-import { EventList, UsersList } from '../../pageElements';
+import { EventList, UsersList, PartnersList } from '../../pageElements';
 
 const AdminPage = () => {
     return (
-        <div>
-            <Tabs>
+        <div style={{backgroundColor: "aliceblue"}}>
+            <Tabs style={{display: "flex", alignItems: "center", borderRadius:"15px"}} unmountOnExit >
             <Tab eventKey="events" title="Events">
                 < EventList />
             </Tab>
@@ -13,10 +13,10 @@ const AdminPage = () => {
                 < UsersList />
             </Tab>
             <Tab eventKey="partners" title="Partners">
-                <h1> Partners </h1>
+                < PartnersList />
             </Tab>
 
-                </Tabs>
+            </Tabs>
         </div>
     );
 };

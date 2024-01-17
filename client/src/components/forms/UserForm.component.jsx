@@ -1,16 +1,28 @@
 import React, {useState} from 'react';
-import { Form, FloatingLabel, InputGroup, Button } from 'react-bootstrap';
-
+import { Form, FloatingLabel, InputGroup, Button, Image } from 'react-bootstrap';
+import { useQuery } from '@apollo/client';
+import { QUERY_PARTNERS } from '../../util/queries';
+import { useMutation } from '@apollo/client';
+import { UPDATE_USER } from '../../util/mutations';
 
 const UserForm = ({ userData }) => {
-    const [formState, setFormState] = useState(userData);
+    const [formState, setFormState] = useState({
+        email: userData.email,
+        name: userData.name,
+        admin: userData.admin,
+        partner: userData.partner?._id,
+    });
 
+    const [guestProfile, setGuestProfile] = useState({
+        phone: userData.guestProfile?.phone,
+        email: userData.email,
+    });
+
+    const { data : partnersData, loading, error } = useQuery(QUERY_PARTNERS);
     
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-        setFormState({ ...formState,  [name]: value });
+    const [updateUser, { loading: mutationLoading, error: mutationError }] = useMutation(UPDATE_USER);
 
-    };
+
 
     const handleAdmin = (event) => {
         const { name, checked } = event.target;
@@ -18,19 +30,42 @@ const UserForm = ({ userData }) => {
 
     };
 
-    const handleGuestChange = (event) => {
+    const handleUserChange = (event) => {
         const { name, value } = event.target;
         setFormState({ ...formState, 
-            guestProfile: { 
-                ...formState.guestProfile, 
-                [name]: value } 
+                [name]: value 
             });
+
     };
+
+    const handleGuestChange = (event) => {
+        const { name, value } = event.target;
+        setGuestProfile({ ...guestProfile,
+                [name]: value 
+        });
+
+    };
+
 
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(formState);
+        updateUser({
+            variables: { 
+                userId: userData._id,
+                userInput : {...formState},
+                guestInput: {...guestProfile}
+            }
+        })
+        .then((res) => {
+            console.log('User updated: ', res.data);
+            localStorage.setItem('user', JSON.stringify(res.data.updateUser));
+            window.location.reload();
+        })
+        .catch((err) => {
+            alert('Error updating user:', err);
+            console.error('Error updating user:', err);
+        });
     };
 
     return (
@@ -40,7 +75,7 @@ const UserForm = ({ userData }) => {
                 <FloatingLabel label="email" className="mb-3">
                 <Form.Group controlId="formBasicEmail">
                 
-                    <Form.Control type="text" placeholder="email" name="email" value={formState.email} onChange={handleChange} />
+                    <Form.Control type="text" placeholder="email" name="email" value={formState.email} onChange={handleUserChange} />
                     
                 </Form.Group>
                 </FloatingLabel>
@@ -48,31 +83,10 @@ const UserForm = ({ userData }) => {
                 <FloatingLabel label="name" className="mb-3">
                 <Form.Group controlId="formBasicName">
                 
-                    <Form.Control type="text" placeholder="name" name="name" value={formState.name} onChange={handleChange} />
+                    <Form.Control type="text" placeholder="name" name="name" value={formState.name} onChange={handleUserChange} />
 
                 </Form.Group>
                 </FloatingLabel>
-
-                <div style={{display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center"}}>
-                <InputGroup className="mb-3">
-                <div style={{minWidth: "25%", textAlign: "center"}}>
-                <Form.Label htmlFor="admin" >admin
-                <Form.Group controlId="formBasicAdmin">
-
-                    <Form.Check type="checkbox" name="admin" onChange={handleAdmin} value={formState.admin} checked={formState.admin} />
-
-                </Form.Group>
-                </Form.Label>
-                </div>
-
-                <FloatingLabel label="partner" className="mb-3" >
-                <Form.Group controlId="formBasicPartner" >
-                
-                    <Form.Control type="text" placeholder="partner" disabled={!formState.admin} name="partner" value={formState.partner} onChange={handleChange} />
-
-                </Form.Group>
-                </FloatingLabel>
-                </InputGroup>
 
                 <FloatingLabel label="phone" className="mb-3">
                     <Form.Group controlId="formBasicPhone">
@@ -82,18 +96,22 @@ const UserForm = ({ userData }) => {
 
                     </Form.Group>
                 </FloatingLabel>
-
-
-                </div>
-
-
-                    
-
-
-
-       
+            
                 
+                <Form.Group controlId="formBasicAdmin" className='mb-3' style={{display: "flex"}}>
+                    <Form.Label >admin
+                    <Form.Check type="checkbox" name="admin" onChange={handleAdmin} value={formState.admin} checked={formState.admin} inline />
+                    </Form.Label>
+                    <Form.Select type="text" placeholder="partner" disabled={!formState.admin} name="partner" value={formState.partner} size="sm" onChange={handleUserChange} style={{width: "50%", backgroundColor: !formState?.admin ? "black" : null}} >
+                        {partnersData?.findAllPartners?.map((partner, index) => <option key={index} value={partner._id} style={{width:"100%"}}>{partner.name}<Image src={partner.imgSrc}/></option>)}
+                    </Form.Select>
+
+                </Form.Group>
+            
+
+                <Form.Group controlId="formBasicSubmit">
                 <Button type="submit">submit</Button>
+                </Form.Group>
 
             </Form>
         </div>

@@ -1,13 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { useForm } from '../../util/hooks';
 import { useMutation } from '@apollo/client';
 import { CREATE_EVENT } from '../../util/mutations';
+import { UserContext } from '../../util/context/UserContext';
 
 const EventForm = ({ eventData, formTitle, submitText, guestId, admin }) => {
-    
+  
+    const { userData, loading: contextLoading } = useContext(UserContext);
+  
     const [eventTime, setEventTime] = useState(new Date());
     const [createEvent, { loading, error }] = useMutation(CREATE_EVENT);
 
@@ -18,6 +21,7 @@ const EventForm = ({ eventData, formTitle, submitText, guestId, admin }) => {
         eventLocation: eventData?.eventLocation ?? '',
         eventTitle: eventData?.eventTitle ?? '',
         eventNotes: eventData?.eventNotes ?? '',
+        eventPartner: userData.partner?._id ?? '',
       },
       (formData) => writeEvent(formData)
     );

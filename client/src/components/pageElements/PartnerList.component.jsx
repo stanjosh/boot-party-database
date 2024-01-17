@@ -1,48 +1,62 @@
 
-import React, { useState} from "react"
-import { useLazyQuery } from '@apollo/client';
+import React, { useEffect, useState} from "react"
+import { useLazyQuery, useQuery } from '@apollo/client';
 import { UserDisplay } from "./";
-import { Form, Button, InputGroup } from 'react-bootstrap';
-import { QUERY_USERS_SEARCH } from '../../util/queries';
-
+import { Form, Modal, InputGroup, Button, Image, FloatingLabel } from 'react-bootstrap';
+import { QUERY_PARTNERS_SEARCH, QUERY_PARTNERS } from '../../util/queries';
+import { PartnerForm } from '../forms';
 
 
 const PartnersList = () => {
 
+    const [showNewPartnerModal, setNewShowPartnerModal] = useState(false);
+
+    const { loading: partnersLoading, data: partnersData } = useQuery(QUERY_PARTNERS);
+    const [ searchPartners, { loading: searchLoading, data: searchData, error: searchError }] = useLazyQuery(QUERY_PARTNERS_SEARCH)
+
+    const loading = partnersLoading || searchLoading;
+    
+
     const [currentSearch, setCurrentSearch] = useState('');
 
-    const [ searchPartners, { loading, data, error }] = useLazyQuery(QUERY_PARTNERS_SEARCH, {
-        variables: { search: currentSearch },
-        
-    });
-
+    const [sortedData, setSortedData] = useState(partnersData?.findAllPartners)
 
     const handleSearchChange = (event) => {
         const { value } = event.target;
         setCurrentSearch(value);
-    };
+    }
 
     const handleSearchSubmit = (event) => {
         event.preventDefault();
-        searchPartners();
-    };
+        searchPartners({ 
+            variables: { 
+                search: currentSearch 
+            }})
+            .then((res) => {
+                setSortedData(res.data.findPartnersBySearch)
+            }
+        )
 
-    
+
+        
+    }
+
 
     return (
         <div>
-            <div>
-                <Form onSubmit={handleSearchSubmit}>
+            <div style={{display:"flex", alignContent:"center"}}>
+                <Form onSubmit={handleSearchSubmit} style={{width: "400px", maxWidth: "100%"}}>
+                    
                     <InputGroup className="mb-3">
-                    <Form.Label htmlFor="search" visuallyHidden >name or email search </Form.Label>
-                        <InputGroup.Text controlId="formBasicSearch">
-                        
-                            <Form.Control type="text" placeholder="search by name or email" onChange={handleSearchChange} />
-                            <Form.Control id="search" type="submit"  />
-
-                        </InputGroup.Text>
+                        <Button onClick={() => setNewShowPartnerModal(true)} style={{display: "flex", alignItems: "center", justifyContent: "center"}}>new</Button>
+                        <FloatingLabel controlId="floatingInput" label="name or email search">
+                        <Form.Control type="text" placeholder="name or email search" onChange={handleSearchChange} />
+                        </FloatingLabel>
+                        <Form.Control id="search" type="submit" value="search"  required style={{backgroundColor: "var(--alviesBlue)", maxWidth: "min-content"}} />
                     </InputGroup>
+
                 </Form>
+                
             </div>        
 
             {loading ? (
@@ -50,9 +64,31 @@ const PartnersList = () => {
             ) : (
                 <div style={{display: "flex", flexWrap: "wrap"}}>
                     
-                    {data?.findPartnersBySearch?.map((userData, index) => <div key={index} style={{flex: "1 1 250px", maxHeight: "50%"}}> <UserDisplay userData={userData}  admin/> </div>)}
+                    {sortedData?.map((partnerData, index) => <div key={index} style={{flex: "1 1 250px", display: "flex", justifyContent: "space-around", margin: "5px", padding: "5px", border: "1px solid black", borderRadius: "5px", alignContent: "center"}}> 
+                        <div style={{display: "flex", flex: "1 0 75%", alignItems: "center", justifyContent: "center"}}><strong>{partnerData?.name}</strong>
+                        </div>
+
+
+                        <Button>edit</Button>
+
+
+
+                     </div>)}
                 </div>
             )}
+        
+        <Modal show={showNewPartnerModal} onHide={() => setNewShowPartnerModal(false)} >
+            <Modal.Header closeButton className='bg-dark text-light'>
+              <Modal.Title>add guest</Modal.Title>
+            </Modal.Header>
+            <Modal.Body  className='bg-dark text-light'>
+              <PartnerForm  success={() => setNewShowPartnerModal(false)}/>
+            </Modal.Body>
+            <Modal.Footer  className='bg-dark text-light'>
+            </Modal.Footer>
+          </Modal>
+
+
         </div>
 
     )

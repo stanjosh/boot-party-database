@@ -12,7 +12,7 @@ function App() {
 
   return (
     <UserContextProvider>
-    <>
+    <div style={{minHeight: "100vh", height: "100%"}}>
         <UserContext.Consumer>
           {({user}) => <Header user={user}/>}
         </UserContext.Consumer>
@@ -24,7 +24,7 @@ function App() {
 
         <Footer />
 
-    </>
+    </div>
     </UserContextProvider>
   );
 }

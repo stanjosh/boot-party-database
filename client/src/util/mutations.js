@@ -25,12 +25,45 @@ mutation CreateUser($userInput: UserInput!) {
 }
 `;
 
+export const UPDATE_USER = gql`
+mutation UpdateUser($userId: ID!, $userInput: UserInput!, $guestInput: GuestInput) {
+  updateUser(userId: $userId, userInput: $userInput, guestInput: $guestInput) {
+    _id
+    email
+    admin
+    partner {
+      _id
+      name
+      imgSrc
+    }
+    guestProfile {
+      _id
+      name
+      phone
+      shoeSize
+      shoeWidth
+      boots {
+        bootName
+        bootSku
+        bootImgSrc
+      }
+    }
+  }
+}
+`;
+
 export const LOGIN_USER = gql`
   mutation LoginUser($email: String!, $password: String!) {
     loginUser(email: $email, password: $password) {
     user {
       _id
       email
+      admin
+      partner {
+        _id
+        name
+        imgSrc
+      }
       guestProfile {
         _id
         name
@@ -71,6 +104,17 @@ mutation CreateGuest($guestInput: GuestInput) {
   }
 }
 `;
+
+export const CREATE_PARTNER = gql`
+mutation CreatePartner($partnerInput: PartnerInput!) {
+  createPartner(partnerInput: $partnerInput) {
+    _id
+    name
+    imgSrc
+  }
+}
+`;
+
 
 export const CREATE_EVENT = gql`
 mutation CreateEvent($eventInput: EventInput!, $userId: ID) {
