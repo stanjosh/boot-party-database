@@ -37,16 +37,7 @@ const UserDisplay = ( { userData, admin } ) => {
 
         </div>
 
-        <Modal show={show} onHide={() => setShow(false)} centered>
-            <Modal.Header closeButton className='bg-dark text-light'>
-                <Modal.Title>Update User</Modal.Title>
-            </Modal.Header>
-            <Modal.Body className='bg-dark text-light'>
-                <UserForm userData={userData} formTitle={'edit user info'}/>
-             
-            </Modal.Body>
 
-        </Modal>
 
         </>
     );

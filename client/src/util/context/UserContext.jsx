@@ -10,6 +10,8 @@ export const UserContext = createContext({
     setUserData: () => {},
 });
 
+
+
 export const UserContextProvider = ({ children }) => {
     const { loading, data } = useQuery(QUERY_ME);
     const [userData, setUserData] = useState(data?.me);
@@ -21,7 +23,7 @@ export const UserContextProvider = ({ children }) => {
       }  , [userData, data, loading])
 
       return (
-		<UserContext.Provider value={{ userData, loading }}>
+		<UserContext.Provider value={{ userData, loading, admin : userData?.admin }}>
 			{children}
 		</UserContext.Provider>
 	);

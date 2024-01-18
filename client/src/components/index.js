@@ -4,5 +4,6 @@ import ShareParty from './pages/party/ShareParty.component'
 import AdminParty from './pages/admin/AdminParty.component'
 import EventList from './pageElements/EventList.component'
 import AdminPage from './pages/admin/AdminPage.component'
+import UserProfilePage from './pages/userProfilePage.component.jsx'
 
-export { LandingPage, Booking, ShareParty, AdminParty, EventList, AdminPage }
+export { LandingPage, Booking, ShareParty, AdminParty, EventList, AdminPage, UserProfilePage }

@@ -1,7 +1,8 @@
 import { useContext, useState } from 'react';
-import { Navbar, Nav, Container, Image } from 'react-bootstrap';
+import { Navbar, Nav, Container, Image, Fade } from 'react-bootstrap';
 import LoginSignup from './LoginSignup.component';
 import { UserContext } from '../../util/context/UserContext';
+import { UserForm } from '../forms';
 
 const Header = () => {
   
@@ -10,7 +11,7 @@ const Header = () => {
     const [showLoginSignup, setShowLoginSignup] = useState(false);
 
 
-
+    const [showUserForm, setShowUserForm] = useState(false);  
     const { userData }  = useContext(UserContext);
     console.log(userData) 
 
@@ -67,7 +68,7 @@ const Header = () => {
           ) : (
           <Nav.Link 
             eventKey={3} 
-            href='/user'
+            onClick={() => setShowUserForm(true)}
             style={{margin: "5px", 
               flex: "1 1 150px", 
               width: "150px", 
@@ -83,6 +84,8 @@ const Header = () => {
               } 
               <Image src="/user.svg" style={{maxHeight: "40px"}} />
           
+              <UserForm userData={userData} showing={showUserForm}/>
+
             
             </Nav.Link>  
           )}
@@ -117,6 +120,7 @@ const Header = () => {
     ))}
 
     <LoginSignup show={showLoginSignup} onHide={() => setShowLoginSignup(false)}/>
+    
     
 
 
