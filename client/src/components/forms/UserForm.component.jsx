@@ -1,5 +1,5 @@
 import React, {useState , useEffect} from 'react';
-import { Form, FloatingLabel, Modal, Button, Image } from 'react-bootstrap';
+import { Form, FloatingLabel, Modal, Button, Nav, Image } from 'react-bootstrap';
 import { useQuery } from '@apollo/client';
 import { QUERY_PARTNERS } from '../../util/queries';
 import { useMutation } from '@apollo/client';
@@ -7,26 +7,27 @@ import { UPDATE_USER } from '../../util/mutations';
 
 
 
-const UserForm = ({ userData = {}, admin, showing }) => {
-
+const UserForm = ({ userData = {}, admin, show, onHide }) => {
 
     const [formState, setFormState] = useState({
         email: userData?.email || '',
         name: userData?.name || '',
         admin: userData?.admin || '',
         partner: userData?.partner?._id || '',
-    });
-
-    const [guestProfile, setGuestProfile] = useState({
-        phone: userData?.guestProfile?.phone || '',
-        email: userData?.email || '',
+        guestProfile: {
+            email: userData?.guestProfile?.email || userData?.email || '',
+            name: userData?.guestProfile?.name || '',
+            phone: userData?.guestProfile?.phone || ''
+        }
     });
 
     const { data : partnersData, loading, error } = useQuery(QUERY_PARTNERS);
+
     
+   
+
+
     const [updateUser, { loading: mutationLoading, error: mutationError }] = useMutation(UPDATE_USER);
-
-
 
     const handleAdmin = (event) => {
         const { name, checked } = event.target;
@@ -42,12 +43,10 @@ const UserForm = ({ userData = {}, admin, showing }) => {
 
     };
 
-    const handleGuestChange = (event) => {
-        const { name, value } = event.target;
-        setGuestProfile({ ...guestProfile,
-                [name]: value 
-        });
-
+    const handleLogout = () => {
+        localStorage.removeItem('id_token');
+        window.location.reload();
+        
     };
 
 
@@ -58,7 +57,7 @@ const UserForm = ({ userData = {}, admin, showing }) => {
             variables: { 
                 userId: userData?._id || '',
                 userInput : {...formState},
-                guestInput: {...guestProfile}
+                guestInput: {...formState.guestProfile}
             }
         })
         .then((res) => {
@@ -72,14 +71,7 @@ const UserForm = ({ userData = {}, admin, showing }) => {
         });
     };
 
-    
-
-    const [show, setShow] = useState(false);
-    
-    useEffect(() => {
-        if (showing) setShow(true);
-        else setShow(false);
-    }, [showing]);
+ 
 
     if (loading) {
         return <div>Loading...</div>;
@@ -88,7 +80,10 @@ const UserForm = ({ userData = {}, admin, showing }) => {
     }
 
     return (
-        <Modal show={show} onHide={() => setShow(false)} centered>
+
+
+
+        <Modal show={show} onHide={onHide} centered>
         <Modal.Header closeButton className='bg-dark text-light'>
             <Modal.Title>Update User</Modal.Title>
         </Modal.Header>
@@ -107,7 +102,7 @@ const UserForm = ({ userData = {}, admin, showing }) => {
                     
                     <Form.Group controlId="formBasicName">
                     <FloatingLabel label="name" className="mb-3" style={{fontStyle: "italic", color: "gray"}}>
-                        <Form.Control type="text" placeholder="name" name="name" value={formState.name} onChange={handleUserChange} />
+                        <Form.Control type="text" placeholder="name" name="name" value={formState.guestProfile?.name} onChange={handleUserChange} />
                         </FloatingLabel>
                     </Form.Group>
                     
@@ -115,9 +110,9 @@ const UserForm = ({ userData = {}, admin, showing }) => {
                     
                         <Form.Group controlId="formBasicPhone">
                         <FloatingLabel label="phone number" className="mb-3" style={{fontStyle: "italic", color: "gray"}}>
-                            <Form.Control type="text" placeholder="phone" name="phone" value={formState.guestProfile?.phone} onChange={handleGuestChange} />
+                            <Form.Control type="text" placeholder="phone" name="phone" value={formState.guestProfile?.phone} onChange={handleUserChange} />
                         </FloatingLabel>
-                            <Form.Control type="hidden" name="email" value={formState.email} onChange={handleGuestChange} />
+                            <Form.Control type="hidden" name="email" value={formState.email} onChange={handleUserChange} />
 
                         </Form.Group>
                 
@@ -132,17 +127,22 @@ const UserForm = ({ userData = {}, admin, showing }) => {
                         </Form.Select>
 
                     </Form.Group>
-                
+                    <div style={{display: "flex", justifyContent: "space-around"}}>
+                        <Form.Group controlId="formBasicCancel">
+                            <Button onClick={handleLogout}>logout</Button>
+                        </Form.Group>
 
-                    <Form.Group controlId="formBasicSubmit">
-                    <Button type="submit">submit</Button>
-                    </Form.Group>
 
+                        <Form.Group controlId="formBasicSubmit">
+                        <Button type="submit">save</Button>
+                        </Form.Group>
+                    </div>
                 </Form>
             </div>
         </Modal.Body>
 
-    </Modal>
+        </Modal>
+ 
     );
 };
 

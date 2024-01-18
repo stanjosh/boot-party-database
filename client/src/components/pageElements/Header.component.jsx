@@ -1,7 +1,8 @@
-import { useContext, useState } from 'react';
-import { Navbar, Nav, Container, Image, Fade } from 'react-bootstrap';
+import { useState } from 'react';
+import { Navbar, Nav, Container, Image } from 'react-bootstrap';
 import LoginSignup from './LoginSignup.component';
-import { UserContext } from '../../util/context/UserContext';
+import { QUERY_ME } from '../../util/queries';
+import { useQuery } from '@apollo/client';
 import { UserForm } from '../forms';
 
 const Header = () => {
@@ -9,10 +10,15 @@ const Header = () => {
 
 
     const [showLoginSignup, setShowLoginSignup] = useState(false);
+    const [showUserModal, setShowUserModal] = useState(false);
+
+    const { data, loading, error } = useQuery(QUERY_ME);
+
+    const userData = data?.me || {};
 
 
-    const [showUserForm, setShowUserForm] = useState(false);  
-    const { userData }  = useContext(UserContext);
+
+
     console.log(userData) 
 
     return(   
@@ -66,9 +72,9 @@ const Header = () => {
             sign in / up
             </Nav.Link>  
           ) : (
-          <Nav.Link 
+            <Nav.Link 
             eventKey={3} 
-            onClick={() => setShowUserForm(true)}
+            onClick={() => setShowUserModal(true)}
             style={{margin: "5px", 
               flex: "1 1 150px", 
               width: "150px", 
@@ -84,12 +90,14 @@ const Header = () => {
               } 
               <Image src="/user.svg" style={{maxHeight: "40px"}} />
           
-              <UserForm userData={userData} showing={showUserForm}/>
 
-            
-            </Nav.Link>  
+
+              
+
+              </Nav.Link> 
+    
           )}
-
+          <UserForm userData={userData} show={showUserModal} onHide={() => setShowUserModal(false)} />
           {userData?.admin ? (
             <Nav.Link 
             eventKey={4} 
@@ -119,7 +127,7 @@ const Header = () => {
       </Navbar>
     ))}
 
-    <LoginSignup show={showLoginSignup} onHide={() => setShowLoginSignup(false)}/>
+    <LoginSignup show={showLoginSignup} setShowing={setShowLoginSignup} onHide={() => setShowLoginSignup(false)}/>
     
     
 
