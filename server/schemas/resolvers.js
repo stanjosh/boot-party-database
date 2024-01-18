@@ -34,7 +34,7 @@ const resolvers = {
     },
     
     findPartnersBySearch: async (parent, { search }, context) => {
-      return await Partner.find({ name:  search })
+      return await Partner.find({ $text: { $search:  search } })
     },
 
 

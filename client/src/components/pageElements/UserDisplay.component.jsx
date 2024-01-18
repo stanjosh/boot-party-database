@@ -3,7 +3,6 @@ import { UserForm } from '../forms';
 import { Card, Button, Modal } from 'react-bootstrap';
 
 
-
 const UserDisplay = ( { userData, admin } ) => {
     
     const [show, setShow] = useState(false);
@@ -37,6 +36,7 @@ const UserDisplay = ( { userData, admin } ) => {
 
         </div>
 
+        <UserForm userData={userData} show={show} onHide={() => setShow(false)} admin/>
 
 
         </>

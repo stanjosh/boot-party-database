@@ -11,19 +11,21 @@ const UserForm = ({ userData = {}, admin, show, onHide }) => {
 
     const [formState, setFormState] = useState({
         email: userData?.email || '',
-        name: userData?.name || '',
-        admin: userData?.admin || '',
-        partner: userData?.partner?._id || '',
-        guestProfile: {
-            email: userData?.guestProfile?.email || userData?.email || '',
-            name: userData?.guestProfile?.name || '',
-            phone: userData?.guestProfile?.phone || ''
-        }
+        admin: userData?.admin,
+        partner: userData?.partner?._id || null,
+        
+
     });
 
     const { data : partnersData, loading, error } = useQuery(QUERY_PARTNERS);
 
-    
+    const [guestInput, setGuestInput] = useState({
+        
+            email: userData?.guestProfile?.email || userData?.email || '',
+            name: userData?.guestProfile?.name || '',
+            phone: userData?.guestProfile?.phone || '',
+            
+        });
    
 
 
@@ -43,9 +45,15 @@ const UserForm = ({ userData = {}, admin, show, onHide }) => {
 
     };
 
+    const handleGuestChange = (event) => {
+        const { name, value } = event.target;
+        setGuestInput({ ...guestInput,
+                [name]: value 
+            });
+        };
+
     const handleLogout = () => {
-        localStorage.removeItem('id_token');
-        window.location.reload();
+        Auth.logout();
         
     };
 
@@ -57,13 +65,13 @@ const UserForm = ({ userData = {}, admin, show, onHide }) => {
             variables: { 
                 userId: userData?._id || '',
                 userInput : {...formState},
-                guestInput: {...formState.guestProfile}
+                guestInput: {...guestInput}
             }
         })
         .then((res) => {
             console.log('User updated: ', res.data);
-            localStorage.setItem('user', JSON.stringify(res.data.updateUser));
-            window.location.reload();
+        
+            
         })
         .catch((err) => {
             alert('Error updating user:', err);
@@ -102,7 +110,7 @@ const UserForm = ({ userData = {}, admin, show, onHide }) => {
                     
                     <Form.Group controlId="formBasicName">
                     <FloatingLabel label="name" className="mb-3" style={{fontStyle: "italic", color: "gray"}}>
-                        <Form.Control type="text" placeholder="name" name="name" value={formState.guestProfile?.name} onChange={handleUserChange} />
+                        <Form.Control type="text" placeholder="name" name="name" value={guestInput.name} onChange={handleGuestChange} />
                         </FloatingLabel>
                     </Form.Group>
                     
@@ -110,7 +118,7 @@ const UserForm = ({ userData = {}, admin, show, onHide }) => {
                     
                         <Form.Group controlId="formBasicPhone">
                         <FloatingLabel label="phone number" className="mb-3" style={{fontStyle: "italic", color: "gray"}}>
-                            <Form.Control type="text" placeholder="phone" name="phone" value={formState.guestProfile?.phone} onChange={handleUserChange} />
+                            <Form.Control type="text" placeholder="phone" name="phone" value={guestInput.phone} onChange={handleGuestChange} />
                         </FloatingLabel>
                             <Form.Control type="hidden" name="email" value={formState.email} onChange={handleUserChange} />
 

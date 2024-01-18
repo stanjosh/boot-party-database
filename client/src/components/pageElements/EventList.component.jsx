@@ -1,12 +1,13 @@
 
 import React, { useEffect, useState } from "react"
-import { useLazyQuery } from '@apollo/client';
+import { Button } from "react-bootstrap";
+import { useQuery } from '@apollo/client';
 import { QUERY_EVENTS } from '../../util/queries';
 import dayjs from "dayjs";
 
     
 const EventList = () => {
-    const [getEvents, { loading, data }] = useLazyQuery(QUERY_EVENTS);
+    const { loading, data } = useQuery(QUERY_EVENTS);
 
     const events = data?.findAllEvents;
 
@@ -120,7 +121,7 @@ const EventList = () => {
                             <td>{dayjs(event?.eventTime * 1).format('MMMM D, YYYY h:mm A')}</td>
                             <td>{event?.eventLocation}</td>
                             <td>{event?.eventContact?.name}</td>
-                            
+                            <td><Button href={`/admin/party/${event?._id}`}>admin</Button></td>
                             
                         </tr>
                         )
