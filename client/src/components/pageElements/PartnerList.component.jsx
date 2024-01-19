@@ -79,7 +79,7 @@ const PartnersList = () => {
         
         <Modal show={showNewPartnerModal} onHide={() => setNewShowPartnerModal(false)} >
             <Modal.Header closeButton className='bg-dark text-light'>
-              <Modal.Title>add guest</Modal.Title>
+              <Modal.Title>new partner</Modal.Title>
             </Modal.Header>
             <Modal.Body  className='bg-dark text-light'>
               <PartnerForm  success={() => setNewShowPartnerModal(false)}/>
