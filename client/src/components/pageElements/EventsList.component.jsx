@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from "react"
-import { Button } from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
 import { useQuery } from '@apollo/client';
 import { QUERY_EVENTS } from '../../util/queries';
 import dayjs from "dayjs";
@@ -87,12 +87,14 @@ const EventList = () => {
                             <tr>
                             <th 
                                 style={{cursor: "n-resize"}}
+                                scope="col"
                                 name="title" 
                                 onClick={(e) => sortTable(e)}
                             >
                                 title</th>
                             <th 
                                 style={{cursor: "n-resize"}}
+                                scope="col"
                                 name="time" 
                                 onClick={(e) => sortTable(e)}
                             >
@@ -100,12 +102,15 @@ const EventList = () => {
                             </th>
                             <th 
                                 style={{cursor: "n-resize"}}
-                                name="location" onClick={(e) => sortTable(e)}
+                                scope="col"
+                                name="location"
+                                onClick={(e) => sortTable(e)}
                             >
                                 location
                             </th>
                             <th 
                                 style={{cursor: "n-resize"}}
+                                scope="col"
                                 name="contact" 
                                 onClick={(e) => sortTable(e)}
                             >contact</th>
@@ -116,14 +121,16 @@ const EventList = () => {
                         <tbody>
                     {sortedData?.map((event, index) => {
                         return (
+
                         <tr key={index}>
-                            <td>{event?.eventTitle}</td>
-                            <td>{dayjs(event?.eventTime * 1).format('MMMM D, YYYY h:mm A')}</td>
-                            <td>{event?.eventLocation}</td>
-                            <td>{event?.eventContact?.name}</td>
-                            <td><Button href={`/admin/party/${event?._id}`}>admin</Button></td>
+                            <td data-label={event?.eventTitle? 'title' : null}>{event?.eventTitle}</td>
+                            <td data-label='date / time'>{dayjs(event?.eventTime * 1).format('MMMM D, YYYY h:mm A')}</td>
+                            <td data-label='location'>{event?.eventLocation}</td>
+                            <td data-label='contact'>{event?.eventContact?.name}</td>
+                            <td data-label='admin'><Button href={`/admin/party/${event?._id}`}>admin</Button></td>
                             
                         </tr>
+
                         )
                         }
                     )}

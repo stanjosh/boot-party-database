@@ -104,7 +104,7 @@ const typeDefs = gql`
     name: String!
     imgSrc: String
     events: [EventInput]
-    users: [UserInput]
+
   }
 
   input BootInput {

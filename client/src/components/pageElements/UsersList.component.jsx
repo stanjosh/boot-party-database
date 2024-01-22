@@ -1,6 +1,6 @@
 
 import React, { useState} from "react"
-import { useLazyQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { UserDisplay } from "./";
 import { Form, Button, InputGroup } from 'react-bootstrap';
 import { QUERY_USERS_SEARCH } from '../../util/queries';
@@ -9,22 +9,23 @@ import { QUERY_USERS_SEARCH } from '../../util/queries';
 
 const UsersList = () => {
 
-    const [currentSearch, setCurrentSearch] = useState('');
-    const [ searchUsers, { loading, data, error }] = useLazyQuery(QUERY_USERS_SEARCH, {
-        variables: { search: currentSearch },
-        
+    const [searchText, setSearchText] = useState("");
+    const [search, setSearch] = useState("");
+
+    const { loading, data } = useQuery(QUERY_USERS_SEARCH, {
+        variables: { search },
     });
 
-
-    const handleSearchChange = (event) => {
-        const { value } = event.target;
-        setCurrentSearch(value);
+    const handleSearchChange = (e) => {
+        setSearchText(e.target.value);
     }
 
-    const handleSearchSubmit = (event) => {
-        event.preventDefault();
-        searchUsers();
+    const handleSearchSubmit = async (e) => {
+        e.preventDefault();
+        setSearch(searchText);
+        setSearchText("");
     }
+
 
     
 
@@ -32,11 +33,11 @@ const UsersList = () => {
         <div>
             <div>
                 <Form onSubmit={handleSearchSubmit}>
-                    <InputGroup className="mb-3">
+                    <InputGroup className="mb-3"  controlId="formBasicSearch">
                     <Form.Label htmlFor="search" visuallyHidden >name or email search </Form.Label>
-                        <InputGroup.Text controlId="formBasicSearch">
+                        <InputGroup.Text>
                         
-                            <Form.Control type="text" placeholder="search by name or email" onChange={handleSearchChange} />
+                            <Form.Control type="text" placeholder="search by name or email" value={searchText} onChange={handleSearchChange} />
                             <Form.Control id="search" type="submit"  />
 
                         </InputGroup.Text>
@@ -49,7 +50,13 @@ const UsersList = () => {
             ) : (
                 <div style={{display: "flex", flexWrap: "wrap"}}>
                     
-                    {data?.findUsersBySearch?.map((userData, index) => <div key={index} style={{flex: "1 1 250px", maxHeight: "50%"}}> <UserDisplay userData={userData}  admin/> </div>)}
+                    {data?.findUsersBySearch?.map((userData, index) => {
+                        console.log(userData)
+                        return (
+                        <div key={index} style={{flex: "1 1 250px", maxHeight: "50%"}}>
+                            <UserDisplay userData={userData}  admin/> 
+                        </div>
+                        )})}
                 </div>
             )}
         </div>

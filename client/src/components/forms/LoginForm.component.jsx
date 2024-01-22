@@ -61,6 +61,11 @@ const LoginForm = () => {
                     }
             }>
 
+            <Container>
+                {error && <Alert variant='danger'>{error?.message}</Alert>}
+                {loginSuccess && <Alert variant='success'>Logging you in...</Alert>}
+            </Container>
+
             <Form.Group className='mb-3'>
             <Form.Label htmlFor='email' visuallyHidden>Email</Form.Label>
             <Form.Control
@@ -96,10 +101,7 @@ const LoginForm = () => {
                 log in
             </Button>
             
-            <Container>
-                {error && <Alert variant='danger'>Error logging in!</Alert>}
-                {loginSuccess && <Alert variant='success'>Success!</Alert>}
-            </Container>
+
         
         </Form>
 

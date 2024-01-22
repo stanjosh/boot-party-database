@@ -9,10 +9,10 @@ const AdminPage = () => {
             <Tab eventKey="events" title="Events">
                 < EventList />
             </Tab>
-            <Tab eventKey="users" title="Users">
+            <Tab eventKey="users" title="Users" unmountOnExit >
                 < UsersList />
             </Tab>
-            <Tab eventKey="partners" title="Partners">
+            <Tab eventKey="partners" title="Partners" unmountOnExit>
                 < PartnersList />
             </Tab>
 

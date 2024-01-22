@@ -1,17 +1,19 @@
-import React, {useState , useEffect} from 'react';
-import { Form, FloatingLabel, Modal, Button, Nav, Image } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Form, FloatingLabel, Modal, Button, Image } from 'react-bootstrap';
 import { useQuery } from '@apollo/client';
 import { QUERY_PARTNERS } from '../../util/queries';
 import { useMutation } from '@apollo/client';
 import { UPDATE_USER } from '../../util/mutations';
-
+import Auth from '../../util/Auth';
 
 
 const UserForm = ({ userData = {}, admin, show, onHide }) => {
 
+
+
     const [formState, setFormState] = useState({
         email: userData?.email || '',
-        admin: userData?.admin,
+        admin: userData?.admin || false,
         partner: userData?.partner?._id || null,
         
 
@@ -27,6 +29,7 @@ const UserForm = ({ userData = {}, admin, show, onHide }) => {
             
         });
    
+
 
 
     const [updateUser, { loading: mutationLoading, error: mutationError }] = useMutation(UPDATE_USER);
@@ -69,17 +72,32 @@ const UserForm = ({ userData = {}, admin, show, onHide }) => {
             }
         })
         .then((res) => {
+            
             console.log('User updated: ', res.data);
-        
+            onHide();
             
         })
         .catch((err) => {
             alert('Error updating user:', err);
             console.error('Error updating user:', err);
-        });
+        })
     };
 
  
+    useEffect(() => {
+        setFormState({
+            email: userData?.email || '',
+            admin: userData?.admin || false,
+            partner: userData?.partner?._id || null,
+        });
+        setGuestInput({
+            email: userData?.guestProfile?.email || userData?.email || '',
+            name: userData?.guestProfile?.name || '',
+            phone: userData?.guestProfile?.phone || '',
+        });
+    }, [userData, partnersData]);
+
+
 
     if (loading) {
         return <div>Loading...</div>;
@@ -116,25 +134,27 @@ const UserForm = ({ userData = {}, admin, show, onHide }) => {
                     
 
                     
-                        <Form.Group controlId="formBasicPhone">
+                    <Form.Group controlId="formBasicPhone">
                         <FloatingLabel label="phone number" className="mb-3" style={{fontStyle: "italic", color: "gray"}}>
                             <Form.Control type="text" placeholder="phone" name="phone" value={guestInput.phone} onChange={handleGuestChange} />
                         </FloatingLabel>
-                            <Form.Control type="hidden" name="email" value={formState.email} onChange={handleUserChange} />
-
-                        </Form.Group>
-                
-                
-                    
-                    <Form.Group controlId="formBasicAdmin" className='mb-3' style={{display: "flex"}} hidden={!admin}>
-                        <Form.Label >admin
-                        <Form.Check type="checkbox" name="admin" onChange={handleAdmin} value={formState.admin} checked={formState.admin} inline />
-                        </Form.Label>
-                        <Form.Select type="text" placeholder="partner" disabled={!formState.admin} name="partner" value={formState.partner} size="sm" onChange={handleUserChange} style={{width: "50%", backgroundColor: !formState?.admin ? "black" : null}} >
-                            {partnersData?.findAllPartners?.map((partner, index) => <option key={index} value={partner._id} style={{width:"100%"}}>{partner.name}<Image src={partner.imgSrc}/></option>)}
-                        </Form.Select>
+                        <Form.Control type="hidden" name="email" value={formState.email} onChange={handleUserChange} />
 
                     </Form.Group>
+            
+                
+                    { admin ? 
+                        <Form.Group controlId="formBasicAdmin" className='mb-3' style={{display: "flex"}} hidden={!admin}>
+                            <Form.Label >admin
+                            <Form.Check type="checkbox" name="admin" onChange={handleAdmin} value={formState.admin} checked={formState.admin} inline />
+                            </Form.Label>
+                            <Form.Select type="text" placeholder="partner" disabled={!formState.admin} name="partner" value={formState.partner} size="sm" onChange={handleUserChange} style={{width: "50%", backgroundColor: !formState?.admin ? "black" : null}} >
+                                {partnersData?.findAllPartners?.map((partner, index) => <option key={index} value={partner._id} style={{width:"100%"}} onChange={handleUserChange} >{partner.name}</option>)}
+                            </Form.Select>
+                        </Form.Group>   
+                     : null }
+
+                    
                     <div style={{display: "flex", justifyContent: "space-around"}}>
                         <Form.Group controlId="formBasicCancel">
                             <Button onClick={handleLogout}>logout</Button>

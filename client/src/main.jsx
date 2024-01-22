@@ -9,7 +9,7 @@ import {
   createHttpLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import { LandingPage, Booking, ShareParty, AdminParty, AdminPage } from './components/'
+import { LandingPage, Booking, ShareParty, AdminParty, AdminPage, ErrorPage } from './components/'
 
 
 
@@ -40,6 +40,7 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
@@ -68,6 +69,7 @@ const router = createBrowserRouter([
       {
         path: "*",
         element: <h1>404</h1>
+        
       }
     ]
   }
@@ -79,7 +81,7 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ApolloProvider client={ client }>
-      <RouterProvider router={router} /> 
+      <RouterProvider router={ router } /> 
     </ApolloProvider>
   </React.StrictMode>,
 )

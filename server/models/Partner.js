@@ -14,9 +14,9 @@ const partnerSchema = new Schema({
         trim: true
     },
     events : [{
-      type: Schema.Types.ObjectId,
-      ref: 'Event',
-      autopopulate: true,
+        type: Schema.Types.ObjectId,
+        ref: 'Event',
+        autopopulate: true,
     }],
     users : [{
         type: Schema.Types.ObjectId,
@@ -29,6 +29,7 @@ const partnerSchema = new Schema({
 });
 
 partnerSchema.plugin(require('mongoose-autopopulate'));
+
 
 
 const Partner = model('Partner',partnerSchema);

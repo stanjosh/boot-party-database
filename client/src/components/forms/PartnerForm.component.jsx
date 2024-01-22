@@ -2,19 +2,20 @@ import { useEffect, useState, useRef } from 'react';
 import { Form, Button, Alert, Image } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
 import { CREATE_PARTNER } from '../../util/mutations';
-
+import { UserDisplay } from '../pageElements';
 
 
 const PartnerForm = ({ partnerData, success }) => {
     
     const [addPartner, { loading, error }] = useMutation(CREATE_PARTNER);
 
-
+    const users = partnerData?.users || [];
 
     const  [formData, setFormData] = useState({
 
-        name: '',
-        imgSrc: '',
+        name: partnerData?.name || '',
+        imgSrc: partnerData?.imgSrc || '',
+        
 
     });
 
@@ -49,7 +50,7 @@ const PartnerForm = ({ partnerData, success }) => {
 
 
 
-
+    console.log('partnerData: ', partnerData);
   return (
     <Form onSubmit={handleSubmit} >
         <div className='mb-3'>
@@ -67,12 +68,27 @@ const PartnerForm = ({ partnerData, success }) => {
         <Image src={imgSrc} rounded style={{maxHeight: "100px"}} />
         </div>
         : null}
-
         {error && <Alert variant='danger'>Error updating partner</Alert>}
                 
-        <Button type='submit' className='mt-3' disabled={loading}>
-            save
-        </Button>
+                <Button type='submit' className='mt-3' disabled={loading}>
+                    save
+                </Button>
+
+                { users ? <div style={{width: "100%", textAlign: "center", alignItems: "center"}}>
+                <strong>Users</strong>
+                <div style={{display: "flex", flexWrap: "wrap"}}>
+                {users?.map((userData, index) => {
+                    return (
+                    <div key={index} style={{flex: "1 1 250px", maxHeight: "50%"}}>
+                        <UserDisplay userData={userData}  admin/> 
+                    </div>
+                    )})}
+                    </div>      
+            
+        </div>
+        : null}
+
+
 
     </Form>
 

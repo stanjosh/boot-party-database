@@ -48,11 +48,15 @@ const guestSchema = new Schema({
             
 });
 
-
+guestSchema.index({
+    'name': 'text',
+    'phone': 'text',
+    'email': 'text',
+})
 
 
 const Guest = model('Guest', guestSchema);
 
-
+Guest.ensureIndexes();
 
 module.exports = Guest;

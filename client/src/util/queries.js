@@ -273,11 +273,35 @@ query FindAllPartners {
       _id
       eventLocation
       eventTime
+      eventContact {
+        _id
+        name
+        email
+        phone
+        shoeSize
+        shoeWidth
+        boots { bootName
+                bootSku
+                bootImgSrc
+        }
+      }
     }
     users {
       _id
       email
       admin
+      guestProfile {
+        _id
+        name
+        email
+        phone
+        shoeSize
+        shoeWidth
+        boots { bootName
+                bootSku
+                bootImgSrc
+        }
+      }
     }
   }
 }

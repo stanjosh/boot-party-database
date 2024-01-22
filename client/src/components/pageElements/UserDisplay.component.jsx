@@ -7,39 +7,28 @@ const UserDisplay = ( { userData, admin } ) => {
     
     const [show, setShow] = useState(false);
 
+    console.log(userData)
     return (
 
         
-        <>
-      
-        <div style={{ backgroundColor: "aliceblue"}}> 
-            <ul>
-                <li>
-                    
-                    <div>
-                    name: {userData?.guestProfile?.name} <br />
-                    email: {userData?.email} <br />
-                    partner org: {userData?.partner} <br />
-                    admin?: {userData?.admin ? 'yes' : 'no'} <br />
-                    
+        <div style={{display: "flex"}}>
+            <Card style={{flex: "1 1"}}>
+                <Card.Body>
+                    <Card.Title>{userData?.guestProfile?.name || userData?.email}</Card.Title>
+                    <Card.Subtitle className="mb-2 text-muted">{userData?.guestProfile?.email || userData?.email}</Card.Subtitle>
+                    <Card.Text>
+                        {userData?.admin ? 'admin' : 'user'}
+                    </Card.Text>
+                    <Button variant="primary" onClick={() => setShow(true)}>edit</Button>
+                </Card.Body>
+            </Card>
+            
 
-                    {admin ? <Button className='formButton' onClick={() => setShow(true)} >Admin</Button> : null}
-                    </div>   
-                        
-
-                    
-
-                </li>
-
-
-            </ul>
-
-        </div>
 
         <UserForm userData={userData} show={show} onHide={() => setShow(false)} admin/>
 
 
-        </>
+        </div>
     );
 };
 

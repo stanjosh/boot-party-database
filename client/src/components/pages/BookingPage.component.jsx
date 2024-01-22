@@ -9,7 +9,7 @@ const CreateEventPage = () => {
   
   const { userData } = useContext(UserContext);
 
-  const guestData = userData?.guestProfile;
+  const guestData = userData?.guestProfile || {};
 
 
 
@@ -19,8 +19,8 @@ const CreateEventPage = () => {
     <div style={{textAlign: "center", padding: "15px", marginTop: "25px", width: "100%", maxWidth: "780px", display: "flex", alignContent: "center", justifyContent: "center", backgroundColor: "var(--alviesBlue)",  borderRadius: "3px" }}>
         
         {guestId         
-          ? <EventForm guestId={guestId} create/>
-          : <GuestForm guest={guestData} success={(guestId) => setGuestId(guestId)}/>
+          ? <GuestForm guest={guestData} success={(guestId) => setGuestId(guestId)}/>
+          : <EventForm guestId={guestId} submitText='choose your boots' create/>
         }
       
     </div>

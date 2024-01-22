@@ -9,7 +9,6 @@ const resolvers = {
       if (context.user) {
         return await User.findOne({ _id: context.user._id });
       }
-      throw new AuthenticationError('You need to be logged in!');
     },
 
     findAllEvents: async () => {
@@ -30,7 +29,7 @@ const resolvers = {
     findAllPartners: async () => {
 
       return await Partner.find()
-
+      
     },
     
     findPartnersBySearch: async (parent, { search }, context) => {
@@ -39,7 +38,15 @@ const resolvers = {
 
 
     findUsersBySearch: async (parent, { search }, context) => {
-      return await User.find({ $text: { $search: search } })
+      console.log( search )
+      const guestProfile = await Guest.find({ $text: { $search: search } })
+      if (guestProfile.length > 0) {
+        return await User.find({ guestProfile: { $in: guestProfile } })
+      } else {
+        return await User.find({ $text: { $search: search } })
+      }
+
+      
     },
     
 
@@ -143,19 +150,23 @@ const resolvers = {
 
     loginUser: async (parent, { email, password }) => {
       const user = await User.findOne({ email: email })
-
+      const error = {};
       if (!user) {
+        error.message = 'No user with this email found!';
         throw new AuthenticationError('No user with this email found!');
+        
       }
 
       const correctPw = await user.isCorrectPassword(password);
 
       if (!correctPw) {
+        error.message = 'Incorrect password!';
         throw new AuthenticationError('Incorrect password!');
+        
       }
 
       const token = signToken(user);
-      return { token, user };
+      return { token, user, error };
     },
 
     createEvent: async (parent, { eventInput, userId }, context) => {
