@@ -17,9 +17,9 @@ const LandingPage = () => {
       <>
         <div className="landingPageBox" style={{minWidth: "100%", textAlign: "center", alignContent: "center"}}>
           <div style={{maxWidth: "600px", margin: "auto"}}>
-            <h1 className="landingPageTitle">WE BRING THE FIT</h1>
+            <h1 className="landingPageTitle">boot fittings anywhere</h1>
           
-          <Button href="/book" className="landingPageButton" style={{borderRadius: "2px"}}>START A PARTY</Button>
+          <Button href="/book" className="landingPageButton" style={{borderRadius: "2px"}}>book in austin</Button>
           </div>
         </div>
 

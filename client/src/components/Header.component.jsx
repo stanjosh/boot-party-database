@@ -42,7 +42,7 @@ const Header = () => {
       {['sm'].map((expand) => (
         <Navbar key={expand} expand={expand} style={{zIndex: "100", fontFamily: "unpretentious", padding: "5px", margin: "1rem"}} className="bg-body-tertiary mb-3">
           <Container fluid style={{alignContent: "center", padding: "0"}}>
-            <Navbar.Brand href="/"><Image src='/boot-party-blue.png' height="75cqb" style={{display: "flex"}}/>
+            <Navbar.Brand href="/"><Image src='/boot-party-blue.png' style={{width: "12cqb"}}/>
               
             </Navbar.Brand>
           { error ? <Alert style={{color: "red"}}>please log in again</Alert> : null }
