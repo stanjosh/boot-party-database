@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { UserForm } from '../forms';
+import { UserForm } from './forms';
 import { Card, Button, Modal } from 'react-bootstrap';
 
 

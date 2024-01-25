@@ -1,13 +1,13 @@
 import React from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
-import { EventList, UsersList, PartnersList } from '../../pageElements';
+import { EventsList, UsersList, PartnersList } from '../../components/containers';
 
 const AdminPage = () => {
     return (
         <div style={{backgroundColor: "aliceblue"}}>
             <Tabs style={{display: "flex", alignItems: "center", borderRadius:"15px"}} unmountOnExit >
             <Tab eventKey="events" title="Events">
-                < EventList />
+                < EventsList />
             </Tab>
             <Tab eventKey="users" title="Users" unmountOnExit >
                 < UsersList />

@@ -4,29 +4,37 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { useForm } from '../../util/hooks';
 import { useMutation } from '@apollo/client';
-import { CREATE_EVENT } from '../../util/mutations';
+import { CREATE_EVENT, UPDATE_GUEST } from '../../util/mutations';
 import { UserContext } from '../../util/context/UserContext';
 
-const EventForm = ({ eventData, formTitle, submitText, guestId, admin }) => {
+const EventForm = ({ eventData, formTitle, submitText, admin }) => {
   
     const { userData, loading: contextLoading } = useContext(UserContext);
   
     const [eventTime, setEventTime] = useState(new Date());
-    const [createEvent, { loading, error }] = useMutation(CREATE_EVENT);
+    const [createEvent, { loading: createEventLoading, error: createEventError }] = useMutation(CREATE_EVENT);
+    const [updateGuest, { loading: updateGuestLoading, error: updateGuestError }] = useMutation(UPDATE_GUEST);
+
+    const error = createEventError || updateGuestError;
+    const loading = createEventLoading || updateGuestLoading || contextLoading;
+
+    const [publicEvent, setPublicEvent] = useState(true);
 
     const today = new Date();
     
     const { formData, handleInputChange, handleSubmit } = useForm({
-        eventTime: eventTime,
-        eventLocation: eventData?.eventLocation ?? '',
-        eventTitle: eventData?.eventTitle ?? '',
-        eventNotes: eventData?.eventNotes ?? '',
-        eventPartner: userData.partner?._id ?? '',
-      },
+          eventTime: eventTime,
+          eventLocation: eventData?.eventLocation ?? '',
+          eventTitle: eventData?.eventTitle ?? '',
+          eventNotes: eventData?.eventNotes ?? '',
+          name: userData?.guestProfile?.name ?? '',
+          email: userData?.guestProfile?.email ?? '',
+          phone: userData?.guestProfile?.phone ?? '',
+        },
       (formData) => writeEvent(formData)
     );
  
-    const { eventLocation, eventTitle, eventNotes } = formData;
+    const { eventLocation, eventTitle, eventNotes, name, email, phone } = formData;
 
     const handleTimeChange = (date) => {
         setEventTime(date);
@@ -38,11 +46,26 @@ const EventForm = ({ eventData, formTitle, submitText, guestId, admin }) => {
 
 
     const writeEvent = async (formData) => {
+      const guest = await updateGuest({
+          variables: {
+              guestInput: { 
+                name: formData.name,
+                email: formData.email,
+                phone: formData.phone,
+               },
+          }
+      })
+
+
       await createEvent({
           variables: {
-              eventInput: { ...formData,
-
-                eventContact: guestId,
+              eventInput: { 
+                eventTime: formData.eventTime,
+                eventLocation: formData.eventLocation,
+                eventTitle: formData.eventTitle,
+                eventNotes: formData.eventNotes,
+                eventPartner: publicEvent ? userData?.partner?._id : null,
+                eventContact: guest?.data?.updateGuest?._id,
               },
 
           }
@@ -123,6 +146,54 @@ const EventForm = ({ eventData, formTitle, submitText, guestId, admin }) => {
       />
       </Form.Group>
 
+      <Form.Group controlId="formGuestInfo" >
+        <Form.Control
+          type="text"
+          placeholder='name'
+          name="name"
+          value={name}
+          onChange={handleInputChange}
+          required
+          className='mb-3'
+        />
+        <Form.Control
+          type="text"
+          placeholder='email'
+          name="email"
+          value={email}
+          onChange={handleInputChange}
+          required
+          className='mb-3'
+        />
+        <Form.Control
+          type="text"
+          placeholder='phone (optional)'
+          name="phone"
+          maxLength={14}
+          value={phone.replace(/(\d{3})(\d{3})(\d{4})?/g,'($1)-$2-$3')}
+          onChange={handleInputChange} 
+          className='mb-3'
+        />
+      </Form.Group>
+
+
+    { userData?.partner ? 
+    <Form.Group controlId="formCancel" style={{width: "100%", marginRight: "15px", alignItems:"flex-end"}}>
+        
+        <Form.Check
+          type="switch"
+          id="custom-switch"
+          selected={publicEvent}
+          onChange={() => setPublicEvent(!publicEvent)}
+          label={publicEvent ? 'This will be a private event' : <strong>This will be a private event</strong> }
+          style={{color: "aliceblue"}}
+        />
+        
+    </Form.Group>
+
+    : null }
+    
+    
     <Form.Group controlId="formSubmit" style={{width: "100%", marginRight: "15px", alignItems:"flex-end"}}>
         <Button type="submit" disabled={ loading } style={{
             flex: "0 1 40%",

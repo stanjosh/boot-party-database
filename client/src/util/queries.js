@@ -6,6 +6,10 @@ query Me {
     _id
     email
     admin
+    partner {
+      _id
+      name
+    }
     events {
       _id
       eventLocation

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { GuestForm } from '../forms/';
+import { GuestForm } from './forms';
 import { Card, Button, Modal } from 'react-bootstrap';
 import dayjs from 'dayjs';
 
@@ -28,6 +28,7 @@ const EventDisplay = ( { eventData, admin } ) => {
         <>
         { !admin ? 
         <Card>
+            {eventData?.eventPartner ? <Card.Header>Hosted by {eventData?.eventPartner?.name}</Card.Header> : null}
             <Card.Body style={{display: "flex", width: "100%", flexWrap: "wrap", justifyContent: "space-around", alignItems: "center"}}>
 
                     

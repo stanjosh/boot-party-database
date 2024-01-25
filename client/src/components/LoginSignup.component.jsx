@@ -2,7 +2,7 @@ import React, { useState }from 'react';
 import { Modal, Tabs, Tab, Container } from 'react-bootstrap';
 
 
-import { LoginForm, SignupForm } from '../forms';
+import { LoginForm, SignupForm } from './forms';
 
 const LoginSignup = ({show, onHide}) => {
 

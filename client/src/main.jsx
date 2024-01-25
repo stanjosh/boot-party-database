@@ -9,7 +9,7 @@ import {
   createHttpLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import { LandingPage, Booking, ShareParty, AdminParty, AdminPage, ErrorPage } from './components/'
+import { LandingPage, Booking, ShareParty, AdminParty, AdminPage, ErrorPage } from './pages/'
 
 
 

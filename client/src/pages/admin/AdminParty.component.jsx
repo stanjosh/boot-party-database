@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Container, Alert, Button, Tabs, Tab, Modal } from 'react-bootstrap';
-import { GuestForm, EventForm, EventAdminForm } from '../../forms';
+import { GuestForm, EventForm, EventAdminForm } from '../../components/forms';
 import { useQuery } from '@apollo/client';
-import { QUERY_EVENT } from '../../../util/queries';
+import { QUERY_EVENT } from '../../util/queries';
 
 
 

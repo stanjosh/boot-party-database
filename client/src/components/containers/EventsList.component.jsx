@@ -6,7 +6,7 @@ import { QUERY_EVENTS } from '../../util/queries';
 import dayjs from "dayjs";
 
     
-const EventList = () => {
+const EventsList = () => {
     const { loading, data } = useQuery(QUERY_EVENTS);
 
     const events = data?.findAllEvents;
@@ -142,4 +142,4 @@ const EventList = () => {
     )
 }
 
-export default EventList
+export default EventsList

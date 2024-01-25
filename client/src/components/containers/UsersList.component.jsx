@@ -1,7 +1,7 @@
 
 import React, { useState} from "react"
 import { useQuery } from '@apollo/client';
-import { UserDisplay } from "./";
+import { UserDisplay } from "..";
 import { Form, Button, InputGroup } from 'react-bootstrap';
 import { QUERY_USERS_SEARCH } from '../../util/queries';
 
@@ -33,7 +33,7 @@ const UsersList = () => {
         <div>
             <div>
                 <Form onSubmit={handleSearchSubmit}>
-                    <InputGroup className="mb-3"  controlId="formBasicSearch">
+                    <InputGroup className="mb-3" >
                     <Form.Label htmlFor="search" visuallyHidden >name or email search </Form.Label>
                         <InputGroup.Text>
                         

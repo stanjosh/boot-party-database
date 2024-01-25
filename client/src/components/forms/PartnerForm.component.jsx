@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import { Form, Button, Alert, Image } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
 import { CREATE_PARTNER } from '../../util/mutations';
-import { UserDisplay } from '../pageElements';
+import { UserDisplay } from '../';
 
 
 const PartnerForm = ({ partnerData, success }) => {

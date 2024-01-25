@@ -1,9 +1,12 @@
-import LandingPage from './pages/LandingPage.component'
-import Booking from './pages/BookingPage.component'
-import ShareParty from './pages/party/ShareParty.component'
-import AdminParty from './pages/admin/AdminParty.component'
-import EventList from './pageElements/EventsList.component'
-import AdminPage from './pages/admin/AdminPage.component'
-import ErrorPage from './pages/ErrorPage.component'
+import GuestsDisplay from "./GuestsDisplay.component";
+import UserDisplay from "./UserDisplay.component";
+import EventDisplay from "./EventDisplay.component";
+import PartnerDisplay from "./PartnerDisplay.component";
+import LoginSignup from "./LoginSignup.component";
 
-export { LandingPage, Booking, ShareParty, AdminParty, EventList, AdminPage, ErrorPage }
+import Header from "./Header.component";
+import Footer from "./Footer.component";
+
+
+export { GuestsDisplay, UserDisplay, EventDisplay, PartnerDisplay, Header, Footer, LoginSignup };
+

@@ -52,7 +52,7 @@ const typeDefs = gql`
     eventContact: String!
     eventNotes: String
     eventTitle: String 
-    evventPartner: String
+    eventPartner: String
   }
 
   input UpdateEventInput {

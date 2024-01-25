@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
  import { Card, Button, Modal } from 'react-bootstrap';
-import { PartnerForm } from '../forms';
+import { PartnerForm } from './forms';
 
-const PartnerDisplay = ({partnerData, admin}) => {
+const PartnerDisplay = ({ partnerData, admin }) => {
     const [show, setShow] = useState(false);
 
     const onHide = () => {
@@ -18,10 +18,14 @@ const PartnerDisplay = ({partnerData, admin}) => {
                     <Card.Title>{partnerData?.name}</Card.Title>
                     
                     <Card.Text>
-                        <div>Users: {partnerData?.users?.length}</div>
-                        <div>Events: {partnerData?.events?.length}</div>
+                        
+                        Events: {partnerData?.events?.length}
                     </Card.Text>
-                    
+                    <Card.Text>
+                        Users: {partnerData?.users?.length}
+                    </Card.Text>
+
+
                 </Card.Body>
             </Card>
             

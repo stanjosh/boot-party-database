@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Navbar, Nav, Container, Image } from 'react-bootstrap';
 import LoginSignup from './LoginSignup.component';
-import { QUERY_ME } from '../../util/queries';
+import { QUERY_ME } from '../util/queries';
 import { useQuery } from '@apollo/client';
-import { UserForm } from '../forms';
+import { UserForm } from './forms';
 
 const Header = () => {
   

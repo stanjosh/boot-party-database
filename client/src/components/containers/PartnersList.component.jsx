@@ -1,8 +1,8 @@
 
-import React, { useEffect, useState} from "react"
+import React, { useState } from "react"
 import { useLazyQuery, useQuery } from '@apollo/client';
-import { PartnerDisplay } from "./";
-import { Form, Modal, InputGroup, Button, Image, FloatingLabel } from 'react-bootstrap';
+import { PartnerDisplay } from "../";
+import { Form, Modal, InputGroup, Button, FloatingLabel } from 'react-bootstrap';
 import { QUERY_PARTNERS_SEARCH, QUERY_PARTNERS } from '../../util/queries';
 import { PartnerForm } from '../forms';
 
@@ -51,7 +51,7 @@ const PartnersList = () => {
                 
                 <Form onSubmit={handleSearchSubmit} style={{width: "100%", display: "flex"}}>
                     
-                        <InputGroup className="mb-3"  controlId="formBasicSearch">
+                        <InputGroup className="mb-3">
                         <FloatingLabel controlId="floatingInput" label="partner search">
                         <Form.Control type="text" placeholder="name or email search" required onChange={handleSearchChange} />
                         </FloatingLabel>

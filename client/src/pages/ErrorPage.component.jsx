@@ -10,7 +10,7 @@ const ErrorPage = () => {
       <p>{error.statusText}</p>
         <p>{error.message}</p>
         
-      <Link onClick={history.goBack()} >Back Home</Link>
+      <Link onClick={() => history.back()} >Back</Link>
     </div>
   );
 };
