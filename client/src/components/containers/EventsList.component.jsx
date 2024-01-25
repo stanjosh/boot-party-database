@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState } from "react"
-import { Button, Card } from "react-bootstrap";
+import { Button, Card, Modal } from "react-bootstrap";
+import { EventForm } from "../forms";
 import { useQuery } from '@apollo/client';
 import { QUERY_EVENTS } from '../../util/queries';
 import dayjs from "dayjs";
@@ -15,10 +16,16 @@ const EventsList = () => {
     
     const [sort, setSort] = useState("time")
 
+    const [showNewEventModal, setNewShowEventModal] = useState(false);
+
+
     function sortTable(e){
         const col = e.target.getAttribute("name")
         
         setSort(sort == 1 ? -1 : 1)
+
+        
+
 
         switch (col) {
             case "title": {
@@ -114,6 +121,13 @@ const EventsList = () => {
                                 name="contact" 
                                 onClick={(e) => sortTable(e)}
                             >contact</th>
+                            <th 
+                                style={{cursor: "n-resize"}}
+                                scope="col"
+                                name="admin"
+                                
+                            ><Button onClick={() => setNewShowEventModal(true)}>new</Button></th>
+
                             </tr>
                             
                             
@@ -122,7 +136,14 @@ const EventsList = () => {
                     {sortedData?.map((event, index) => {
                         return (
 
-                        <tr key={index}>
+                        <tr key={index}
+                            style={{cursor: "pointer",
+                            backgroundColor: "lightgray",
+                            color: dayjs(event?.eventTime * 1).isBefore(dayjs()) ? "gray" : "black"
+                        }}
+                            onClick={() => window.location.href = `/events/${event?._id}`}
+                            
+                        >
                             <td data-label={event?.eventTitle? 'title' : null}>{event?.eventTitle}</td>
                             <td data-label='date / time'>{dayjs(event?.eventTime * 1).format('MMMM D, YYYY h:mm A')}</td>
                             <td data-label='location'>{event?.eventLocation}</td>
@@ -138,6 +159,16 @@ const EventsList = () => {
                     </table>
                 </div>
             )}
+            <Modal show={showNewEventModal} onHide={() => setNewShowEventModal(false)} >
+                    
+                    <Modal.Header className="bg-dark text-light"closeButton>
+                        <Modal.Title>New Event</Modal.Title>
+                    </Modal.Header>
+    
+                    <Modal.Body className="bg-dark text-light">
+                        <EventForm submitText={'create'} success={() => setNewShowEventModal(false)}/>
+                    </Modal.Body>
+            </Modal>
         </div>
     )
 }

@@ -6,11 +6,12 @@ const partnerSchema = new Schema({
     name: {
         type: String,
         required: true,
+        unique: true,
         trim: true
     },
     imgSrc: {
         type: String,
-        required: true,
+        required: false,
         trim: true
     },
     events : [{

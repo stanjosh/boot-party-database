@@ -180,7 +180,8 @@ const EventForm = ({ eventData, formTitle, submitText, admin }) => {
 
     { userData?.partner ? 
     <Form.Group controlId="formCancel" style={{width: "100%", marginRight: "15px", alignItems:"flex-end"}}>
-        
+        {publicEvent ? <p style={{color: "aliceblue", fontSize: "2.5cqh"}}>This event will be a public {userData?.partner?.name} event </p> : null}
+        <div style={{fontSize:"1.5cqh"}}>
         <Form.Check
           type="switch"
           id="custom-switch"
@@ -189,7 +190,7 @@ const EventForm = ({ eventData, formTitle, submitText, admin }) => {
           label={publicEvent ? 'This will be a private event' : <strong>This will be a private event</strong> }
           style={{color: "aliceblue"}}
         />
-        
+        </div>
     </Form.Group>
 
     : null }

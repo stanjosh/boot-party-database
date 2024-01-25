@@ -69,10 +69,13 @@ const PartnerForm = ({ partnerData, success }) => {
         </div>
         : null}
         {error && <Alert variant='danger'>Error updating partner</Alert>}
-                
-                <Button type='submit' className='mt-3' disabled={loading}>
-                    save
-                </Button>
+                <div style={{display: "flex", justifyContent: "space-around"}}>
+                    <Button className='mt-3'>delete</Button>
+
+                    <Button type='submit' className='mt-3' disabled={loading}>
+                        save
+                    </Button>
+                </div>
 
                 { users ? <div style={{width: "100%", textAlign: "center", alignItems: "center"}}>
                 <strong>Users</strong>
@@ -88,7 +91,7 @@ const PartnerForm = ({ partnerData, success }) => {
         </div>
         : null}
 
-
+        
 
     </Form>
 
