@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { propTypes } from 'react-bootstrap/esm/Image';
 import { GuestForm } from './forms';
 import { Card, Button, Modal } from 'react-bootstrap';
 import dayjs from 'dayjs';
@@ -83,7 +84,7 @@ const EventDisplay = ( { eventData, admin } ) => {
                     <div>
                     {eventData?.eventTime ? <><strong>{prettyDate + ' ' + prettyTime}</strong> <br /> </>: null}
                         
-                    {eventData?.eventTitle ? <><strong>"{eventData?.eventTitle}"</strong> <br /> </>: null}
+                    {eventData?.eventTitle ? <><strong>&quot;{eventData?.eventTitle}&quot;</strong> <br /> </>: null}
                         
                     {eventData?.eventLocation ? <><strong>{eventData?.eventLocation}</strong> </> : null}
 
@@ -118,3 +119,8 @@ const EventDisplay = ( { eventData, admin } ) => {
 
 export default EventDisplay;
   
+
+EventDisplay.propTypes = {
+    eventData: propTypes.object,
+    admin: propTypes.bool,
+};

@@ -6,6 +6,7 @@ import { useForm } from '../../util/hooks';
 import { useMutation } from '@apollo/client';
 import { CREATE_EVENT, UPDATE_GUEST } from '../../util/mutations';
 import { UserContext } from '../../util/context/UserContext';
+import { propTypes } from 'react-bootstrap/esm/Image';
 
 const EventForm = ({ eventData, formTitle, submitText, admin }) => {
   
@@ -202,7 +203,7 @@ const EventForm = ({ eventData, formTitle, submitText, admin }) => {
             margin: "8px",
             justifySelf: "flex-end",
         }}>
-            {submitText || <h3 style={{fontSize : "2.5cqh", color: "aliceblue", marginBottom : "0"}}>LET'S GO</h3>}
+            {submitText || <h3 style={{fontSize : "2.5cqh", color: "aliceblue", marginBottom : "0"}}>LET&apos;S GO</h3>}
         </Button>
     </Form.Group>
       {error && <Alert>Error updating event</Alert>}
@@ -213,3 +214,11 @@ const EventForm = ({ eventData, formTitle, submitText, admin }) => {
 };
 
 export default EventForm;
+
+
+EventForm.propTypes = {
+  eventData: propTypes.object,
+  formTitle: propTypes.string,
+  submitText: propTypes.string,
+  admin: propTypes.bool,
+};

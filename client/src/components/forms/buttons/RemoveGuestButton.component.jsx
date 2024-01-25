@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
 import { EVENT_REMOVE_SIGNUP } from '../../../util/mutations';
+import { propTypes } from 'react-bootstrap/esm/Image';
 
 const RemoveGuestButton = ({eventId, guestId}) => {
     const [removeGuest, { loading, error }] = useMutation(EVENT_REMOVE_SIGNUP);
@@ -45,3 +46,8 @@ const RemoveGuestButton = ({eventId, guestId}) => {
 };
 
 export default RemoveGuestButton;
+
+RemoveGuestButton.propTypes = {
+    guestId: propTypes.string,
+    eventId: propTypes.string,
+};

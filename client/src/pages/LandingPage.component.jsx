@@ -19,7 +19,7 @@ const LandingPage = () => {
           <div style={{maxWidth: "600px", margin: "auto"}}>
             <h1 className="landingPageTitle">WE BRING THE FIT</h1>
           
-          <Button href="/book" className="landingPageButton">START A PARTY</Button>
+          <Button href="/book" className="landingPageButton" style={{borderRadius: "2px"}}>START A PARTY</Button>
           </div>
         </div>
 
@@ -41,7 +41,7 @@ const LandingPage = () => {
 
             <p style={{fontFamily: '"work-sans",sans-serif', fontWeight: "600",  fontSize: "1.5cqh" }}>
               We want to provide the best guest experience in all of footwear. Because if you can’t have fun trying on boots, you’re doing it wrong. We will literally drive a van-full of boots to you for a personal boot-fitting, wherever you are. Your couch? Cool. Work, no problemo. Got a favorite park bench? Drop us a pin. We want you to feel comfortable trying on our boots, and pulling them off. We’ll bring a few sizes and styles of your choice, for you (and whoever else may be joining) to find the perfect pair, and answer all your boot-wearin’ questions with trusted expertise.</p>
-            <Button href="/book" className="landingPageButton">LET'S GO</Button>
+            <Button href="/book" className="landingPageButton"  style={{borderRadius: "2px"}}>LET&apos;S GO</Button>
           </div>
         </div>
           <div className="landingPageBox imageBG" style={{
@@ -95,7 +95,7 @@ const LandingPage = () => {
           </div>
         </div>
         <div style={{width: "100%", backgroundColor: "aliceblue", paddingTop: "15px", paddingBottom: "15px", textAlign: "center"}}>
-          <Button href="/book" className="landingPageButton">KICK IT OFF</Button>
+          <Button href="/book" className="landingPageButton"  style={{borderRadius: "2px"}}>KICK IT OFF</Button>
         </div>
       </>
     );

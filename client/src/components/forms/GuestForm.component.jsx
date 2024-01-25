@@ -1,17 +1,21 @@
-import { useEffect, useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
 import { UPDATE_GUEST, EVENT_ADD_SIGNUP } from '../../util/mutations';
 import { RemoveGuestButton } from './buttons';
 import { BootSelect } from '.';
-
+import { propTypes } from 'react-bootstrap/esm/Image';
 import SizeSelect from './bootSelect/SizeSelect.component';
 
+
+
 const GuestForm = ({ guest, eventId, formTitle, submitText, success, joining, admin }) => {
-    const [updateGuest, { loading, error }] = useMutation(UPDATE_GUEST);
+    const [updateGuest, { loading: updateGuestLoading, error: updateGuestError }] = useMutation(UPDATE_GUEST);
     const [addGuest, { loading: addGuestLoading, error: addGuestError }] = useMutation(EVENT_ADD_SIGNUP);
     const guestFormRef = useRef(null)
 
+    const error = updateGuestError || addGuestError;
+    const loading = updateGuestLoading || addGuestLoading;
 
     const  [formData, setFormData] = useState({
 
@@ -165,7 +169,7 @@ const GuestForm = ({ guest, eventId, formTitle, submitText, success, joining, ad
         <Form.Group controlId="formSubmit"  style={{flex: "0 1 60%", padding: "5px"}}>
         
         <Button type="submit" disabled={ !formData.name || !formData.email || loading || addGuestLoading || !email?.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) } className='formButtom'>
-            {submitText || <h3 style={{fontSize : "2.5cqh", color: "aliceblue", marginBottom : "0"}}>LET'S GO</h3>}
+            {submitText || <h3 style={{fontSize : "2.5cqh", color: "aliceblue", marginBottom : "0"}}>LET&apos;S GO</h3>}
         </Button>
             
         </Form.Group>
@@ -185,3 +189,14 @@ const GuestForm = ({ guest, eventId, formTitle, submitText, success, joining, ad
 };
 
 export default GuestForm;
+
+
+GuestForm.propTypes = {
+    guest: propTypes.object,
+    eventId: propTypes.string,
+    formTitle: propTypes.string,
+    submitText: propTypes.string,
+    success: propTypes.func,
+    joining: propTypes.bool,
+    admin: propTypes.bool,
+  };
