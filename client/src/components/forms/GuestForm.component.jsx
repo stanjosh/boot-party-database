@@ -4,7 +4,6 @@ import { useMutation } from '@apollo/client';
 import { UPDATE_GUEST, EVENT_ADD_SIGNUP } from '../../util/mutations';
 import { RemoveGuestButton } from './buttons';
 import { BootSelect } from '.';
-import { propTypes } from 'react-bootstrap/esm/Image';
 import SizeSelect from './bootSelect/SizeSelect.component';
 
 
@@ -191,12 +190,3 @@ const GuestForm = ({ guest, eventId, formTitle, submitText, success, joining, ad
 export default GuestForm;
 
 
-GuestForm.propTypes = {
-    guest: propTypes.object,
-    eventId: propTypes.string,
-    formTitle: propTypes.string,
-    submitText: propTypes.string,
-    success: propTypes.func,
-    joining: propTypes.bool,
-    admin: propTypes.bool,
-  };

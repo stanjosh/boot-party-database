@@ -1,5 +1,4 @@
-import React, { useState }from 'react';
-import { Modal, Tabs, Tab, Container } from 'react-bootstrap';
+import { Modal, Tabs, Tab } from 'react-bootstrap';
 
 
 import { LoginForm, SignupForm } from './forms';

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { propTypes } from 'react-bootstrap/esm/Image';
 import { GuestForm } from './forms';
 import { Card, Button, Modal } from 'react-bootstrap';
 import dayjs from 'dayjs';
@@ -120,7 +119,3 @@ const EventDisplay = ( { eventData, admin } ) => {
 export default EventDisplay;
   
 
-EventDisplay.propTypes = {
-    eventData: propTypes.object,
-    admin: propTypes.bool,
-};

@@ -6,7 +6,7 @@ import { useForm } from '../../util/hooks';
 import { useMutation } from '@apollo/client';
 import { CREATE_EVENT, UPDATE_GUEST } from '../../util/mutations';
 import { UserContext } from '../../util/context/UserContext';
-import { propTypes } from 'react-bootstrap/esm/Image';
+
 
 const EventForm = ({ eventData, formTitle, submitText, admin }) => {
   
@@ -215,10 +215,3 @@ const EventForm = ({ eventData, formTitle, submitText, admin }) => {
 
 export default EventForm;
 
-
-EventForm.propTypes = {
-  eventData: propTypes.object,
-  formTitle: propTypes.string,
-  submitText: propTypes.string,
-  admin: propTypes.bool,
-};
