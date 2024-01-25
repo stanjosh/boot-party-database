@@ -13,10 +13,12 @@ const resolvers = {
 
     findAllEvents: async () => {
   
-      return await Event.find().sort({ date: -1 })
+      return await Event.find({
+        eventTime: { $gte: new Date(Date.now() - 7 * 24 * 3600 * 1000) }
+      })
       .populate('eventSignups')
       .populate('eventContact')
-  
+      .sort({ 'eventTime' : 'desc' })
     },
 
     findAllUsers: async () => {

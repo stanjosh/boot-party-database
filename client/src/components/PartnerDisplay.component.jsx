@@ -34,7 +34,7 @@ const PartnerDisplay = ({ partnerData, admin }) => {
                     <Modal.Title className='bg-dark text-light'>Edit Partner</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className='bg-dark text-light'>
-                    <PartnerForm partnerData={partnerData} onHide={onHide} admin/>
+                    <PartnerForm partnerData={partnerData} onHide={onHide} success={onHide} admin/>
                 </Modal.Body>
             </Modal>
 
