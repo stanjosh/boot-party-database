@@ -14,7 +14,7 @@ const useShopifyBoots = ({shoeSize, shoeWidth }) => {
     const sizeDown = (shoeSize == 14 || shoeSize ==  15) ? -1 + parseFloat(shoeSize) : -0.5 + parseFloat(shoeSize);
 
     useEffect(() => {
-
+        if (!shoeSize || !shoeWidth) return;
 
         // Fetch boots data from Shopify JSON
         

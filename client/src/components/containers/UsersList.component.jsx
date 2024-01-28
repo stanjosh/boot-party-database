@@ -1,8 +1,8 @@
 
 import React, { useState} from "react"
-import { useQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 import { UserDisplay } from "..";
-import { Form, Button, InputGroup } from 'react-bootstrap';
+import { FloatingLabel, Form, InputGroup } from 'react-bootstrap';
 import { QUERY_USERS_SEARCH } from '../../util/queries';
 
 
@@ -10,11 +10,11 @@ import { QUERY_USERS_SEARCH } from '../../util/queries';
 const UsersList = () => {
 
     const [searchText, setSearchText] = useState("");
-    const [search, setSearch] = useState("");
 
-    const { loading, data } = useQuery(QUERY_USERS_SEARCH, {
-        variables: { search },
-    });
+    const [searchUsers, { loading, data }] = useLazyQuery(QUERY_USERS_SEARCH, 
+        {
+            variables: { search: searchText },
+        });
 
     const handleSearchChange = (e) => {
         setSearchText(e.target.value);
@@ -22,8 +22,7 @@ const UsersList = () => {
 
     const handleSearchSubmit = async (e) => {
         e.preventDefault();
-        setSearch(searchText);
-        setSearchText("");
+        searchUsers();
     }
 
 
@@ -31,19 +30,23 @@ const UsersList = () => {
 
     return (
         <div>
-            <div>
-                <Form onSubmit={handleSearchSubmit}>
-                    <InputGroup className="mb-3" >
-                    <Form.Label htmlFor="search" visuallyHidden >name or email search </Form.Label>
-                        <InputGroup.Text>
+            <div style={{display:"flex", alignItems:"center", justifyContent:"space-around", padding: "5px"}}>
+                
+                <Form onSubmit={handleSearchSubmit} style={{width: "100%", maxWidth: "300px", display: "flex"}}>
+                    
+                        <InputGroup className="mb-3">
+                        <FloatingLabel controlId="floatingInput" label="user search">
+                        <Form.Control type="text" placeholder="name or email search" required onChange={handleSearchChange} />
+                        </FloatingLabel>
+                        <Form.Control id="search" type="submit" value="search"  style={{backgroundColor: "var(--alviesBlue)", maxWidth: "min-content"}} />
                         
-                            <Form.Control type="text" placeholder="search by name or email" value={searchText} onChange={handleSearchChange} />
-                            <Form.Control id="search" type="submit"  />
+                        </InputGroup>
+                        
+                        
 
-                        </InputGroup.Text>
-                    </InputGroup>
                 </Form>
-            </div>        
+                
+            </div>       
 
             {loading ? (
                 <div>Loading...</div>

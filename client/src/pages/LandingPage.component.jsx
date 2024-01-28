@@ -10,7 +10,6 @@ const LandingPage = () => {
       window.addEventListener("scroll", () => {
         setScrollY(window.scrollY);
       });
-      console.log(scrollY)
     }, [scrollY])
 
     return (

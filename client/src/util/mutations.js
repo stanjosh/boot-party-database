@@ -1,7 +1,6 @@
 import { gql } from '@apollo/client';
 
-const boots = `boots {
-  bootName
+const boots = `{ bootName
   bootSku
   bootImgSrc
   width
@@ -11,54 +10,53 @@ const boots = `boots {
 const guest = `{
   _id
   name
+  email
   phone
-  shoeSize
-  shoeWidth
-  ${boots}
+  boots ${boots}
+}`
+
+const partner = `{
+  _id
+  name
+  imgSrc
+}`
+
+const contact = `{
+  name
+  email
+  phone
 }`
 
 const event = `{
   _id
-  eventLocation
-  eventTime
-  eventContact ${guest}
-  eventTitle
-  eventLeadEmployee
-  eventLoadinTime
-  eventDisplay
-  eventSignups ${guest}
-  eventNotes
-  eventPartyType
-  eventVan
-  eventTransferOrder
-  eventHelpers
+  location
+  time
+  contact ${contact}
+  partner ${partner}
+  title
+  lead
+  loadTime
+  display
+  guests ${guest}
+  notes
+  van
+  transferOrder
+  helpers
 }`
 
-export const CREATE_USER = gql`
-mutation CreateUser($userInput: UserInput!) {
-  createUser(userInput: $userInput) {
-    user {
-      _id
-      email
-      guestProfile ${guest}
-    }
-    token
-  }
-}
-`;
+const user = `{
+  _id
+  email
+  admin
+  partner ${partner}
+  events ${event}
+}`
 
 export const UPDATE_USER = gql`
-mutation UpdateUser($userId: ID!, $userInput: UserInput!, $guestInput: GuestInput) {
-  updateUser(userId: $userId, userInput: $userInput, guestInput: $guestInput) {
-    _id
-    email
-    admin
-    partner {
-      _id
-      name
-      imgSrc
-    }
-    guestProfile ${guest}
+mutation UpdateUser($userInput: UserInput!) {
+  updateUser(userInput: $userInput) {
+    user ${user}
+    token
   }
 }
 `;
@@ -66,41 +64,16 @@ mutation UpdateUser($userId: ID!, $userInput: UserInput!, $guestInput: GuestInpu
 export const LOGIN_USER = gql`
   mutation LoginUser($email: String!, $password: String!) {
     loginUser(email: $email, password: $password) {
-    user {
-      _id
-      email
-      admin
-      partner {
-        _id
-        name
-        imgSrc
-      }
-      guestProfile ${guest}
-    }
-    token
-  }
-}
-`;
-
-export const CREATE_GUEST = gql`
-mutation CreateGuest($guestInput: GuestInput) {
-  createGuest(guestInput: $guestInput) {
-    user {
-      _id
-      email
-      guestProfile ${guest}
-    }
+      user ${user}
+      token
   }
 }
 `;
 
 export const CREATE_PARTNER = gql`
 mutation CreatePartner($partnerInput: PartnerInput!) {
-  createPartner(partnerInput: $partnerInput) {
-    _id
-    name
-    imgSrc
-  }
+  createPartner(partnerInput: $partnerInput) 
+    ${partner}
 }
 `;
 
@@ -113,30 +86,25 @@ mutation CreateEvent($eventInput: EventInput!, $userId: ID) {
 `;
 
 export const UPDATE_EVENT = gql`
-mutation UpdateEvent($eventId: ID!, $updateEventInput: UpdateEventInput) {
-  updateEvent(eventId: $eventId, updateEventInput: $updateEventInput)
+mutation UpdateEvent($updateEventInput: UpdateEventInput!, $eventId: ID) {
+  updateEvent(updateEventInput: $updateEventInput, eventId: $eventId)
+    ${event}
+}
+`;
+export const EVENT_REMOVE_GUEST = gql`
+mutation EventRemoveGuest($eventId: ID!, $guestInput: GuestInput!) {
+  eventRemoveGuest(eventId: $eventId, guestInput: $guestInput)
     ${event}
 }
 `;
 
-export const EVENT_ADD_SIGNUP = gql`
-mutation EventAddSignup($eventId: ID!, $guestId: ID!) {
-  eventAddSignup(eventId: $eventId, guestId: $guestId)
+export const EVENT_ADD_GUEST = gql`
+mutation EventAddGuest($eventId: ID!, $guestInput: GuestInput!) {
+  eventAddGuest(eventId: $eventId, guestInput: $guestInput)
     ${event}
 }
 `;
 
-export const EVENT_REMOVE_SIGNUP = gql`
-mutation EventRemoveSignup($eventId: ID!, $guestId: ID!) {
-  eventRemoveSignup(eventId: $eventId, guestId: $guestId)
-    ${event}
-}
-`;
 
-export const UPDATE_GUEST = gql`
-mutation updateGuest( $guestInput: GuestInput!, $guestId: ID) {
-  updateGuest( guestInput: $guestInput, guestId: $guestId)
-    ${guest}
-}
-`;
+
 

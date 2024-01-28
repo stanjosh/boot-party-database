@@ -2,74 +2,125 @@ const { Schema, model } = require('mongoose');
 
 
 const eventSchema = new Schema({
-    eventContact: {
-        type: Schema.Types.ObjectId,
+    time: {
+        type: Date,
         required: true,
-        ref: 'Guest',
-        autopopulate: true,
-
+    },
+    
+    location: {
+        type: String,
+        required: true,
+        trim: true
     },
 
-    eventTitle: {
+    contact: {
+        name: {
+            type: String,
+            required: true,
+            trim: true
+        },
+        phone : {
+            type: String,
+            required: false,
+            trim: true
+        },
+        email : {
+            type: String,
+            required: false,
+            trim: true
+        }
+    },
+
+    title: {
         type: String,
         required: false,
         trim: true
     },
 
-    eventLeadEmployee: {
+    lead: {
         type: String,
         trim: true
     },
 
-    eventLoadinTime: {
+    loadTime: {
         type: String,
         required: false,
         trim: true
     },
     
-    eventTime: {
-        type: Date,
-        required: true,
-    },
-    eventDisplay: {
+    display: {
         type: String,
         trim: true
     },
-    eventSignups: {
-        type: [Schema.Types.ObjectId],
-        ref: 'Guest',
-        autopopulate: true,
-        
-    },
-    eventLocation: {
+    
+    
+    guests: [{
+        name: {
+            type: String,
+            required: true,
+            trim: true
+        },
+        phone : {
+            type: String,
+            required: false,
+            trim: true
+        },
+        email : {
+            type: String,
+            required: false,
+            trim: true
+        },
+        boots: [ {
+                bootSku: {
+                    type: String,
+                    required: false,
+                    trim: true
+                },
+                bootName: {
+                    type: String,
+                    required: false,
+                    trim: true
+                },
+                bootImgSrc: {
+                    type: String,
+                    required: false,
+                    trim: true
+                },
+                width: {
+                    type: String,
+                    required: false,
+                    trim: true
+                },
+                size: {
+                    type: Number,
+                    required: false,
+                    trim: true
+                }
+            } ],
+                
+    }],
+
+    notes: {
         type: String,
-        required: true,
         trim: true
     },
-    eventNotes: {
-        type: String,
-        trim: true
-    },
-    eventPartyType: {
-        type: String,
-        trim: true
-    },
-    eventVan: {
+    
+    van: {
         type: Number
     },
-    eventTransferOrder: {
+    transferOrder: {
         type: String,
         trim: true
     },
-    eventHelpers: {
+    helpers: {
         type: [String],
         trim: true
     },
-    eventOptions: {
+    options: {
         type: [String],
         trim: true
     },
-    eventPartner : {
+    partner : {
         type: Schema.Types.ObjectId,
         ref: 'Partner',
         autopopulate: true,
@@ -77,7 +128,6 @@ const eventSchema = new Schema({
 
     
 });
-
 
 
 eventSchema.virtual('bootsList').get(function () {

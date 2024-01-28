@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
 import { Container, Button, Form, Alert } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
-import { CREATE_USER } from '../../util/mutations';
+import { UPDATE_USER } from '../../util/mutations';
 import Auth from '../../util/Auth';
 
 
 
 const SignupForm = () => {
     // Component logic goes here
-    const [createUser, { error }] = useMutation(CREATE_USER);
+    const [createUser, { error }] = useMutation(UPDATE_USER);
     const [validated] = useState(false);
     const [passwordCheck, setPasswordCheck] = useState('');
     const [showAlert, setShowAlert] = useState(false);
-    const [ loginSuccess, setLoginSuccess ] = useState(false);
     const [ signupForm, setSignupForm ] = useState({
         email: '',
         password: '',
@@ -50,13 +49,14 @@ const SignupForm = () => {
           Auth.login(user.data.createUser.token);
         } catch (err) {
           console.error(err);
-          setShowAlert(true);
+
         }
-        setLoginSuccess(true);
         setSignupForm({
           email: '',
           password: '',
+          name: '',
         });
+
     }
 
     
@@ -145,6 +145,11 @@ const SignupForm = () => {
                 log in
             </Button>
 
+            {error && (
+                <div className='my-3 p-3 bg-danger text-white'>
+                {error.message}
+                </div>
+            )}
         </Form>
         
     </>

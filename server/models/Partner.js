@@ -29,6 +29,8 @@ const partnerSchema = new Schema({
     
 });
 
+partnerSchema.index({ name: 'text' });
+
 partnerSchema.plugin(require('mongoose-autopopulate'));
 
 

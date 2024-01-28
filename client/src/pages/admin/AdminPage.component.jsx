@@ -4,7 +4,7 @@ import { EventsList, UsersList, PartnersList } from '../../components/containers
 
 const AdminPage = () => {
     return (
-        <div style={{backgroundColor: "aliceblue"}}>
+        <div style={{backgroundColor: "aliceblue", height: "90vh"}}>
             <Tabs style={{display: "flex", alignItems: "center", borderRadius:"15px"}} unmountOnExit >
             <Tab eventKey="events" title="Events">
                 < EventsList />

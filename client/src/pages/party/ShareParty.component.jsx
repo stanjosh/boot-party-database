@@ -7,13 +7,12 @@ import { QUERY_EVENT } from '../../util/queries';
 
 const ShareParty = () => {
   const { eventId } = useParams();
-  console.log(eventId)
   const { loading, error, data } = useQuery(QUERY_EVENT, {
     variables: { uuid : eventId }, 
   });
 
 
-  console.log(data)
+  
   return ( 
     <>
       <Container fluid style={{ minHeight: '70cqh', maxWidth: "650px", marginTop: "15px", marginBottom: "15px" }}>
