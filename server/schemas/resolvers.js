@@ -222,9 +222,9 @@ const resolvers = {
       return guest;
     },
 
-    updateGuest: async (parent, { guestInput }, context) => {
+    updateGuest: async (parent, { guestInput, guestId }, context) => {
       const guest = await Guest.findOneAndUpdate(
-        { _id: guestInput._id || new Types.ObjectId() },
+        { _id: guestId || new Types.ObjectId() },
         { 
           ...guestInput
         },

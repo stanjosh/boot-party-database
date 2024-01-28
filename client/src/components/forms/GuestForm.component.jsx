@@ -48,9 +48,7 @@ const GuestForm = ({ guest, eventId, formTitle, submitText, success, joining, ad
             console.log('boot selected', formData);
         } else {
             setFormData({ ...formData, 
-                bootSku: '', 
-                bootName: '', 
-                bootImgSrc: '' 
+                boots: [],
             });
 
         }
@@ -76,7 +74,8 @@ const GuestForm = ({ guest, eventId, formTitle, submitText, success, joining, ad
         
         await updateGuest({
             variables: {
-                guestInput: { ...formData },           
+                guestInput: { ...formData },
+                guestId: guest?._id ?? null,        
             }
         })
         .then((res) => {

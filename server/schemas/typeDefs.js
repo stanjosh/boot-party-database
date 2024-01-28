@@ -157,7 +157,7 @@ const typeDefs = gql`
     updateEvent(eventId: ID!, updateEventInput: UpdateEventInput!): Event
     eventAddSignup(eventId: ID!, guestId: ID!): Event
     eventRemoveSignup(eventId: ID!, guestId: ID!): Event
-    updateGuest(guestInput: GuestInput!): Guest
+    updateGuest(guestInput: GuestInput!, guestId: ID): Guest
     createGuest(guestInput: GuestInput!): Guest
    
 

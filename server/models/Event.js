@@ -65,12 +65,23 @@ const eventSchema = new Schema({
         type: [String],
         trim: true
     },
+    eventOptions: {
+        type: [String],
+        trim: true
+    },
     eventPartner : {
         type: Schema.Types.ObjectId,
         ref: 'Partner',
         autopopulate: true,
     }
+
     
+});
+
+
+
+eventSchema.virtual('bootsList').get(function () {
+    return this.eventSignups.map(guest => guest.boots).flat()
 });
 
 eventSchema.plugin(require('mongoose-autopopulate'));

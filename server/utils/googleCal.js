@@ -6,6 +6,8 @@ const calendarId = process.env.CALENDAR_ID;
 const SCOPES = ['https://www.googleapis.com/auth/calendar'];
 const calendar = google.calendar('v3');
 
+
+
 const auth = new google.auth.JWT(
   CREDENTIALS.client_email,
   null,
@@ -14,6 +16,39 @@ const auth = new google.auth.JWT(
 );
 
 const TIMEOFFSET = '-06:00';
+
+
+const template = (eventData = {}) `
+  Event time: 
+
+  Fitting time if different
+
+  Set-up start time: ${eventData?.eventTime}
+
+  Number of guests: ${evenData?.eventGuests.length}
+
+  Brand Besties needed: ${eventData?.eventHelpers}
+
+  Location details: ${eventData?.eventLocation}
+
+  Point of Contact for event: ${eventData?.eventContact?.name}
+
+  Point of Contact phone number: ${eventData?.eventContact?.phone}
+
+  Point of Contact email: ${eventData?.eventContact?.email}
+
+  
+
+  Gifting or pay: Pay
+
+  Display details: ${eventData?.eventDisplay}
+
+  Merch box accessibility: TBD 
+
+  Add-ons (laser): Yes TBD
+
+  Additional notes if needed: 
+  `
 
 
 dateTimeForCalendar = () => {
@@ -49,6 +84,9 @@ dateTimeForCalendar = () => {
 }
 
 
+
+
+
 const insertEvent = async (event) => {
   try {
     const response = await calendar.events.insert({
@@ -68,6 +106,7 @@ const insertEvent = async (event) => {
 };
 
 let dateTime = dateTimeForCalendar();
+
 let event = {
   'summary': 'Test Event',
   'description': 'This is a test event',

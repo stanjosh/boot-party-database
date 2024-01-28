@@ -44,6 +44,16 @@ const guestSchema = new Schema({
                 required: false,
                 trim: true
             },
+            width: {
+                type: String,
+                required: false,
+                trim: true
+            },
+            size: {
+                type: Number,
+                required: false,
+                trim: true
+            }
         } ],
             
 });

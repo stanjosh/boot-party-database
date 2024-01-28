@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Container, Alert, Button, Tabs, Tab, Modal } from 'react-bootstrap';
+import { Container, Alert, Button, Tabs, Tab, Modal, Card } from 'react-bootstrap';
 import { GuestForm, EventForm, EventAdminForm } from '../../components/forms';
-import { useQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 import { QUERY_EVENT } from '../../util/queries';
 
 
@@ -11,15 +11,28 @@ import { QUERY_EVENT } from '../../util/queries';
 const AdminParty = () => {
   const { eventId } = useParams();
   
-  const  [showNewGuestModal, setNewShowGuestModal] = useState(false);
-
-  const { loading, error, data } = useQuery(QUERY_EVENT, {
+  const [showNewGuestModal, setNewShowGuestModal] = useState(false); 
+  const [showUpdateGuestModal, setShowUpdateGuestModal] = useState(-1);
+  const [getEventData, { loading, error, data }] = useLazyQuery(QUERY_EVENT, {
     variables: { uuid : eventId }, 
   });
   
-  const eventData = data?.findEventByID ?? {};
+
   
-  console.log(eventData)
+  const handleUpdateGuest = () => {
+    setNewShowGuestModal(false)
+    setShowUpdateGuestModal(-1)
+    getEventData()
+  }
+
+  useEffect(() => {
+    if (eventId && !data) getEventData()
+  }, [eventId, data, getEventData])
+
+
+  const eventData = data?.findEventByID;
+
+  console.log(data)
 
   return (
 
@@ -51,21 +64,45 @@ const AdminParty = () => {
             
               <Button className="" style={{width: "100%"}} onClick={() => setNewShowGuestModal(true)}>add guest</Button>
             </div>
-          {eventData?.eventSignups?.map((guest, index) => {
-              console.log(guest)
-              return (
-              <div key={guest?._id} style={{borderTop: "2px solid aliceblue", marginTop: "10px"}} >
-                <GuestForm eventId={eventId} guest={guest} submitText={'save'} formTitle={'guest ' + (index + 1)} success={() => console.log('success')}admin />
-              </div>
-              )
-          })}
+            <div>
+              { eventData?.eventSignups?.map((guest, index) => {
+                return (
+                  <Card key={index}>
+                    <Card.Header style={{display: "flex" , justifyContent: "space-between"}}>
+                      {guest.name} 
+                      <div>
+                        <Button variant="primary" style={{margin: "5px"}} onClick={() => setShowUpdateGuestModal(index)}>edit</Button>
+                        <Button variant="danger" style={{margin: "5px"}}>X</Button>
+                        
+                      </div>
+                    </Card.Header>
+
+                    <Card.Body>
+                      
+                      {guest?.boots?.map((boot, i) => {
+                        return (
+                          <div key={i}>
+                            {boot.bootSku} {boot.bootName} {boot.bootSize}
+                          </div>
+                        )
+                      })}
+                    </Card.Body>
+                    <Modal show={(showUpdateGuestModal == index)} onHide={() => setShowUpdateGuestModal(-1)} >
+                      <Modal.Body  className='bg-dark'>
+                        <GuestForm  guest={guest} submitText={'save'} formTitle={'update guest'} success={() => handleUpdateGuest()}/>
+                      </Modal.Body>
+                    </Modal>
+                  </Card>
+                )
+              })}
+            </div>
           
           <Modal show={showNewGuestModal} onHide={() => setNewShowGuestModal(false)} >
             <Modal.Header closeButton className='bg-dark text-light'>
               <Modal.Title>add guest</Modal.Title>
             </Modal.Header>
             <Modal.Body  className='bg-dark text-light'>
-              <GuestForm  joining eventId={eventId} submitText={'add'} formTitle={'add guest'} success={() => setNewShowGuestModal(false)}/>
+              <GuestForm  joining eventId={eventId} submitText={'add'} formTitle={'add guest'} success={() => handleUpdateGuest()}/>
             </Modal.Body>
             <Modal.Footer  className='bg-dark text-light'>
             </Modal.Footer>
@@ -81,7 +118,7 @@ const AdminParty = () => {
             <table>
             { eventData?.eventSignups?.map((guest, index) => {
               return (
-                <tr key="index"><td style={{verticalAlign: "top"}}>{guest.name}</td>  { guest?.boots?.map((boot, i) => <tr key={i}>{boot.bootSku}</tr> ) }</tr>
+                <tr key={index}><td style={{verticalAlign: "top"}}>{guest.name}</td>  { guest?.boots?.map((boot, i) => <table key={i}><tr >{boot.bootSku}</tr></table> ) }</tr>
               )
               
 

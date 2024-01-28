@@ -14,7 +14,7 @@ const EventsList = () => {
 
     const [sortedData, setSortedData] = useState(events ?? [])
     
-    const [sort, setSort] = useState("time")
+    const [sort, setSort] = useState(-1)
 
     const [showNewEventModal, setNewShowEventModal] = useState(false);
 
@@ -138,11 +138,11 @@ const EventsList = () => {
 
                         <tr key={index}
                             style={{cursor: "pointer",
-                            backgroundColor: "lightgray",
-                            color: dayjs(event?.eventTime * 1).isBefore(dayjs()) ? "gray" : "black"
+                            backgroundColor: (index % 2 === 0 ? "#eeeeee" : "aliceblue"),
+                            color: dayjs(event?.eventTime * 1).isBefore(dayjs()) ? "gray" : "black",
                         }}
-                            onClick={() => window.location.href = `/events/${event?._id}`}
-                            
+                            onClick={() => window.location.href = `/party/${event?._id}`}
+
                         >
                             <td data-label={event?.eventTitle? 'title' : null}>{event?.eventTitle}</td>
                             <td data-label='date / time'>{dayjs(event?.eventTime * 1).format('MMMM D, YYYY h:mm A')}</td>

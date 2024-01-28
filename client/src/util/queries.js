@@ -24,6 +24,8 @@ query Me {
         boots { bootName
                 bootSku
                 bootImgSrc
+                width
+                size
         }
       }
       eventTitle
@@ -40,6 +42,8 @@ query Me {
         boots { bootName
                 bootSku
                 bootImgSrc
+                width
+                size
         }
       }
       eventNotes
@@ -67,6 +71,8 @@ query Me {
           boots { bootName
                 bootSku
                 bootImgSrc
+                width
+                size
         }
         }
         eventTitle
@@ -83,6 +89,8 @@ query Me {
           boots { bootName
                 bootSku
                 bootImgSrc
+                width
+                size
         }
         }
         eventNotes
@@ -103,6 +111,8 @@ query Me {
       boots { bootName
                 bootSku
                 bootImgSrc
+                width
+                size
         }
     }
   }
@@ -129,6 +139,8 @@ query FindAllUsers {
       boots { bootName
                 bootSku
                 bootImgSrc
+                width
+                size
         }
     }
     events {
@@ -145,6 +157,8 @@ query FindAllUsers {
         boots { bootName
                 bootSku
                 bootImgSrc
+                width
+                size
         }
       }
       eventTitle
@@ -161,6 +175,8 @@ query FindAllUsers {
         boots { bootName
                 bootSku
                 bootImgSrc
+                width
+                size
         }
       }
       eventNotes
@@ -190,6 +206,8 @@ query FindEventByID($uuid: ID!) {
       boots { bootName
                 bootSku
                 bootImgSrc
+                width
+                size
         }
     }
     eventTitle
@@ -206,6 +224,8 @@ query FindEventByID($uuid: ID!) {
       boots { bootName
                 bootSku
                 bootImgSrc
+                width
+                size
         }
     }
     eventNotes
@@ -237,6 +257,8 @@ query FindAllEvents {
       boots { bootName
                 bootSku
                 bootImgSrc
+                width
+                size
         }
     }
     eventTitle
@@ -253,6 +275,8 @@ query FindAllEvents {
       boots { bootName
                 bootSku
                 bootImgSrc
+                width
+                size
         }
     }
     eventNotes
@@ -287,6 +311,8 @@ query FindAllPartners {
         boots { bootName
                 bootSku
                 bootImgSrc
+                width
+                size
         }
       }
     }
@@ -304,6 +330,8 @@ query FindAllPartners {
         boots { bootName
                 bootSku
                 bootImgSrc
+                width
+                size
         }
       }
     }
@@ -332,6 +360,8 @@ query FindPartnersBySearch($search: String!) {
         boots { bootName
                 bootSku
                 bootImgSrc
+                width
+                size
         }
       }
       eventTitle
@@ -348,6 +378,8 @@ query FindPartnersBySearch($search: String!) {
         boots { bootName
                 bootSku
                 bootImgSrc
+                width
+                size
         }
       }
       eventNotes
@@ -370,6 +402,8 @@ query FindPartnersBySearch($search: String!) {
         boots { bootName
                 bootSku
                 bootImgSrc
+                width
+                size
         }
       }
       events {
@@ -386,6 +420,8 @@ query FindPartnersBySearch($search: String!) {
           boots { bootName
                 bootSku
                 bootImgSrc
+                width
+                size
         }
         }
         eventTitle
@@ -402,6 +438,8 @@ query FindPartnersBySearch($search: String!) {
           boots { bootName
                 bootSku
                 bootImgSrc
+                width
+                size
         }
         }
         eventNotes
@@ -436,6 +474,8 @@ query FindUsersBySearch($search: String!) {
       boots { bootName
                 bootSku
                 bootImgSrc
+                width
+                size
         }
     }
     events {
@@ -452,6 +492,8 @@ query FindUsersBySearch($search: String!) {
         boots { bootName
                 bootSku
                 bootImgSrc
+                width
+                size
         }
       }
       eventTitle
@@ -468,6 +510,8 @@ query FindUsersBySearch($search: String!) {
         boots { bootName
                 bootSku
                 bootImgSrc
+                width
+                size
         }
       }
       eventNotes

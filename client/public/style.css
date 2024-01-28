@@ -119,7 +119,7 @@ h1 {
 
 h4 {
     color: var(--lightText);
-    font-size: 5cqb;
+    font-size: cqb;
     font-family: 'unpretentious', sans-serif;
     letter-spacing: .3cqw;
     padding: 10px;
@@ -172,14 +172,8 @@ h4 {
 }
 
 
-.card {
-    background-color: var(--lightText);
-}
 
-.card .h1 .h2 .h3 .h4 {
-    color: var(--alviesBlue);
-    font-family: 'unpretentious', sans-serif;
-}
+
 
 .pblock {
     background-color: var(--alviesBlue);;
@@ -315,6 +309,10 @@ table {
     background-color: #f8f8f8;
     border: 1px solid #ddd;
     padding: .35em;
+  }
+
+  table tr:hover {
+    filter: contrast(125%);
   }
   
   table th,
