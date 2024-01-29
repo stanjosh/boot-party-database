@@ -93,7 +93,7 @@ const BootSelect = ({ formData, onSelectBoot, clearSelection, scrollBackTo }) =>
         <>
             <Container fluid style={{display: "flex", flexWrap: "wrap", flexDirection: "row"}}>
                 {bootData?.map((boot) => {
-                    const { sku, title, bootImgSrc , option3 : color, id, alt } = boot[0];
+                    const { sku, title, bootImgSrc , option3 : color, id } = boot[0];
 
  
                     return (

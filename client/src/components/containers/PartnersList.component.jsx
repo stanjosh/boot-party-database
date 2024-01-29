@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from "react"
+import { useState, useEffect } from "react"
 import { useLazyQuery, useQuery } from '@apollo/client';
 import { Form, Modal, InputGroup, Button, FloatingLabel } from 'react-bootstrap';
 import { QUERY_PARTNERS_SEARCH, QUERY_PARTNERS } from '../../util/queries';

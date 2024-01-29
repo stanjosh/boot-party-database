@@ -134,7 +134,7 @@ const SignupForm = () => {
                 isInvalid={signupForm.password !== passwordCheck}
                 autoComplete='new-password'
             />
-            <Form.Control.Feedback type='invalid'>Passwords don't match!</Form.Control.Feedback>
+            <Form.Control.Feedback type='invalid'>Passwords don&apos;t match!</Form.Control.Feedback>
             </Form.Group>
 
 
