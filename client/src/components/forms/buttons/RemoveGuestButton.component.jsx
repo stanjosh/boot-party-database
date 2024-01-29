@@ -18,7 +18,7 @@ const RemoveGuestButton = ({eventId, guestInput}) => {
         })
         .then((res) => {
           // Handle success
-          console.log('Joined party:', res.data);
+          console.log('Left party:', res.data);
           
           })
           .catch((err) => {

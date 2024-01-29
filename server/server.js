@@ -27,9 +27,16 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.post('/api/calendar', async (req, res, next) => {
-  console.log('req.body', req.body);
-  const event = await insertNewEvent(req.body);
-  res.json(event);
+
+  await insertNewEvent(req.body, req.headers.origin)
+  .then((event) => {
+    res.status(200).json({event : event});
+  })
+  .catch((err) => {
+    console.log(err);
+    res.status(500).json({error: err});
+  });
+  next();
 })
 
 app.get('*', (req, res) => {

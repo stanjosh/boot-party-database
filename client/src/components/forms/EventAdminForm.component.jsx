@@ -28,7 +28,6 @@ const EventAdminForm = ({ eventData }) => {
             
         })
         .then((res) => {
-          console.log('Event created:', res.data);
           localStorage.setItem('event', JSON.stringify(res.data.updateEvent));
           window.location.assign(`/party/${JSON.parse(localStorage.getItem('event'))._id}`);
         })

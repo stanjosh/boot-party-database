@@ -47,7 +47,7 @@ const AdminParty = () => {
 
   const eventData = data?.findEventByID || {};
 
-  console.log('eventData', eventData);
+
 
   return (
 

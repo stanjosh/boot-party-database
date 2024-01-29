@@ -13,7 +13,6 @@ if (!keysEnvVar) {
 }
 
 const keys = JSON.parse(keysEnvVar);
-console.log(keys);
 
 const client = new google.auth.JWT({
   email: keys.client_email,
@@ -43,22 +42,19 @@ const calendarId = process.env.CALENDAR_ID;
 
 const TIMEOFFSET = '-06:00';
 
-const insertNewEvent = async (eventData) => {
-  
-  
+const insertNewEvent = async (eventData, url = "https://bootparty.com") => {
   
   if (!eventData) {
     throw new Error('Please provide an event data object.');
   }
-  console.log(eventData);
 
   const startDate = dayjs(eventData?.time * 1);
   const endDate = dayjs(eventData?.time * 1).add(2, 'hour');
 
 
   const template = `
-  <a href="https://bootparty.com/admin/party/${eventData?._id}"> ADMIN PARTY </a>
-  
+  <a href="${url}/admin/party/${eventData?._id}"> ADMIN PARTY </a>
+
   Event time: ${dayjs(eventData?.time * 1).format('dddd, MMMM D, YYYY h:mm A')}
 
   ${eventData?.loadTime ? `Set-up start time: ${eventData?.loadTime}` : ''}
@@ -91,7 +87,7 @@ const insertNewEvent = async (eventData) => {
   `
 
 
-  const event = {
+  const eventRequest = {
     'summary': eventData?.title ? eventData?.title : eventData?.location,
     'location': eventData?.location,
     'description': template,
@@ -114,22 +110,26 @@ const insertNewEvent = async (eventData) => {
 
 
 
-  try {
-    const response = calendar.events.insert({
-      auth: client,
-      calendarId: calendarId,
-      requestBody: event,
-    });
-    if (response['status'] == 200 && response['statusText'] === 'OK') {
-      return "Event inserted successfully";
-    } else {
-      return "Failed to insert event";
-    } 
-  } catch (err) {
-    console.log(err);
-    return "Failed to insert event";
-  }
 
-}
+
+
+    return new Promise((resolve, reject) => {
+      calendar.events.insert({
+        auth: client,
+        calendarId: calendarId,
+        resource: eventRequest,
+      }, (err, res) => {
+        if (err) {
+          console.log('The API returned an error: ' + err);
+          reject(err);
+        } else {
+          console.log('Event created: %s', res.data.htmlLink);
+          resolve(res.data);
+        }
+      });
+
+
+    });
+  };
 
 module.exports = insertNewEvent;

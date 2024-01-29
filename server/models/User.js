@@ -84,15 +84,15 @@ userSchema.pre('findOneAndUpdate', async function (next) {
   const update = this.getUpdate()
   const filter = this.getFilter()
 
-  console.log('id ' + filter._id)
+
   if (update.partner) {
-      console.log('partner found')
+
       await Partner.findOneAndUpdate(
         { _id: update.partner },
         { $addToSet : { users: filter._id } },
         { new: true }
       );
-      console.log('partner updated')
+
     }
   console.log(update)
   next();

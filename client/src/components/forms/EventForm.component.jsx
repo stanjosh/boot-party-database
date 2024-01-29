@@ -41,7 +41,6 @@ const EventForm = ({ eventData, formTitle, submitText, admin }) => {
     const handleTimeChange = (date) => {
         setTime(date);
         handleInputChange({target: {name: 'time', value: date}})
-        console.log('time changed', formData);
     };
 
 
@@ -62,14 +61,10 @@ const EventForm = ({ eventData, formTitle, submitText, admin }) => {
                   email: formData.email,
                   phone: formData.phone,
                 },
-                
-                
               },
-
           }
       })
       .then((res) => {
-        console.log('Event created:', res.data);
         localStorage.setItem('event', JSON.stringify(res.data.updateEvent));
         window.location.assign(`/party/${JSON.parse(localStorage.getItem('event'))._id}`);
       })
