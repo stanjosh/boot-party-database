@@ -4,76 +4,68 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { useForm } from '../../util/hooks';
 import { useMutation } from '@apollo/client';
-import { CREATE_EVENT, UPDATE_GUEST } from '../../util/mutations';
+import { UPDATE_EVENT } from '../../util/mutations';
 import { UserContext } from '../../util/context/UserContext';
 
 
 const EventForm = ({ eventData, formTitle, submitText, admin }) => {
   
-    const { userData, loading: contextLoading } = useContext(UserContext);
+    const { userData, loading: contextLoading, error: contextError } = useContext(UserContext);
   
-    const [eventTime, setEventTime] = useState(new Date());
-    const [createEvent, { loading: createEventLoading, error: createEventError }] = useMutation(CREATE_EVENT);
-    const [updateGuest, { loading: updateGuestLoading, error: updateGuestError }] = useMutation(UPDATE_GUEST);
+    const [time, setTime] = useState(new Date());
+    const [updateEvent, { loading: updateEventLoading, error: updateEventError }] = useMutation(UPDATE_EVENT);
+    
+    const loading = updateEventLoading || contextLoading;
+    const error = updateEventError || contextError;
 
-    const error = createEventError || updateGuestError;
-    const loading = createEventLoading || updateGuestLoading || contextLoading;
-
-    const [publicEvent, setPublicEvent] = useState(true);
+    const [publicEvent, setPublicEvent] = useState((eventData?.partner?._id && eventData?.partner?._id === userData?.partner?._id) ? true : false);
 
     const today = new Date();
     
     const { formData, handleInputChange, handleSubmit } = useForm({
-          eventTime: eventTime,
-          eventLocation: eventData?.eventLocation ?? '',
-          eventTitle: eventData?.eventTitle ?? '',
-          eventNotes: eventData?.eventNotes ?? '',
-          name: userData?.guestProfile?.name ?? '',
-          email: userData?.guestProfile?.email ?? '',
-          phone: userData?.guestProfile?.phone ?? '',
+          time: time,
+          location: eventData?.location ?? '',
+          title: eventData?.title ?? '',
+          notes: eventData?.notes ?? '',
+          name: (eventData?.contact?.name || userData?.name) ?? '',
+          email: (eventData?.contact?.email || userData?.email)  ?? '',
+          phone: (eventData?.contact?.phone || userData?.phone) ?? '',
+
         },
       (formData) => writeEvent(formData)
     );
  
-    const { eventLocation, eventTitle, eventNotes, name, email, phone } = formData;
+    const { location, title, notes, name, email, phone } = formData;
+    
 
     const handleTimeChange = (date) => {
-        setEventTime(date);
-        handleInputChange({target: {name: 'eventTime', value: date}})
-        console.log('time changed', formData);
+        setTime(date);
+        handleInputChange({target: {name: 'time', value: date}})
     };
 
 
 
 
     const writeEvent = async (formData) => {
-      const guest = await updateGuest({
+      await updateEvent({
           variables: {
-              guestInput: { 
-                name: formData.name,
-                email: formData.email,
-                phone: formData.phone,
-               },
-          }
-      })
-
-
-      await createEvent({
-          variables: {
-              eventInput: { 
-                eventTime: formData.eventTime,
-                eventLocation: formData.eventLocation,
-                eventTitle: formData.eventTitle,
-                eventNotes: formData.eventNotes,
-                eventPartner: publicEvent ? userData?.partner?._id : null,
-                eventContact: guest?.data?.updateGuest?._id,
+              eventId: eventData?._id ?? null,
+              updateEventInput: {
+                partner: publicEvent ? userData?.partner?._id : null,
+                time: formData.time,
+                location: formData.location,
+                title: formData.title,
+                notes: formData.notes,
+                contact: {
+                  name: formData.name,
+                  email: formData.email,
+                  phone: formData.phone,
+                },
               },
-
           }
       })
       .then((res) => {
-        console.log('Event created:', res.data);
-        localStorage.setItem('event', JSON.stringify(res.data.createEvent));
+        localStorage.setItem('event', JSON.stringify(res.data.updateEvent));
         window.location.assign(`/party/${JSON.parse(localStorage.getItem('event'))._id}`);
       })
       .catch((err) => {
@@ -93,24 +85,24 @@ const EventForm = ({ eventData, formTitle, submitText, admin }) => {
       <Form.Control
         type="text"
         placeholder="Event Address"
-        name="eventLocation"
-        value={eventLocation}
+        name="location"
+        value={location}
         onChange={handleInputChange}
         required
         
       />
       </Form.Group>
 
-      <Form.Group controlId="formEventTime" style={{flex: "0 1"}}>
+      <Form.Group controlId="formTime" style={{flex: "0 1"}}>
       {admin ? <Form.Label>time</Form.Label> : null}
       
       <DatePicker
         style={{flex: "0 1 60%", borderRadius: "3px"}}
-        name='eventTime'
+        name='time'
         excludeDates={[today.setDate(today.getDate()), today.setDate(today.getDate() + 1)]}
-        selected={formData?.eventTime}
+        selected={formData?.time}
         onChange={(date) => handleTimeChange(date)}
-        value={formData?.eventTime}
+        value={formData?.time}
         showTodayButton={false}
         showIcon={true}
         minDate={new Date()}
@@ -123,26 +115,26 @@ const EventForm = ({ eventData, formTitle, submitText, admin }) => {
       </Form.Group>
       </div>
 
-      <Form.Group controlId="formEventTitle" style={{marginBottom: "10px"}} >
+      <Form.Group controlId="formTitle" style={{marginBottom: "10px"}} >
       {admin ? <Form.Label>event title</Form.Label> : null}
       <Form.Control
           type="text"
           placeholder="Title your event? (you don't have to)"
-          name="eventTitle"
-          value={eventTitle}
+          name="title"
+          value={title}
           onChange={handleInputChange}
       />
       </Form.Group>
 
       
-      <Form.Group controlId="formEventNotes" style={{marginBottom: "10px"}} >
+      <Form.Group controlId="formNotes" style={{marginBottom: "10px"}} >
       {admin ? <Form.Label>notes</Form.Label> : null}
       <Form.Control
           as="textarea"
           rows={4}
           placeholder="Notes for us? (don't worry about it)"
-          name="eventNotes"
-          value={eventNotes}
+          name="notes"
+          value={notes}
           onChange={handleInputChange}
       />
       </Form.Group>

@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 import PolaroidDrop from "./PolaroidDrop.component";
+import { EventForm } from "../components/forms";
+
 
 const LandingPage = () => {
     const [scrollY, setScrollY] = useState(0);
-
+    const [showNewEventModal, setShowNewEventModal] = useState(false);
 
     useEffect(() => {
       window.addEventListener("scroll", () => {
         setScrollY(window.scrollY);
       });
-      console.log(scrollY)
     }, [scrollY])
 
     return (
@@ -19,7 +20,7 @@ const LandingPage = () => {
           <div style={{maxWidth: "600px", margin: "auto"}}>
             <h1 className="landingPageTitle">boot fittings anywhere</h1>
           
-          <Button href="/book" className="landingPageButton" style={{borderRadius: "2px"}}>book in austin</Button>
+          <Button onClick={() => setShowNewEventModal(true)} className="landingPageButton" style={{borderRadius: "2px"}}>book in austin</Button>
           </div>
         </div>
 
@@ -39,9 +40,10 @@ const LandingPage = () => {
             <h2 className="landingPageTitle">KICK UP YOUR FEET</h2>
             <h3 className="landingPageTitle">WE&apos;LL COME TO YOU</h3>
 
-            <p style={{fontFamily: '"work-sans",sans-serif', fontWeight: "600",  fontSize: "1.5cqh" }}>
-              We want to provide the best guest experience in all of footwear. Because if you can’t have fun trying on boots, you’re doing it wrong. We will literally drive a van-full of boots to you for a personal boot-fitting, wherever you are. Your couch? Cool. Work, no problemo. Got a favorite park bench? Drop us a pin. We want you to feel comfortable trying on our boots, and pulling them off. We’ll bring a few sizes and styles of your choice, for you (and whoever else may be joining) to find the perfect pair, and answer all your boot-wearin’ questions with trusted expertise.</p>
-            <Button href="/book" className="landingPageButton"  style={{borderRadius: "2px"}}>LET&apos;S GO</Button>
+            
+            {secondPanelContent}
+
+            <Button onClick={() => setShowNewEventModal(true)} className="landingPageButton"  style={{borderRadius: "2px"}}>LET&apos;S GO</Button>
           </div>
         </div>
           <div className="landingPageBox imageBG" style={{
@@ -51,19 +53,7 @@ const LandingPage = () => {
         }}>
             <div className="pblock" style={{textAlign: "left", alignSelf: "start"}}>
             <h4>THE REVIEWS ARE IN:</h4>
-            <p>
-            
-            &quot;Our Boot Party was a huge success! Alvies arrived timely 
-              with all the boots (for 12 people) and they were set up and
-                ready to start fitting as soon as we started to arrive.
-                Everything was timely, not rushed, and they took care of 
-                everyone individually like they were the only one there. 
-                Two days post-party and everyone is wearing their boots
-                  into the office and still reflecting on the fun event. 
-                  I&apos;ve never received as many kudos at previous events 
-                  I&apos;ve planned.&quot;</p>
-            <p>&quot;I highly recommend using Alvies Boot Party for any event including companies and friends&apos; gatherings. Thank you, Alvies!!&quot;</p>
-            <p>- Stephanie Martin</p>
+            { reviewsContent }
           </div>
           <div className="pblock" style={{textAlign: "right", alignSelf: "end", display: "inline-block"}}>
               <h4>CHOOSE YOUR BOOT PARTY</h4>
@@ -95,10 +85,52 @@ const LandingPage = () => {
           </div>
         </div>
         <div style={{width: "100%", backgroundColor: "aliceblue", paddingTop: "15px", paddingBottom: "15px", textAlign: "center"}}>
-          <Button href="/book" className="landingPageButton"  style={{borderRadius: "2px"}}>KICK IT OFF</Button>
+          <Button onClick={() => setShowNewEventModal(true)} className="landingPageButton"  style={{borderRadius: "2px"}}>KICK IT OFF</Button>
         </div>
+        <Modal show={showNewEventModal} onHide={() => setShowNewEventModal(false)} >
+                    
+                    
+    
+                    <Modal.Body className="text-light" style={{backgroundColor: "var(--alviesBlue)"}}>
+                        <EventForm submitText={'create'} success={() => setShowNewEventModal(false)}/>
+                    </Modal.Body>
+          </Modal>
       </>
     );
   };
   
   export default LandingPage;
+
+
+  const secondPanelContent = (
+    <>
+      <p style={{fontFamily: '"work-sans",sans-serif', fontWeight: "600",  fontSize: "1.5cqh" }}>
+        We want to provide the best guest experience in all of footwear. 
+        Because if you can’t have fun trying on boots, you’re doing it wrong. 
+        We will literally drive a van-full of boots to you for a personal 
+        boot-fitting, wherever you are. Your couch? Cool. Work, no problemo. 
+        Got a favorite park bench? Drop us a pin. We want you to feel 
+        comfortable trying on our boots, and pulling them off. We’ll bring a 
+        few sizes and styles of your choice, for you (and whoever else may be 
+        joining) to find the perfect pair, and answer all your boot-wearin’ 
+        questions with trusted expertise.
+      </p>
+    </> )
+
+  const reviewsContent = (
+    <>
+      <p>&quot;Our Boot Party was a huge success! Alvies arrived timely with 
+      all the boots (for 12 people) and they were set up and ready to start 
+      fitting as soon as we started to arrive. Everything was timely, not 
+      rushed, and they took care of everyone individually like they were the 
+      only one there. Two days post-party and everyone is wearing their boots 
+      into the office and still reflecting on the fun event. I&apos;ve never 
+      received as many kudos at previous events I&apos;ve planned.&quot;</p>
+        <p>
+          &quot;I highly recommend using Alvies Boot Party for any event including 
+          companies and friends&apos; gatherings. Thank you, Alvies!!&quot;
+        </p>
+        <p style={{textAlign: "right"}}>
+          &mdash; Stephanie Martin
+        </p>
+    </> )

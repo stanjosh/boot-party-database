@@ -1,53 +1,71 @@
 import { gql } from '@apollo/client';
 
+const boots = `{ bootName
+  bootSku
+  bootImgSrc
+  width
+  size
+}`
+
+const guest = `{
+  _id
+  name
+  email
+  phone
+  boots ${boots}
+}`
+
+const partner = `{
+  _id
+  name
+  imgSrc
+}`
+
+const contact = `{
+  name
+  email
+  phone
+}`
+
+const event = `{
+  _id
+  location
+  time
+  contact ${contact}
+  partner ${partner}
+  title
+  lead
+  loadTime
+  display
+  guests ${guest}
+  notes
+  van
+  transferOrder
+  helpers
+}`
+
+const user = `{
+  _id
+  name
+  email
+  admin
+  phone
+  partner ${partner}
+  events ${event}
+}`
+
+export const UPDATE_USER = gql`
+mutation UpdateUser($userId: ID!, $updateUserInput: UpdateUserInput!) {
+  updateUser(userId: $userId, updateUserInput: $updateUserInput) 
+    ${user}
+}
+`;
 
 export const CREATE_USER = gql`
 mutation CreateUser($userInput: UserInput!) {
   createUser(userInput: $userInput) {
-    user {
-      _id
-      email
-      guestProfile {
-        _id
-        name
-        phone
-        shoeSize
-        shoeWidth
-        boots {
-          bootName
-          bootSku
-          bootImgSrc
-        }
-      }
-    }
+    user ${user}
     token
-  }
-}
-`;
-
-export const UPDATE_USER = gql`
-mutation UpdateUser($userId: ID!, $userInput: UserInput!, $guestInput: GuestInput) {
-  updateUser(userId: $userId, userInput: $userInput, guestInput: $guestInput) {
-    _id
-    email
-    admin
-    partner {
-      _id
-      name
-      imgSrc
-    }
-    guestProfile {
-      _id
-      name
-      phone
-      shoeSize
-      shoeWidth
-      boots {
-        bootName
-        bootSku
-        bootImgSrc
-      }
-    }
   }
 }
 `;
@@ -55,253 +73,47 @@ mutation UpdateUser($userId: ID!, $userInput: UserInput!, $guestInput: GuestInpu
 export const LOGIN_USER = gql`
   mutation LoginUser($email: String!, $password: String!) {
     loginUser(email: $email, password: $password) {
-    user {
-      _id
-      email
-      admin
-      partner {
-        _id
-        name
-        imgSrc
-      }
-      guestProfile {
-        _id
-        name
-        phone
-        shoeSize
-        shoeWidth
-        boots {
-          bootName
-          bootSku
-          bootImgSrc
-        }
-      }
-    }
-    token
-  }
-}
-`;
-
-export const CREATE_GUEST = gql`
-mutation CreateGuest($guestInput: GuestInput) {
-  createGuest(guestInput: $guestInput) {
-    user {
-      _id
-      email
-      guestProfile {
-        _id
-        name
-        phone
-        shoeSize
-        shoeWidth
-        boots {
-          bootName
-          bootSku
-          bootImgSrc
-        }
-      }
-    }
+      user ${user}
+      token
   }
 }
 `;
 
 export const CREATE_PARTNER = gql`
 mutation CreatePartner($partnerInput: PartnerInput!) {
-  createPartner(partnerInput: $partnerInput) {
-    _id
-    name
-    imgSrc
-  }
+  createPartner(partnerInput: $partnerInput) 
+    ${partner}
 }
 `;
 
 
 export const CREATE_EVENT = gql`
 mutation CreateEvent($eventInput: EventInput!, $userId: ID) {
-  createEvent(eventInput: $eventInput, userId: $userId) {
-    _id
-    eventLocation
-    eventTime
-    eventContact {
-      email
-      name
-      phone
-      shoeWidth
-      shoeSize
-      boots {
-          bootName
-          bootSku
-          bootImgSrc
-        }
-    }
-    eventTitle
-    eventLeadEmployee
-    eventLoadinTime
-    eventDisplay
-    eventSignups {
-      name
-      email
-      phone
-      shoeWidth
-      shoeSize
-      boots {
-          bootName
-          bootSku
-          bootImgSrc
-        }
-    }
-    eventNotes
-    eventPartyType
-    eventVan
-    eventTransferOrder
-    eventHelpers
-  }
+  createEvent(eventInput: $eventInput, userId: $userId) 
+    ${event}
 }
 `;
 
 export const UPDATE_EVENT = gql`
-mutation UpdateEvent($eventId: ID!, $updateEventInput: UpdateEventInput) {
-  updateEvent(eventId: $eventId, updateEventInput: $updateEventInput) {
-    _id
-    eventLocation
-    eventTime
-    eventContact {
-      email
-      name
-      phone
-      shoeWidth
-      shoeSize
-      boots {
-          bootName
-          bootSku
-          bootImgSrc
-        }
-    }
-    eventTitle
-    eventLeadEmployee
-    eventLoadinTime
-    eventDisplay
-    eventSignups {
-      name
-      email
-      phone
-      shoeWidth
-      shoeSize
-      boots {
-          bootName
-          bootSku
-          bootImgSrc
-        }
-    }
-    eventNotes
-    eventPartyType
-    eventVan
-    eventTransferOrder
-    eventHelpers
-  }
+mutation UpdateEvent($updateEventInput: UpdateEventInput!, $eventId: ID) {
+  updateEvent(updateEventInput: $updateEventInput, eventId: $eventId)
+    ${event}
+}
+`;
+export const EVENT_REMOVE_GUEST = gql`
+mutation EventRemoveGuest($eventId: ID!, $guestId: ID!) {
+  eventRemoveGuest(eventId: $eventId, guestId: $guestId)
+    ${event}
 }
 `;
 
-export const EVENT_ADD_SIGNUP = gql`
-mutation EventAddSignup($eventId: ID!, $guestId: ID!) {
-  eventAddSignup(eventId: $eventId, guestId: $guestId) {
-    _id
-    eventLocation
-    eventTime
-    eventContact {
-      email
-      name
-      phone
-      shoeWidth
-      shoeSize
-      boots {
-          bootName
-          bootSku
-          bootImgSrc
-        }
-    }
-    eventTitle
-    eventLeadEmployee
-    eventLoadinTime
-    eventDisplay
-    eventSignups {
-      name
-      email
-      phone
-      shoeWidth
-      shoeSize
-      boots {
-          bootName
-          bootSku
-          bootImgSrc
-        }
-    }
-    eventNotes
-    eventPartyType
-    eventVan
-    eventTransferOrder
-    eventHelpers
-  }
+export const EVENT_ADD_GUEST = gql`
+mutation EventAddGuest($eventId: ID!, $guestInput: GuestInput!) {
+  eventAddGuest(eventId: $eventId, guestInput: $guestInput)
+    ${event}
 }
 `;
 
-export const EVENT_REMOVE_SIGNUP = gql`
-mutation EventRemoveSignup($eventId: ID!, $guestId: ID!) {
-  eventRemoveSignup(eventId: $eventId, guestId: $guestId) {
-    _id
-    eventLocation
-    eventTime
-    eventContact {
-      email
-      name
-      phone
-      shoeWidth
-      shoeSize
-      boots {
-          bootName
-          bootSku
-          bootImgSrc
-        }
-    }
-    eventTitle
-    eventLeadEmployee
-    eventLoadinTime
-    eventDisplay
-    eventSignups {
-      name
-      email
-      phone
-      shoeWidth
-      shoeSize
-      boots {
-          bootName
-          bootSku
-          bootImgSrc
-        }
-    }
-    eventNotes
-    eventPartyType
-    eventVan
-    eventTransferOrder
-    eventHelpers
-  }
-}
-`;
 
-export const UPDATE_GUEST = gql`
-mutation updateGuest( $guestInput: GuestInput!) {
-  updateGuest( guestInput: $guestInput) {
-    _id
-    name
-    email
-    phone
-    shoeWidth
-    shoeSize
-    boots {
-          bootName
-          bootSku
-          bootImgSrc
-        }
-  }
-}
-`;
+
+

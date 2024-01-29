@@ -14,9 +14,9 @@ const EventsList = () => {
 
     const [sortedData, setSortedData] = useState(events ?? [])
     
-    const [sort, setSort] = useState("time")
+    const [sort, setSort] = useState(-1)
 
-    const [showNewEventModal, setNewShowEventModal] = useState(false);
+    const [showNewEventModal, setShowNewEventModal] = useState(false);
 
 
     function sortTable(e){
@@ -30,8 +30,8 @@ const EventsList = () => {
         switch (col) {
             case "title": {
                 const sorted = [...events].sort((a, b) => {
-                    if (a.eventTitle.toUpperCase() < b.eventTitle.toUpperCase()) return sort
-                    if (a.eventTitle.toUpperCase() > b.eventTitle.toUpperCase()) return -sort
+                    if (a.title.toUpperCase() < b.title.toUpperCase()) return sort
+                    if (a.title.toUpperCase() > b.title.toUpperCase()) return -sort
                     return 0
                 })
                 setSortedData(sorted)
@@ -39,8 +39,8 @@ const EventsList = () => {
             }
             case "time": {
                 const sorted = [...events].sort((a, b) => {
-                    if (a.eventTime < b.eventTime) return sort
-                    if (a.eventTime > b.eventTime) return -sort
+                    if (a.time < b.time) return sort
+                    if (a.time > b.time) return -sort
                     return 0
                 })
                 setSortedData(sorted)
@@ -48,8 +48,8 @@ const EventsList = () => {
             }
             case "location": {
                 const sorted = [...events].sort((a, b) => {
-                    if (a.eventLocation.toUpperCase() < b.eventLocation.toUpperCase()) return sort
-                    if (a.eventLocation.toUpperCase() > b.eventLocation.toUpperCase()) return -sort
+                    if (a.location.toUpperCase() < b.location.toUpperCase()) return sort
+                    if (a.location.toUpperCase() > b.location.toUpperCase()) return -sort
                     return 0
                 })
                 setSortedData(sorted)
@@ -57,8 +57,17 @@ const EventsList = () => {
             }
             case "contact": {
                 const sorted = [...events].sort((a, b) => {
-                    if (a.eventContact.name.toUpperCase() < b.eventContact.name.toUpperCase()) return sort
-                    if (a.eventContact.name.toUpperCase() > b.eventContact.name.toUpperCase()) return -sort
+                    if (a.contact.name.toUpperCase() < b.contact.name.toUpperCase()) return sort
+                    if (a.contact.name.toUpperCase() > b.contact.name.toUpperCase()) return -sort
+                    return 0
+                })
+                setSortedData(sorted)
+                break;
+            }
+            case "partner": {
+                const sorted = [...events].sort((a, b) => {
+                    if (a.partner.name.toUpperCase() < b.partner.name.toUpperCase()) return sort
+                    if (a.partner.name.toUpperCase() > b.partner.name.toUpperCase()) return -sort
                     return 0
                 })
                 setSortedData(sorted)
@@ -66,8 +75,8 @@ const EventsList = () => {
             }
             default: {
                 const sorted = [...events].sort((a, b) => {
-                    if (a.eventTitle.toUpperCase() < b.eventTitle.toUpperCase()) return sort
-                    if (a.eventTitle.toUpperCase() > b.eventTitle.toUpperCase()) return -sort
+                    if (a.title.toUpperCase() < b.title.toUpperCase()) return sort
+                    if (a.title.toUpperCase() > b.title.toUpperCase()) return -sort
                     return 0
                 })
                 setSortedData(sorted)
@@ -124,9 +133,15 @@ const EventsList = () => {
                             <th 
                                 style={{cursor: "n-resize"}}
                                 scope="col"
+                                name="partner" 
+                                onClick={(e) => sortTable(e)}
+                            >partner</th>
+                            <th 
+                                style={{cursor: "n-resize"}}
+                                scope="col"
                                 name="admin"
                                 
-                            ><Button onClick={() => setNewShowEventModal(true)}>new</Button></th>
+                            ><Button onClick={() => setShowNewEventModal(true)}>new</Button></th>
 
                             </tr>
                             
@@ -138,16 +153,17 @@ const EventsList = () => {
 
                         <tr key={index}
                             style={{cursor: "pointer",
-                            backgroundColor: "lightgray",
-                            color: dayjs(event?.eventTime * 1).isBefore(dayjs()) ? "gray" : "black"
+                            backgroundColor: (index % 2 === 0 ? "#eeeeee" : "aliceblue"),
+                            color: dayjs(event?.time * 1).isBefore(dayjs()) ? "gray" : "black",
                         }}
-                            onClick={() => window.location.href = `/events/${event?._id}`}
-                            
+                            onClick={() => window.location.href = `/party/${event?._id}`}
+
                         >
-                            <td data-label={event?.eventTitle? 'title' : null}>{event?.eventTitle}</td>
-                            <td data-label='date / time'>{dayjs(event?.eventTime * 1).format('MMMM D, YYYY h:mm A')}</td>
-                            <td data-label='location'>{event?.eventLocation}</td>
-                            <td data-label='contact'>{event?.eventContact?.name}</td>
+                            <td data-label={event?.title? 'title' : null}>{event?.title}</td>
+                            <td data-label='date / time'>{dayjs(event?.time * 1).format('MMMM D, YYYY h:mm A')}</td>
+                            <td data-label='location'>{event?.location}</td>
+                            <td data-label='contact'>{event?.contact?.name}</td>
+                            <td data-label='partner'>{event?.partner?.name}</td>
                             <td data-label='admin'><Button href={`/admin/party/${event?._id}`}>admin</Button></td>
                             
                         </tr>
@@ -159,14 +175,14 @@ const EventsList = () => {
                     </table>
                 </div>
             )}
-            <Modal show={showNewEventModal} onHide={() => setNewShowEventModal(false)} >
+            <Modal show={showNewEventModal} onHide={() => setShowNewEventModal(false)} >
                     
                     <Modal.Header className="bg-dark text-light"closeButton>
                         <Modal.Title>New Event</Modal.Title>
                     </Modal.Header>
     
                     <Modal.Body className="bg-dark text-light">
-                        <EventForm submitText={'create'} success={() => setNewShowEventModal(false)}/>
+                        <EventForm submitText={'create'} success={() => setShowNewEventModal(false)}/>
                     </Modal.Body>
             </Modal>
         </div>

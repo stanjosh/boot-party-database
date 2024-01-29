@@ -32,7 +32,6 @@ const PartnerForm = ({ partnerData, success }) => {
             }
         })
         .then((res) => {
-            console.log('Partner created: ', res.data);
             localStorage.setItem('partner', JSON.stringify(res.data.createPartner));
             success();
         })
@@ -50,7 +49,7 @@ const PartnerForm = ({ partnerData, success }) => {
 
 
 
-    console.log('partnerData: ', partnerData);
+
   return (
     <Form onSubmit={handleSubmit} >
         <div className='mb-3'>

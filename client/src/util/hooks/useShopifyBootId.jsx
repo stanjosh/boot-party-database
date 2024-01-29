@@ -15,7 +15,7 @@ const useShopifyBootId = ({ variantId }) => {
                     .then((response) => response.json())
                     .then((data) => {
                         setVariantData(data);
-                        console.log('Boots fetched:', );
+
                     });
             } catch (error) {
                 console.error('Error fetching boot:', error);

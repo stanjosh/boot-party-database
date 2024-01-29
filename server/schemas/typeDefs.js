@@ -4,22 +4,13 @@ const typeDefs = gql`
   type User {
     _id: ID!
     email: String!
-    password: String!
-    guestProfile: Guest
+    name: String!
+    phone: String
     partner: Partner
     admin: Boolean
     events: [Event]
   }
 
-  input UserInput {
-    email: String!
-    password: String
-    name: String
-    admin: Boolean
-    partner: ID
-    guestProfile: ID
-  }
-  
   type Partner {
     _id: ID!
     name: String!
@@ -30,54 +21,33 @@ const typeDefs = gql`
 
   type Event {
     _id: ID!
-    eventLocation: String!
-    eventTime: String!
-    eventContact: Guest!
-    eventTitle: String 
-    eventLeadEmployee: String
-    eventLoadinTime: String
-    eventDisplay: String
-    eventSignups: [Guest]
-    eventNotes: String
-    eventPartyType: String
-    eventVan: Int
-    eventTransferOrder: String
-    eventHelpers: [String]
-    eventPartner: Partner
+    location: String!
+    time: String!
+    contact: Contact
+    title: String 
+    lead: String
+    loadTime: String
+    display: String
+    guests: [Guest]
+    notes: String
+    van: Int
+    transferOrder: String
+    helpers: [String]
+    partner: Partner
   }
 
-  input EventInput {
-    eventLocation: String!
-    eventTime: String!
-    eventContact: String!
-    eventNotes: String
-    eventTitle: String 
-    eventPartner: String
+  type Contact {
+    name: String!
+    email: String
+    phone: String
   }
 
-  input UpdateEventInput {
-    eventLocation: String
-    eventTime: String
-    eventTitle: String 
-    eventLeadEmployee: String
-    eventLoadinTime: String
-    eventDisplay: String
-    eventNotes: String
-    eventPartyType: String
-    eventVan: Int
-    eventTransferOrder: String
-    eventHelpers: [String]
-    eventContact: GuestInput
-    eventPartner: String
-  }
 
   type Guest {
     _id: ID!
     name: String!
     email: String
     phone: String
-    shoeSize: String
-    shoeWidth: String
     boots: [Boot]
   }
 
@@ -89,15 +59,59 @@ const typeDefs = gql`
     size: String
   }
 
+  input EventInput {
+    location: String!
+    time: String!
+    contact: ContactInput!
+    notes: String
+    title: String 
+    partner: String
+  }
+
+  input UserInput {
+    email: String!
+    password: String!
+    name: String!
+    phone: String
+    admin: Boolean
+    partner: ID
+  }
+
+  input UpdateUserInput {
+    _id: ID
+    email: String
+    name: String
+    phone: String
+    admin: Boolean
+    partner: ID
+  }
+
+  input ContactInput {
+    name: String!
+    email: String!
+    phone: String
+  }
+
+  input UpdateEventInput {
+    location: String
+    time: String
+    contact: ContactInput
+    title: String 
+    lead: String
+    loadTime: String
+    display: String
+    notes: String
+    van: Int
+    transferOrder: String
+    helpers: [String]
+    partner: String
+  }
 
   input GuestInput {
     name: String
     email: String
     phone: String
     boots: [BootInput]
-    shoeSize: String
-    shoeWidth: String
-    bootImgSrc: String
   }
 
   input PartnerInput {
@@ -130,21 +144,6 @@ const typeDefs = gql`
     findUsersBySearch(search: String!): [User]
     findGuestByID(uuid: ID!): Guest
     findEventByID(uuid: ID!): Event
-    findEventByDate(date: String!): [Event]
-    findGuestByFirstName(firstName: String!): [Guest]
-    findGuestByLastName(lastName: String!): [Guest]
-    findGuestByEmail(email: String!): [Guest]
-    findGuestByPhone(phone: String!): [Guest]
-    findGuestByShoeSize(shoeSize: Int!): [Guest]
-    findEventByEventTitle(eventTitle: String!): [Event]
-    findEventByEventLeadEmployee(eventLeadEmployee: String!): [Event]
-    findEventByEventContact(eventContact: String!): [Event]
-    findEventByEventLoadinTime(eventLoadinTime: String!): [Event]
-    findEventByEventTime(eventTime: String!): [Event]
-    findEventByEventLocation(eventLocation: String!): [Event]
-    findEventByEventTransferOrder(eventTransferOrder: String!): [Event]
-    
-
 
   }
 
@@ -152,12 +151,12 @@ const typeDefs = gql`
     createPartner(partnerInput: PartnerInput!): Partner
     createUser(userInput: UserInput!): Auth
     loginUser(email: String!, password: String!): Auth
-    updateUser(userId: ID!, userInput: UserInput!, guestInput: GuestInput): User
+    updateUser(userId: ID!, updateUserInput: UpdateUserInput!): User
     createEvent(eventInput: EventInput!, userId: ID): Event
-    updateEvent(eventId: ID!, updateEventInput: UpdateEventInput!): Event
-    eventAddSignup(eventId: ID!, guestId: ID!): Event
-    eventRemoveSignup(eventId: ID!, guestId: ID!): Event
-    updateGuest(guestInput: GuestInput!): Guest
+    updateEvent(updateEventInput: UpdateEventInput!, eventId: ID): Event
+    eventAddGuest(eventId: ID!, guestInput: GuestInput!): Event
+    eventRemoveGuest(eventId: ID!, guestId: ID!): Event
+    updateGuest(guestInput: GuestInput!, guestId: ID): Guest
     createGuest(guestInput: GuestInput!): Guest
    
 

@@ -14,7 +14,7 @@ const useShopifyBoots = ({shoeSize, shoeWidth }) => {
     const sizeDown = (shoeSize == 14 || shoeSize ==  15) ? -1 + parseFloat(shoeSize) : -0.5 + parseFloat(shoeSize);
 
     useEffect(() => {
-
+        if (!shoeSize || !shoeWidth) return;
 
         // Fetch boots data from Shopify JSON
         
@@ -26,6 +26,8 @@ const useShopifyBoots = ({shoeSize, shoeWidth }) => {
                     variant.title = product?.title;
                     variant.bootName = product?.title + ' ' + variant?.option3; 
                     variant.bootImgSrc = variant.featured_image?.src;
+                    variant.size = variant?.option1;
+                    variant.width = variant?.option2;
                 })
                 
             })
@@ -37,7 +39,7 @@ const useShopifyBoots = ({shoeSize, shoeWidth }) => {
             const filteredBoots = variants
                 .flat()
                 .filter((b) => {
-                    return b.option2 == shoeWidth && (b.option1 == parseFloat(shoeSize) || b.option1 == sizeUp || b.option1 == sizeDown);
+                    return b.available && b.option2 == shoeWidth && (b.option1 == parseFloat(shoeSize) || b.option1 == sizeUp || b.option1 == sizeDown);
                 })
                 
                 .reduce((acc = [], boot) => {

@@ -1,22 +1,17 @@
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { Navbar, Nav, Container, Image, Alert } from 'react-bootstrap';
 import LoginSignup from './LoginSignup.component';
 import { QUERY_ME } from '../util/queries';
 import { useQuery } from '@apollo/client';
 import { UserForm } from './forms';
+import { UserContext } from '../util/context/UserContext';
 
 const Header = () => {
   
-
+    const { userData, loading, error } = useContext(UserContext);
 
     const [showLoginSignup, setShowLoginSignup] = useState(false);
     const [showUserModal, setShowUserModal] = useState(false);
-
-    const { data, loading, error } = useQuery(QUERY_ME);
-
-
-
-    const userData = data?.me || {};
 
     const buttonStyle = {
       display: "flex",
@@ -35,6 +30,15 @@ const Header = () => {
       
     };
 
+    useEffect(() => {
+      if (userData) {
+        setShowLoginSignup(false);
+      }
+    }, [userData])
+
+
+
+
     return(   
   
     <>
@@ -45,8 +49,8 @@ const Header = () => {
             <Navbar.Brand href="/"><Image src='/boot-party-blue.png' style={{width: "12cqb"}}/>
               
             </Navbar.Brand>
-          { error ? <Alert style={{color: "red"}}>please log in again</Alert> : null }
-          { loading ? null : 
+            { loading ? null : error ? <Alert variant='danger' style={{fontSize: "2cqb"}}>Error loading user, please refresh or log in again</Alert> : null }            
+          
             <>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav" style={{justifyContent: "end", width: "100%"}}>
@@ -73,11 +77,11 @@ const Header = () => {
                 eventKey={3} 
                 onClick={() => setShowUserModal(true)}
                 style={buttonStyle}> 
-                { userData?.guestProfile.name } 
+                { userData?.name } 
                 <Image src="/user.svg" style={{maxHeight: "30px", filter: "invert(44%) sepia(80%) saturate(2219%) hue-rotate(172deg) brightness(95%) contrast(103%)"}} />
                 </Nav.Link> 
             )}
-            <UserForm userData={userData} show={showUserModal} onHide={() => setShowUserModal(false)} />
+            <UserForm userData={userData} show={showUserModal} onHide={() => setShowUserModal(false)} admin={userData?.admin} />
             {userData?.admin ? (
               <Nav.Link 
                 eventKey={4} 
@@ -90,7 +94,7 @@ const Header = () => {
 
         </Navbar.Collapse>
         </>
-        }
+        
         </Container>
       </Navbar>
     ))}

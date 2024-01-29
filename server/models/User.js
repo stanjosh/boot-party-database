@@ -7,14 +7,20 @@ const userSchema = new Schema({
     email: {
       type: String,
       required: true,
-      trim: true
+      unique: true,
+      trim: true,
     },
-    guestProfile: {
-      type: Schema.Types.ObjectId,
-      required: true,
-      ref: 'Guest',
-      autopopulate: true,
-   },
+    name: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    phone : {
+        type: String,
+        required: false,
+        trim: true
+    },
+    
 
     admin: {
       type: Boolean,
@@ -51,12 +57,13 @@ userSchema.plugin(require('mongoose-autopopulate'));
 
 userSchema.index({
   'email': 'text',
-  'guestProfile.name': 'text',
-  'guestProfile.phone': 'text',
-  'guestProfile.email': 'text',
+  'name': 'text',
+  'phone': 'text',
   'partner.name': 'text',
   
 });
+
+
 
 
 userSchema.pre('save', async function (next) {
@@ -77,15 +84,15 @@ userSchema.pre('findOneAndUpdate', async function (next) {
   const update = this.getUpdate()
   const filter = this.getFilter()
 
-  console.log('id ' + filter._id)
+
   if (update.partner) {
-      console.log('partner found')
+
       await Partner.findOneAndUpdate(
         { _id: update.partner },
         { $addToSet : { users: filter._id } },
         { new: true }
       );
-      console.log('partner updated')
+
     }
   console.log(update)
   next();

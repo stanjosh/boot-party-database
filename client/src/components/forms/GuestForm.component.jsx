@@ -1,28 +1,23 @@
 import { useState, useRef } from 'react';
-import { Form, Button, Alert } from 'react-bootstrap';
+import { Form, Button, Alert, Modal } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
-import { UPDATE_GUEST, EVENT_ADD_SIGNUP } from '../../util/mutations';
+import { EVENT_ADD_GUEST } from '../../util/mutations';
 import { RemoveGuestButton } from './buttons';
 import { BootSelect } from '.';
-import SizeSelect from './bootSelect/SizeSelect.component';
 
 
 
-const GuestForm = ({ guest, eventId, formTitle, submitText, success, joining, admin }) => {
-    const [updateGuest, { loading: updateGuestLoading, error: updateGuestError }] = useMutation(UPDATE_GUEST);
-    const [addGuest, { loading: addGuestLoading, error: addGuestError }] = useMutation(EVENT_ADD_SIGNUP);
+
+const GuestForm = ({ guest, eventId, success, show, onHide }) => {
+    const [addGuest, { loading, error }] = useMutation(EVENT_ADD_GUEST);
     const guestFormRef = useRef(null)
 
-    const error = updateGuestError || addGuestError;
-    const loading = updateGuestLoading || addGuestLoading;
 
     const  [formData, setFormData] = useState({
 
         name: guest?.name || '',
         email: guest?.email || '',
         phone: guest?.phone || '',
-        shoeWidth: guest?.shoeWidth || '',
-        shoeSize: guest?.shoeSize ||'',
         boots : guest?.boots || [],
 
     });
@@ -38,19 +33,17 @@ const GuestForm = ({ guest, eventId, formTitle, submitText, success, joining, ad
 
     const handleSelectBoot = (e) => {
         const boot = JSON.parse(e.currentTarget.dataset.boot);
-        console.log('bootdata', boot);
+
         
         if (boot) {
             
             setFormData({ ...formData, 
                 boots: [...boot],
             });
-            console.log('boot selected', formData);
+
         } else {
             setFormData({ ...formData, 
-                bootSku: '', 
-                bootName: '', 
-                bootImgSrc: '' 
+                boots: [],
             });
 
         }
@@ -74,45 +67,25 @@ const GuestForm = ({ guest, eventId, formTitle, submitText, success, joining, ad
 
     const writeGuest = async (formData) => {
         
-        await updateGuest({
-            variables: {
-                guestInput: { ...formData },           
-            }
-        })
-        .then((res) => {
-    
-            console.log('Guest created: ', res.data);
-            localStorage.setItem('guest', JSON.stringify(res.data.editGuest));
-            if (eventId && joining) {
-                addGuestToParty(res.data.updateGuest._id);
-            } else {
-                success(res.data.updateGuest._id);
-            }
-        })
-        .catch((err) => {
-            alert('Error updating guest:', err);
-            console.error('Error updating guest:', err);
-         
-        });
+        try {
+            await addGuest({
+                variables: { eventId, guestInput: formData },
+            });
+            success();
+            setFormData({
+                name: '',
+                email: '',
+                phone: '',
+                boots: [],
+            });
+        } catch (e) {
+            console.error(e);
+        }
     
     };
 
-    const addGuestToParty = async (guestId) => {
-        await addGuest({
-            variables: {
-                eventId: eventId,
-                guestId: guestId,
-            }
-        })
-        .then((res) => {
-            console.log('Joined party:', res.data);
-            localStorage.setItem('event', JSON.stringify(res.data.addSignup));
-            success();
-        })
-        .catch((err) => {
-            console.error('Error joining party:', err);
-        });
-    }
+
+    
 
 
     const scrollto = () => guestFormRef.current.scrollIntoView()    
@@ -122,11 +95,15 @@ const GuestForm = ({ guest, eventId, formTitle, submitText, success, joining, ad
 
 
   return (
+    <Modal show={show} onHide={onHide} >
+    <Modal.Header closeButton className='bg-dark text-light'>
+      <Modal.Title>add guest</Modal.Title>
+    </Modal.Header>
+    <Modal.Body  className='bg-dark text-light'>
+    
+    
     <Form onSubmit={handleSubmit} ref={guestFormRef} >
-        {formTitle 
-            ? <h4 style={{color: "aliceblue", marginBottom: "15px", marginTop: "15px", fontSize: "3cqb" }}> {formTitle} </h4>
-            : <h1 style={{fontSize: "5cqh" }}>Who are you?</h1>
-        }
+
         <Form.Group controlId="formGuestInfo" >
             <Form.Control
                 type="text"
@@ -157,18 +134,16 @@ const GuestForm = ({ guest, eventId, formTitle, submitText, success, joining, ad
             />
             </Form.Group>
         <Form.Group >
-
-            <SizeSelect formData={ formData } handleInputChange={handleInputChange} />
             <BootSelect formData={ formData } onSelectBoot={handleSelectBoot} clearSelection={clearSelectedBoot} scrollBackTo={scrollto} />
         </Form.Group>
 
         <div style={{display: "flex", flexWrap: "nowrap", justifyContent:"flex-end", width: "100%"}}>
-        { admin && eventId && guest?._id && <RemoveGuestButton guestId={guest?._id} eventId={eventId}/> }
+        { eventId && guest?._id && <RemoveGuestButton guestId={guest?._id} eventId={eventId}/> }
         
         <Form.Group controlId="formSubmit"  style={{flex: "0 1 60%", padding: "5px"}}>
         
-        <Button type="submit" disabled={ !formData.name || !formData.email || loading || addGuestLoading || !email?.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) } className='formButtom'>
-            {submitText || <h3 style={{fontSize : "2.5cqh", color: "aliceblue", marginBottom : "0"}}>LET&apos;S GO</h3>}
+        <Button type="submit" disabled={ !formData.name || !formData.email || loading || !email?.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) } className='formButtom'>
+            JOIN THE PARTY
         </Button>
             
         </Form.Group>
@@ -181,6 +156,10 @@ const GuestForm = ({ guest, eventId, formTitle, submitText, success, joining, ad
 
 
     </Form>
+    </Modal.Body>
+    <Modal.Footer  className='bg-dark text-light'>
+    </Modal.Footer>
+  </Modal>
 
 
 

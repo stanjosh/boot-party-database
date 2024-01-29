@@ -1,110 +1,74 @@
 import { gql } from '@apollo/client';
 
+
+const boots = `{ bootName
+  bootSku
+  bootImgSrc
+  width
+  size
+}`
+
+const guest = `{
+  _id
+  name
+  email
+  phone
+  boots ${boots}
+}`
+
+const partner = `{
+  _id
+  name
+  imgSrc
+}`
+
+const contact = `{
+  name
+  email
+  phone
+}`
+
+const event = `{
+  _id
+  location
+  time
+  contact ${contact}
+  partner ${partner}
+  title
+  lead
+  loadTime
+  display
+  guests ${guest}
+  notes
+  van
+  transferOrder
+  helpers
+}`
+
+const user = `{
+  _id
+  name
+  email
+  admin
+  phone
+  partner ${partner}
+  events ${event}
+}`
+
+
+
+
+
 export const QUERY_ME = gql`
 query Me {
   me {
     _id
     email
     admin
-    partner {
-      _id
-      name
-    }
-    events {
-      _id
-      eventLocation
-      eventTime
-      eventContact {
-        _id
-        name
-        email
-        phone
-        shoeSize
-        shoeWidth
-        boots { bootName
-                bootSku
-                bootImgSrc
-        }
-      }
-      eventTitle
-      eventLeadEmployee
-      eventLoadinTime
-      eventDisplay
-      eventSignups {
-        _id
-        name
-        email
-        phone
-        shoeSize
-        shoeWidth
-        boots { bootName
-                bootSku
-                bootImgSrc
-        }
-      }
-      eventNotes
-      eventPartyType
-      eventVan
-      eventTransferOrder
-      eventHelpers
-    }
-
-
-    partner {
-      _id
-      name
-      events {
-        _id
-        eventLocation
-        eventTime
-        eventContact {
-          _id
-          name
-          email
-          phone
-          shoeSize
-          shoeWidth
-          boots { bootName
-                bootSku
-                bootImgSrc
-        }
-        }
-        eventTitle
-        eventLeadEmployee
-        eventLoadinTime
-        eventDisplay
-        eventSignups {
-          _id
-          name
-          email
-          phone
-          shoeSize
-          shoeWidth
-          boots { bootName
-                bootSku
-                bootImgSrc
-        }
-        }
-        eventNotes
-        eventPartyType
-        eventVan
-        eventTransferOrder
-        eventHelpers
-      }
-    }
-
-    guestProfile {
-      _id
-      name
-      email
-      phone
-      shoeSize
-      shoeWidth
-      boots { bootName
-                bootSku
-                bootImgSrc
-        }
-    }
+    name
+    phone
+    partner ${partner}
+    events ${event}
   }
 }
 `;
@@ -115,60 +79,10 @@ query FindAllUsers {
     _id
     email
     admin
-    partner {
-      _id
-      name
-    }
-    guestProfile {
-      _id
-      name
-      email
-      phone
-      shoeSize
-      shoeWidth
-      boots { bootName
-                bootSku
-                bootImgSrc
-        }
-    }
-    events {
-      _id
-      eventLocation
-      eventTime
-      eventContact {
-        _id
-        name
-        email
-        phone
-        shoeSize
-        shoeWidth
-        boots { bootName
-                bootSku
-                bootImgSrc
-        }
-      }
-      eventTitle
-      eventLeadEmployee
-      eventLoadinTime
-      eventDisplay
-      eventSignups {
-        _id
-        name
-        email
-        phone
-        shoeSize
-        shoeWidth
-        boots { bootName
-                bootSku
-                bootImgSrc
-        }
-      }
-      eventNotes
-      eventPartyType
-      eventVan
-      eventTransferOrder
-      eventHelpers
-    }
+    name
+    phone
+    partner ${partner}
+    events ${event}
   }
 }
 `;
@@ -176,95 +90,15 @@ query FindAllUsers {
 
 export const QUERY_EVENT = gql`
 query FindEventByID($uuid: ID!) {
-  findEventByID(uuid: $uuid) {
-    _id
-    eventLocation
-    eventTime
-    eventContact {
-      _id
-      name
-      email
-      phone
-      shoeSize
-      shoeWidth
-      boots { bootName
-                bootSku
-                bootImgSrc
-        }
-    }
-    eventTitle
-    eventLeadEmployee
-    eventLoadinTime
-    eventDisplay
-    eventSignups {
-      _id
-      name
-      email
-      phone
-      shoeSize
-      shoeWidth
-      boots { bootName
-                bootSku
-                bootImgSrc
-        }
-    }
-    eventNotes
-    eventPartyType
-    eventVan
-    eventTransferOrder
-    eventHelpers
-    eventPartner {
-      _id
-      name
-    }
-  }
+  findEventByID(uuid: $uuid) 
+    ${event}
 }
 `;
 
 export const QUERY_EVENTS = gql`
 query FindAllEvents {
-  findAllEvents {
-    _id
-    eventLocation
-    eventTime
-    eventContact {
-      _id
-      name
-      email
-      phone
-      shoeSize
-      shoeWidth
-      boots { bootName
-                bootSku
-                bootImgSrc
-        }
-    }
-    eventTitle
-    eventLeadEmployee
-    eventLoadinTime
-    eventDisplay
-    eventSignups {
-      _id
-      name
-      email
-      phone
-      shoeSize
-      shoeWidth
-      boots { bootName
-                bootSku
-                bootImgSrc
-        }
-    }
-    eventNotes
-    eventPartyType
-    eventVan
-    eventTransferOrder
-    eventHelpers
-    eventPartner {
-      _id
-      name
-    }
-  }
+  findAllEvents 
+    ${event}
 }
 `;
 
@@ -273,40 +107,8 @@ query FindAllPartners {
   findAllPartners {
     _id
     name
-    events {
-      _id
-      eventLocation
-      eventTime
-      eventContact {
-        _id
-        name
-        email
-        phone
-        shoeSize
-        shoeWidth
-        boots { bootName
-                bootSku
-                bootImgSrc
-        }
-      }
-    }
-    users {
-      _id
-      email
-      admin
-      guestProfile {
-        _id
-        name
-        email
-        phone
-        shoeSize
-        shoeWidth
-        boots { bootName
-                bootSku
-                bootImgSrc
-        }
-      }
-    }
+    events ${event}
+    users ${user}
   }
 }
 `;
@@ -318,99 +120,8 @@ query FindPartnersBySearch($search: String!) {
     _id
     name
     imgSrc
-    events {
-      _id
-      eventLocation
-      eventTime
-      eventContact {
-        _id
-        name
-        email
-        phone
-        shoeSize
-        shoeWidth
-        boots { bootName
-                bootSku
-                bootImgSrc
-        }
-      }
-      eventTitle
-      eventLeadEmployee
-      eventLoadinTime
-      eventDisplay
-      eventSignups {
-        _id
-        name
-        email
-        phone
-        shoeSize
-        shoeWidth
-        boots { bootName
-                bootSku
-                bootImgSrc
-        }
-      }
-      eventNotes
-      eventPartyType
-      eventVan
-      eventTransferOrder
-      eventHelpers
-    }
-    users {
-      _id
-      email
-      admin
-      guestProfile {
-        _id
-        name
-        email
-        phone
-        shoeSize
-        shoeWidth
-        boots { bootName
-                bootSku
-                bootImgSrc
-        }
-      }
-      events {
-        _id
-        eventLocation
-        eventTime
-        eventContact {
-          _id
-          name
-          email
-          phone
-          shoeSize
-          shoeWidth
-          boots { bootName
-                bootSku
-                bootImgSrc
-        }
-        }
-        eventTitle
-        eventLeadEmployee
-        eventLoadinTime
-        eventDisplay
-        eventSignups {
-          _id
-          name
-          email
-          phone
-          shoeSize
-          shoeWidth
-          boots { bootName
-                bootSku
-                bootImgSrc
-        }
-        }
-        eventNotes
-        eventPartyType
-        eventVan
-        eventTransferOrder
-        eventHelpers
-      }
-    }
+    events ${event}
+    users ${user}
   }
 }
 `;
@@ -421,61 +132,11 @@ query FindUsersBySearch($search: String!) {
   findUsersBySearch(search: $search) {
     _id
     email
+    name
+    phone
     admin
-    partner {
-      _id
-      name
-    }
-    guestProfile {
-      _id
-      name
-      email
-      phone
-      shoeSize
-      shoeWidth
-      boots { bootName
-                bootSku
-                bootImgSrc
-        }
-    }
-    events {
-      _id
-      eventLocation
-      eventTime
-      eventContact {
-        _id
-        name
-        email
-        phone
-        shoeSize
-        shoeWidth
-        boots { bootName
-                bootSku
-                bootImgSrc
-        }
-      }
-      eventTitle
-      eventLeadEmployee
-      eventLoadinTime
-      eventDisplay
-      eventSignups {
-        _id
-        name
-        email
-        phone
-        shoeSize
-        shoeWidth
-        boots { bootName
-                bootSku
-                bootImgSrc
-        }
-      }
-      eventNotes
-      eventPartyType
-      eventVan
-      eventTransferOrder
-      eventHelpers
-    }
+    partner ${partner}
+    events ${event}
   }
 }
 `;

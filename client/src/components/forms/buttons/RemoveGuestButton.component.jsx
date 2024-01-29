@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
-import { EVENT_REMOVE_SIGNUP } from '../../../util/mutations';
+import { EVENT_REMOVE_GUEST } from '../../../util/mutations';
 
-const RemoveGuestButton = ({eventId, guestId}) => {
-    const [removeGuest, { loading, error }] = useMutation(EVENT_REMOVE_SIGNUP);
+const RemoveGuestButton = ({eventId, guestInput}) => {
+    const [removeGuest, { loading, error }] = useMutation(EVENT_REMOVE_GUEST);
     const [confirm, setConfirm] = useState(false);
 
     const handleRemoveGuest = async (e) => {
@@ -12,13 +12,13 @@ const RemoveGuestButton = ({eventId, guestId}) => {
         await removeGuest({
             variables: {
                 eventId: eventId,
-                guestId: guestId,           
+                guestInput: guestInput,           
                
             }
         })
         .then((res) => {
           // Handle success
-          console.log('Joined party:', res.data);
+          console.log('Left party:', res.data);
           
           })
           .catch((err) => {
