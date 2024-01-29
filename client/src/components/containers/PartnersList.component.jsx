@@ -12,9 +12,7 @@ const PartnersList = () => {
     const { loading: partnersLoading, error: partnersError, data: partnersData } = useQuery(QUERY_PARTNERS);
     const [ searchPartners, { loading: searchLoading, data: searchData, error: searchError }] = useLazyQuery(QUERY_PARTNERS_SEARCH)
 
-    const partners = searchData?.findPartnersBySearch ?? partnersData?.findAllPartners ?? [];
-
-    const [sortedData, setSortedData] = useState( partners )
+    const [sortedData, setSortedData] = useState( partnersData?.findAllPartners ?? [] )
 
     const [sort, setSort] = useState(-1)
 
@@ -36,7 +34,7 @@ const PartnersList = () => {
 
         switch (col) {
             case "name": {
-                const sorted = [...partners].sort((a, b) => {
+                const sorted = [...sortedData].sort((a, b) => {
                     if (a.name?.toUpperCase() < b.name?.toUpperCase()) return sort
                     if (a.name?.toUpperCase() > b.name?.toUpperCase()) return -sort
                     return 0
@@ -45,7 +43,7 @@ const PartnersList = () => {
                 break;
             }
             case "events": {
-                const sorted = [...partners].sort((a, b) => {
+                const sorted = [...sortedData].sort((a, b) => {
                     if (a.events?.length < b.events?.length) return sort
                     if (a.events?.length > b.events?.length) return -sort
                     return 0
@@ -54,7 +52,7 @@ const PartnersList = () => {
                 break;
             }
             case "users": {
-                const sorted = [...partners].sort((a, b) => {
+                const sorted = [...sortedData].sort((a, b) => {
                     if (a.users?.length < b.users?.length) return sort
                     if (a.users?.length > b.users?.length) return -sort
                     return 0
@@ -64,7 +62,7 @@ const PartnersList = () => {
             }
         
             default: {
-                const sorted = [...partners].sort((a, b) => {
+                const sorted = [...sortedData].sort((a, b) => {
                     if (a.name?.toUpperCase() < b.name?.toUpperCase()) return sort
                     if (a.name?.toUpperCase() > b.name?.toUpperCase()) return -sort
                     return 0
@@ -88,8 +86,8 @@ const PartnersList = () => {
             variables: { 
                 search: currentSearch 
             }})
-            .then((res) => {
-                setSortedData(res.data.findPartnersBySearch)
+            .then(() => {
+                setSortedData(searchData)
             }
         )
 
@@ -98,8 +96,8 @@ const PartnersList = () => {
     }
 
     useEffect(() => {
-        setSortedData(partners)
-    }, [partners])
+        setSortedData(searchData || partnersData)
+    }, [searchData, partnersData])
     
     console.log(sortedData)
 
