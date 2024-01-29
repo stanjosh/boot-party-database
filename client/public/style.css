@@ -361,9 +361,15 @@ table {
         background-position: 25%;
     }
 
+
+
 }
 
 @media screen and (max-width: 600px) {
+    .h1 {
+        font-size: 3cqw;
+    }
+
     table {
       border: 0;
     }

@@ -4,7 +4,6 @@ const typeDefs = gql`
   type User {
     _id: ID!
     email: String!
-    password: String!
     name: String!
     phone: String
     partner: Partner
@@ -12,16 +11,6 @@ const typeDefs = gql`
     events: [Event]
   }
 
-  input UserInput {
-    _id: ID
-    email: String
-    password: String
-    name: String
-    phone: String
-    admin: Boolean
-    partner: ID
-  }
-  
   type Partner {
     _id: ID!
     name: String!
@@ -77,6 +66,24 @@ const typeDefs = gql`
     notes: String
     title: String 
     partner: String
+  }
+
+  input UserInput {
+    email: String!
+    password: String!
+    name: String!
+    phone: String
+    admin: Boolean
+    partner: ID
+  }
+
+  input UpdateUserInput {
+    _id: ID
+    email: String
+    name: String
+    phone: String
+    admin: Boolean
+    partner: ID
   }
 
   input ContactInput {
@@ -144,11 +151,11 @@ const typeDefs = gql`
     createPartner(partnerInput: PartnerInput!): Partner
     createUser(userInput: UserInput!): Auth
     loginUser(email: String!, password: String!): Auth
-    updateUser(userInput: UserInput!): Auth
+    updateUser(userId: ID!, updateUserInput: UpdateUserInput!): User
     createEvent(eventInput: EventInput!, userId: ID): Event
     updateEvent(updateEventInput: UpdateEventInput!, eventId: ID): Event
     eventAddGuest(eventId: ID!, guestInput: GuestInput!): Event
-    eventRemoveGuest(eventId: ID!, guestInput: GuestInput!): Event
+    eventRemoveGuest(eventId: ID!, guestId: ID!): Event
     updateGuest(guestInput: GuestInput!, guestId: ID): Guest
     createGuest(guestInput: GuestInput!): Guest
    

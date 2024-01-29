@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 import PolaroidDrop from "./PolaroidDrop.component";
+import { EventForm } from "../components/forms";
+
 
 const LandingPage = () => {
     const [scrollY, setScrollY] = useState(0);
-
+    const [showNewEventModal, setShowNewEventModal] = useState(false);
 
     useEffect(() => {
       window.addEventListener("scroll", () => {
@@ -18,7 +20,7 @@ const LandingPage = () => {
           <div style={{maxWidth: "600px", margin: "auto"}}>
             <h1 className="landingPageTitle">boot fittings anywhere</h1>
           
-          <Button href="/book" className="landingPageButton" style={{borderRadius: "2px"}}>book in austin</Button>
+          <Button onClick={() => setShowNewEventModal(true)} className="landingPageButton" style={{borderRadius: "2px"}}>book in austin</Button>
           </div>
         </div>
 
@@ -39,9 +41,9 @@ const LandingPage = () => {
             <h3 className="landingPageTitle">WE&apos;LL COME TO YOU</h3>
 
             
-              {secondPanelContent}
+            {secondPanelContent}
 
-            <Button href="/book" className="landingPageButton"  style={{borderRadius: "2px"}}>LET&apos;S GO</Button>
+            <Button onClick={() => setShowNewEventModal(true)} className="landingPageButton"  style={{borderRadius: "2px"}}>LET&apos;S GO</Button>
           </div>
         </div>
           <div className="landingPageBox imageBG" style={{
@@ -83,8 +85,16 @@ const LandingPage = () => {
           </div>
         </div>
         <div style={{width: "100%", backgroundColor: "aliceblue", paddingTop: "15px", paddingBottom: "15px", textAlign: "center"}}>
-          <Button href="/book" className="landingPageButton"  style={{borderRadius: "2px"}}>KICK IT OFF</Button>
+          <Button onClick={() => setShowNewEventModal(true)} className="landingPageButton"  style={{borderRadius: "2px"}}>KICK IT OFF</Button>
         </div>
+        <Modal show={showNewEventModal} onHide={() => setShowNewEventModal(false)} >
+                    
+                    
+    
+                    <Modal.Body className="text-light" style={{backgroundColor: "var(--alviesBlue)"}}>
+                        <EventForm submitText={'create'} success={() => setShowNewEventModal(false)}/>
+                    </Modal.Body>
+          </Modal>
       </>
     );
   };

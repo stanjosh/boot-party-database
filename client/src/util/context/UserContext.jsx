@@ -27,7 +27,7 @@ export const UserContextProvider = ({ children }) => {
     }  , [userData, data, loading])
 
   return (
-		<UserContext.Provider value={{ userData, loading, error }}>
+		<UserContext.Provider value={{ userData, admin : userData?.admin, loading, error }}>
 			{children}
 		</UserContext.Provider>
 	);

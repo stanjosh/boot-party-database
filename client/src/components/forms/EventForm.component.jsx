@@ -10,11 +10,13 @@ import { UserContext } from '../../util/context/UserContext';
 
 const EventForm = ({ eventData, formTitle, submitText, admin }) => {
   
-    const { userData, loading: contextLoading } = useContext(UserContext);
+    const { userData, loading: contextLoading, error: contextError } = useContext(UserContext);
   
     const [time, setTime] = useState(new Date());
-    const [updateEvent, { loading, error }] = useMutation(UPDATE_EVENT);
+    const [updateEvent, { loading: updateEventLoading, error: updateEventError }] = useMutation(UPDATE_EVENT);
     
+    const loading = updateEventLoading || contextLoading;
+    const error = updateEventError || contextError;
 
     const [publicEvent, setPublicEvent] = useState((eventData?.partner?._id && eventData?.partner?._id === userData?.partner?._id) ? true : false);
 
@@ -25,9 +27,9 @@ const EventForm = ({ eventData, formTitle, submitText, admin }) => {
           location: eventData?.location ?? '',
           title: eventData?.title ?? '',
           notes: eventData?.notes ?? '',
-          name: userData?.name ?? '',
-          email: userData?.email ?? '',
-          phone: userData?.phone ?? '',
+          name: (eventData?.contact?.name || userData?.name) ?? '',
+          email: (eventData?.contact?.email || userData?.email)  ?? '',
+          phone: (eventData?.contact?.phone || userData?.phone) ?? '',
 
         },
       (formData) => writeEvent(formData)

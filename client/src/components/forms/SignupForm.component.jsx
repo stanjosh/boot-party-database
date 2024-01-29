@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import { Container, Button, Form, Alert } from 'react-bootstrap';
+import { useState } from 'react';
+import { Button, Form, Alert } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
-import { UPDATE_USER } from '../../util/mutations';
+import { CREATE_USER } from '../../util/mutations';
 import Auth from '../../util/Auth';
 
 
 
 const SignupForm = () => {
     // Component logic goes here
-    const [createUser, { error }] = useMutation(UPDATE_USER);
+    const [createUser, { error }] = useMutation(CREATE_USER);
     const [validated] = useState(false);
     const [passwordCheck, setPasswordCheck] = useState('');
     const [showAlert, setShowAlert] = useState(false);
@@ -56,6 +56,7 @@ const SignupForm = () => {
           password: '',
           name: '',
         });
+        setPasswordCheck('');
 
     }
 

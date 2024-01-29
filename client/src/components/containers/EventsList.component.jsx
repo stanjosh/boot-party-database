@@ -16,7 +16,7 @@ const EventsList = () => {
     
     const [sort, setSort] = useState(-1)
 
-    const [showNewEventModal, setNewShowEventModal] = useState(false);
+    const [showNewEventModal, setShowNewEventModal] = useState(false);
 
 
     function sortTable(e){
@@ -141,7 +141,7 @@ const EventsList = () => {
                                 scope="col"
                                 name="admin"
                                 
-                            ><Button onClick={() => setNewShowEventModal(true)}>new</Button></th>
+                            ><Button onClick={() => setShowNewEventModal(true)}>new</Button></th>
 
                             </tr>
                             
@@ -175,14 +175,14 @@ const EventsList = () => {
                     </table>
                 </div>
             )}
-            <Modal show={showNewEventModal} onHide={() => setNewShowEventModal(false)} >
+            <Modal show={showNewEventModal} onHide={() => setShowNewEventModal(false)} >
                     
                     <Modal.Header className="bg-dark text-light"closeButton>
                         <Modal.Title>New Event</Modal.Title>
                     </Modal.Header>
     
                     <Modal.Body className="bg-dark text-light">
-                        <EventForm submitText={'create'} success={() => setNewShowEventModal(false)}/>
+                        <EventForm submitText={'create'} success={() => setShowNewEventModal(false)}/>
                     </Modal.Body>
             </Modal>
         </div>

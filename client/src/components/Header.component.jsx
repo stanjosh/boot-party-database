@@ -81,7 +81,7 @@ const Header = () => {
                 <Image src="/user.svg" style={{maxHeight: "30px", filter: "invert(44%) sepia(80%) saturate(2219%) hue-rotate(172deg) brightness(95%) contrast(103%)"}} />
                 </Nav.Link> 
             )}
-            <UserForm userData={userData} show={showUserModal} onHide={() => setShowUserModal(false)} />
+            <UserForm userData={userData} show={showUserModal} onHide={() => setShowUserModal(false)} admin={userData?.admin} />
             {userData?.admin ? (
               <Nav.Link 
                 eventKey={4} 

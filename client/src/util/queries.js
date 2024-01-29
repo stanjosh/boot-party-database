@@ -47,8 +47,10 @@ const event = `{
 
 const user = `{
   _id
+  name
   email
   admin
+  phone
   partner ${partner}
   events ${event}
 }`

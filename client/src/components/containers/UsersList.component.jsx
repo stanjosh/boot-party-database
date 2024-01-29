@@ -1,13 +1,17 @@
 
-import React, { useState} from "react"
+import { useState, useContext } from "react"
 import { useLazyQuery } from '@apollo/client';
 import { UserDisplay } from "..";
 import { FloatingLabel, Form, InputGroup } from 'react-bootstrap';
 import { QUERY_USERS_SEARCH } from '../../util/queries';
-
+import { UserContext } from '../../util/context/UserContext';
 
 
 const UsersList = () => {
+
+    const { currentUser } = useContext(UserContext);
+
+
 
     const [searchText, setSearchText] = useState("");
 
@@ -57,7 +61,7 @@ const UsersList = () => {
                         console.log(userData)
                         return (
                         <div key={index} style={{flex: "1 1 250px", maxHeight: "50%"}}>
-                            <UserDisplay userData={userData}  admin/> 
+                            <UserDisplay userData={userData} admin={currentUser?.admin}/> 
                         </div>
                         )})}
                 </div>

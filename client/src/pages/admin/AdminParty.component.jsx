@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Container, Alert, Button, Tabs, Tab, Modal, Card } from 'react-bootstrap';
 import { GuestForm, EventForm, EventAdminForm } from '../../components/forms';
-import { useLazyQuery } from '@apollo/client';
+import { useLazyQuery, useMutation } from '@apollo/client';
 import { QUERY_EVENT } from '../../util/queries';
-
+import { EVENT_REMOVE_GUEST } from '../../util/mutations';
+import { CopyBootList } from '../../components/forms/buttons';
 
 
 
@@ -13,26 +14,40 @@ const AdminParty = () => {
   
   const [showNewGuestModal, setNewShowGuestModal] = useState(false); 
   const [showUpdateGuestModal, setShowUpdateGuestModal] = useState(-1);
-  const [getEventData, { loading, error, data }] = useLazyQuery(QUERY_EVENT, {
+  const [removeGuest, { loading: removeGuestLoading, error: removeGuestError }] = useMutation(EVENT_REMOVE_GUEST);
+  const [getEventData, { loading: getEventLoading, error: getEventError, data }] = useLazyQuery(QUERY_EVENT, {
     variables: { uuid : eventId }, 
   });
   
+  const loading = getEventLoading || removeGuestLoading;
+  const error = getEventError || removeGuestError;
+
+  const handleRemoveGuest = (guest) => async () => {
+    await removeGuest({
+      variables: {
+        eventId: eventId,
+        guestId: guest._id
+      }
+    })
+    
+  }
 
   
   const handleUpdateGuest = () => {
     setNewShowGuestModal(false)
     setShowUpdateGuestModal(-1)
-    getEventData()
+    
   }
-
+  
   useEffect(() => {
-    if (eventId && !data) getEventData()
-  }, [eventId, data, getEventData])
+    if (!loading && !error) getEventData();
+  }, [getEventData, loading, error]);
 
 
-  const eventData = data?.findEventByID;
 
-  console.log(data)
+  const eventData = data?.findEventByID || {};
+
+  console.log('eventData', eventData);
 
   return (
 
@@ -52,27 +67,24 @@ const AdminParty = () => {
             
 
               <EventForm eventData={eventData} submitText={'save'} admin={true} />
-
-              <GuestForm eventId={eventId} guest={eventData?.eventContact} submitText={'save'} formTitle={'event contact'} success={() => console.log('success')}  />
-            
             
           </Tab>
 
-          <Tab eventKey="guests" title="guests">
+          <Tab eventKey="guests" title={'Guests: ' + eventData?.guests?.length}>
             <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", verticalAlign: "center"}}>
-              <h4 style={{color: "aliceblue", fontSize: "3cqb" }}>{eventData?.eventSignups?.length} GUESTS</h4>
-            
-              <Button className="" style={{width: "100%"}} onClick={() => setNewShowGuestModal(true)}>add guest</Button>
+              
+              <CopyBootList guests={eventData?.guests} />
+              <Button className="formButton" style={{width: "100%"}} onClick={() => setNewShowGuestModal(true)}>add guest</Button>
             </div>
             <div>
-              { eventData?.eventSignups?.map((guest, index) => {
+              { eventData?.guests?.map((guest, index) => {
                 return (
                   <Card key={index}>
                     <Card.Header style={{display: "flex" , justifyContent: "space-between"}}>
                       {guest.name} 
                       <div>
                         <Button variant="primary" style={{margin: "5px"}} onClick={() => setShowUpdateGuestModal(index)}>edit</Button>
-                        <Button variant="danger" style={{margin: "5px"}}>X</Button>
+                        <Button variant="danger" style={{margin: "5px"}} onClick={handleRemoveGuest(guest)}>X</Button>
                         
                       </div>
                     </Card.Header>
@@ -111,22 +123,8 @@ const AdminParty = () => {
           </Tab>
 
           <Tab eventKey="deleteEvent" title="Event Options">
-            <EventAdminForm event={eventData} />
+            <EventAdminForm eventData={eventData} />
           </Tab>
-
-          <Tab eventKey="bootList" title="Boot List">
-            <table>
-            { eventData?.eventSignups?.map((guest, index) => {
-              return (
-                <tr key={index}><td style={{verticalAlign: "top"}}>{guest.name}</td>  { guest?.boots?.map((boot, i) => <table key={i}><tr >{boot.bootSku}</tr></table> ) }</tr>
-              )
-              
-
-            })}
-            </table>
-          </Tab>
-
-
           </Tabs>
         </Container>
 

@@ -29,8 +29,20 @@ const resolvers = {
     },
 
     findUsersBySearch: async (parent, { search }, context) => {
-      return await User.find({ $text: { $search:  search } })
+      
+      if (context.user.partner) {
+          return await User.find({ 
+          $text: { $search:  search },
+          partner: context.user.partner._id})
+      } else if (context.user.admin) {
+        return await User.find({ $text: { $search:  search } })
+      } else {
+        throw new AuthenticationError('You are not authorized to search users');
+      }
+      
     },
+    
+
 
     findEventByID: async (parent, { uuid }, context) => {
       console.log(uuid)
@@ -53,23 +65,22 @@ const resolvers = {
   },
 
   Mutation: {
-
-    updateUser: async (parent, { userInput }, context) => {
-      let user = {};
-      if (userInput._id) {
-        if (context.user && context.user._id === userInput._id) {
-          user = await User.findOneAndUpdate({ _id: context.user._id }, { ...userInput }, { new: true });
-        } else if ( context.admin && userInput._id ) {
-          user = await User.findOneAndUpdate({ _id: userInput._id }, { ...userInput }, { new: true });
-        } else {
-          throw new AuthenticationError('You are not authorized to update this user');
-        }
-
-      } else {
-        user = await User.create({ ...userInput });
-      }
+    createUser: async (parent, { userInput }, context) => {
+      const user = await User.create({ ...userInput });
       const token = signToken(user);
       return { token, user };
+    },
+
+
+    updateUser: async (parent, { userId, updateUserInput }, context) => {
+
+      
+        if (userId || context.user && context.user._id === userId || context.user.admin) {
+          return await User.findOneAndUpdate({ _id: userId }, { ...updateUserInput }, { new: true });
+        
+      } else {
+        throw new AuthenticationError('You are not authorized to update this user');
+      }
     },
   
 
@@ -130,11 +141,11 @@ const resolvers = {
         ;
     },
 
-    eventRemoveGuest: async (parent, { eventId, guestInput }, context) => {
+    eventRemoveGuest: async (parent, { eventId, guestId }, context) => {
       const event = await Event.findOneAndUpdate({ _id: eventId },
         {
           $pull:{
-            guests: guestInput
+            guests: { _id : guestId }
             }
           }
         );

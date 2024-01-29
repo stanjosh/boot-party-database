@@ -1,22 +1,34 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { GuestForm } from './forms';
 import { Card, Button } from 'react-bootstrap';
 import dayjs from 'dayjs';
 import { UserContext } from '../util/context/UserContext';
+import { GuestsDisplay } from './';
+import { useLazyQuery } from '@apollo/client';
+import { QUERY_EVENT } from '../util/queries';
 
+const EventDisplay = ( { eventId } ) => {
+    const [getEventData, { loading, error, data }] = useLazyQuery(QUERY_EVENT, {
+        variables: { uuid : eventId }, 
+      });
 
+    const eventData = data?.findEventByID || {};
 
-const EventDisplay = ( { eventData, admin } ) => {
-    
-    const userData = useContext(UserContext);
-
+    const { userData, admin } = useContext(UserContext) ?? {};
+    const [showNewGuestModal, setShowNewGuestModal] = useState(false);
 
     const prettyTime = dayjs(parseInt(eventData?.time)).format('h:mm A')
     const prettyDate = dayjs(parseInt(eventData?.time)).format('dddd, MMMM D')
 
-    const eventId = eventData?._id;
 
-    const [showNewGuestModal, setShowNewGuestModal] = useState(false);
+    const handleAddGuest = () => {
+        setShowNewGuestModal(false);
+        getEventData();
+    }
+
+    useEffect(() => {
+        getEventData();
+    }, [getEventData]);
 
     const shareData = {
         title: "Alvies Boot Party",
@@ -24,6 +36,10 @@ const EventDisplay = ( { eventData, admin } ) => {
         url: `${window.location.origin}/join/${eventData?._id}`,
       };
 
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error : {error.message}</p>;
+
+    
     return (
 
         
@@ -48,14 +64,14 @@ const EventDisplay = ( { eventData, admin } ) => {
                     {admin ? <Button className='formButton' href={`${window.location.origin}/admin/party/${eventData?._id}`} >Admin</Button> : null }
                     <Button className='formButton' onClick={() => setShowNewGuestModal(true)}>JOIN</Button>
                     <Button className='formButton' onClick={() => navigator.share(shareData)}>SHARE</Button>
-                    { !userData.admin ? <Button className='formButton' href={`${window.location.origin}/admin/party/${eventData?._id}`} >Admin</Button> : null }
+                    { userData?.admin ? <Button className='formButton' href={`${window.location.origin}/admin/party/${eventData?._id}`} >Admin</Button> : null }
                 </div>
 
             </Card.Body>
             
         </Card>
-
-        <GuestForm eventId={eventId} show={showNewGuestModal} success={() => setShowNewGuestModal(false)} />
+        <GuestsDisplay eventData={eventData}/>
+        <GuestForm eventId={eventId} show={showNewGuestModal} success={() => handleAddGuest()} />
 
         </>
     );

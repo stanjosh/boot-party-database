@@ -46,15 +46,24 @@ const event = `{
 
 const user = `{
   _id
+  name
   email
   admin
+  phone
   partner ${partner}
   events ${event}
 }`
 
 export const UPDATE_USER = gql`
-mutation UpdateUser($userInput: UserInput!) {
-  updateUser(userInput: $userInput) {
+mutation UpdateUser($userId: ID!, $updateUserInput: UpdateUserInput!) {
+  updateUser(userId: $userId, updateUserInput: $updateUserInput) 
+    ${user}
+}
+`;
+
+export const CREATE_USER = gql`
+mutation CreateUser($userInput: UserInput!) {
+  createUser(userInput: $userInput) {
     user ${user}
     token
   }
@@ -92,8 +101,8 @@ mutation UpdateEvent($updateEventInput: UpdateEventInput!, $eventId: ID) {
 }
 `;
 export const EVENT_REMOVE_GUEST = gql`
-mutation EventRemoveGuest($eventId: ID!, $guestInput: GuestInput!) {
-  eventRemoveGuest(eventId: $eventId, guestInput: $guestInput)
+mutation EventRemoveGuest($eventId: ID!, $guestId: ID!) {
+  eventRemoveGuest(eventId: $eventId, guestId: $guestId)
     ${event}
 }
 `;

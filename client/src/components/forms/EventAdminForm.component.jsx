@@ -1,19 +1,52 @@
-import React from 'react';
+
 import { Button, Form } from 'react-bootstrap';
 import { useForm } from '../../util/hooks';
+import { CopyToCalendar } from '../forms/buttons';
 
-const EventAdminForm = ({ event }) => {
+const EventAdminForm = ({ eventData }) => {
     const { formData, handleInputChange, handleSubmit } = useForm({
-        eventLeadEmployee: event?.eventLeadEmployee ?? '',
-        eventHelpers: event?.eventHelpers ?? '',
-        eventDisplay: event?.eventDisplay ?? '',
+        eventLeadEmployee: eventData?.eventLeadEmployee ?? '',
+        eventHelpers: eventData?.eventHelpers ?? '',
+        eventDisplay: eventData?.eventDisplay ?? '',
       },
       (formData) => writeEvent(formData)
     );
 
+    const writeEvent = async (formData) => {
+        await updateEvent({
+            variables: {
+                eventId: eventData?._id ?? null,
+                updateEventInput: {
+                    eventLeadEmployee: formData.eventLeadEmployee,
+                    eventHelpers: formData.eventHelpers,
+                    eventDisplay: formData.eventDisplay,
+                  },
+                  
+                  
+                },
+  
+            
+        })
+        .then((res) => {
+          console.log('Event created:', res.data);
+          localStorage.setItem('event', JSON.stringify(res.data.updateEvent));
+          window.location.assign(`/party/${JSON.parse(localStorage.getItem('event'))._id}`);
+        })
+        .catch((err) => {
+          console.error('Error creating event:', err);
+        });
+    
+      };
+    
+
     const { eventLeadEmployee, eventHelpers, eventDisplay } = formData;
 
+
+
     return (
+        <>
+            <CopyToCalendar eventData={eventData} />
+            <Button variant="danger" style={{margin: "15px"}}>DELETE EVENT</Button>
         <Form onSubmit={handleSubmit} >
 
             <h4 style={{color: "aliceblue", marginBottom: "15px", marginTop: "15px", fontSize: "3cqb" }}>alvies details</h4>
@@ -50,9 +83,11 @@ const EventAdminForm = ({ event }) => {
             />
             </Form.Group>
 
+            <Button type="submit" className='formButtom'> save </Button>
 
-            <Button variant="danger" style={{width: "100%", marginTop: "15px"}}>DELETE EVENT</Button>
         </Form>
+        
+        </>
     );
 };
 

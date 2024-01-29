@@ -72,7 +72,12 @@ const GuestForm = ({ guest, eventId, success, show, onHide }) => {
                 variables: { eventId, guestInput: formData },
             });
             success();
-            onHide();
+            setFormData({
+                name: '',
+                email: '',
+                phone: '',
+                boots: [],
+            });
         } catch (e) {
             console.error(e);
         }

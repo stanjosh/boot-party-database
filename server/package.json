@@ -15,7 +15,7 @@
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.3.1",
     "express": "^4.17.1",
-    "forever-monitor": "^3.0.3",
+    "google-auth-library": "^9.5.0",
     "googleapis": "^129.0.0",
     "graphql": "^15.5.0",
     "jsonwebtoken": "^9.0.0",
