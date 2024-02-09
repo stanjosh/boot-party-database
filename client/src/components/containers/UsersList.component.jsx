@@ -10,15 +10,9 @@ import { UserContext } from '../../util/context/UserContext';
 const UsersList = () => {
 
     const { currentUser } = useContext(UserContext);
-
-
-
     const [searchText, setSearchText] = useState("");
 
-    const [searchUsers, { loading, data }] = useLazyQuery(QUERY_USERS_SEARCH, 
-        {
-            variables: { search: searchText },
-        });
+    const [searchUsers, { loading, data }] = useLazyQuery(QUERY_USERS_SEARCH);
 
     const handleSearchChange = (e) => {
         setSearchText(e.target.value);
@@ -26,8 +20,13 @@ const UsersList = () => {
 
     const handleSearchSubmit = async (e) => {
         e.preventDefault();
-        searchUsers();
+        searchUsers(        {
+            variables: { search: searchText },
+        });
     }
+
+
+
 
 
     
