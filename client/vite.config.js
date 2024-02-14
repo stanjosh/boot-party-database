@@ -23,16 +23,6 @@ export default defineConfig({
       },
     },
   },
-  plugins: [react()],
-  build: {
-    sourcemap: false,
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          vendor: ['react', 'react-router-dom', 'react-dom'],
-          ...renderChunks(dependencies),
-        },
-      },
-    },
-  },
+  plugins: [react()]
+  
 })
