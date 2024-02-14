@@ -10,7 +10,7 @@ This is a site for managing events for Alvies. It allows users to create, edit, 
 
 ### Technologies
 
-uses MongoDB, Express, Graphql, React. Uses Google Calendar API for calendar integration.
+uses MongoDB, Express, Graphql, Vite React. Uses Google Calendar API for calendar integration.
 
 
 ### List of features
