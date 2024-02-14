@@ -20,7 +20,7 @@
     "graphql": "^15.5.0",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.0.2",
-    "mongoose-autopopulate": "^1.1.0",
+    "mongoose-autopopulate": "^1.1.0"
 
   },
   "optionalDependencies": {
