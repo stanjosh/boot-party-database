@@ -31,9 +31,7 @@ uses MongoDB, Express, Graphql, Vite React. Uses Google Calendar API for calenda
 
 
 
-admin user: josh@alvies.com
 
-password: plastic
 
 ![](/screenshot.png)
 
