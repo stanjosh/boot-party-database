@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useState } from 'react';
 import { Form, Button, Alert, Image } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
 import { CREATE_PARTNER } from '../../util/mutations';

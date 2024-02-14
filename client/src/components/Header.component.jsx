@@ -1,8 +1,6 @@
 import { useState, useContext, useEffect } from 'react';
 import { Navbar, Nav, Container, Image, Alert } from 'react-bootstrap';
 import LoginSignup from './LoginSignup.component';
-import { QUERY_ME } from '../util/queries';
-import { useQuery } from '@apollo/client';
 import { UserForm } from './forms';
 import { UserContext } from '../util/context/UserContext';
 

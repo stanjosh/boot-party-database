@@ -1,5 +1,4 @@
-import React from 'react';
-import { Card, Button, Container, Image } from 'react-bootstrap';
+import { Card, Button, Image } from 'react-bootstrap';
 
 
 const GuestsDisplay = ( { eventData } ) => {

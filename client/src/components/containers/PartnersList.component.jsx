@@ -1,30 +1,36 @@
 
-import React, { useState, useEffect } from "react"
-import { useLazyQuery, useQuery } from '@apollo/client';
+import { useState } from "react"
+import { useLazyQuery } from '@apollo/client';
 import { Form, Modal, InputGroup, Button, FloatingLabel } from 'react-bootstrap';
-import { QUERY_PARTNERS_SEARCH, QUERY_PARTNERS } from '../../util/queries';
+import { QUERY_PARTNERS_SEARCH } from '../../util/queries';
 import { PartnerForm } from '../forms';
-
+import { useDebounce } from '../../util/hooks';
 
 
 
 const PartnersList = () => {
-    const { loading: partnersLoading, error: partnersError, data: partnersData } = useQuery(QUERY_PARTNERS);
-    const [ searchPartners, { loading: searchLoading, data: searchData, error: searchError }] = useLazyQuery(QUERY_PARTNERS_SEARCH)
 
-    const partners = searchData?.findPartnersBySearch ?? partnersData?.findAllPartners ?? [];
+    const [ searchPartners, { loading, data, error }] = useLazyQuery(QUERY_PARTNERS_SEARCH)
 
-    const [sortedData, setSortedData] = useState( partners )
+
+
+    const [currentSearch, setCurrentSearch] = useState('');
+    const [sortedData, setSortedData] = useState(data?.findPartnersBySearch || [])
+
+
+
+        
+
+
+
+
+
 
     const [sort, setSort] = useState(-1)
 
     const [showNewPartnerModal, setShowNewPartnerModal] = useState(false);
     const [showPartnerModal, setShowPartnerModal] = useState(0);
 
-    const loading = partnersLoading || searchLoading;
-    const error = partnersError || searchError;
-
-    const [currentSearch, setCurrentSearch] = useState('');
 
     function sortTable(e){
         const col = e.target.getAttribute("name")
@@ -36,7 +42,7 @@ const PartnersList = () => {
 
         switch (col) {
             case "name": {
-                const sorted = [...partners].sort((a, b) => {
+                const sorted = [...sortedData].sort((a, b) => {
                     if (a.name?.toUpperCase() < b.name?.toUpperCase()) return sort
                     if (a.name?.toUpperCase() > b.name?.toUpperCase()) return -sort
                     return 0
@@ -45,7 +51,7 @@ const PartnersList = () => {
                 break;
             }
             case "events": {
-                const sorted = [...partners].sort((a, b) => {
+                const sorted = [...sortedData].sort((a, b) => {
                     if (a.events?.length < b.events?.length) return sort
                     if (a.events?.length > b.events?.length) return -sort
                     return 0
@@ -54,7 +60,7 @@ const PartnersList = () => {
                 break;
             }
             case "users": {
-                const sorted = [...partners].sort((a, b) => {
+                const sorted = [...sortedData].sort((a, b) => {
                     if (a.users?.length < b.users?.length) return sort
                     if (a.users?.length > b.users?.length) return -sort
                     return 0
@@ -64,7 +70,7 @@ const PartnersList = () => {
             }
         
             default: {
-                const sorted = [...partners].sort((a, b) => {
+                const sorted = [...sortedData].sort((a, b) => {
                     if (a.name?.toUpperCase() < b.name?.toUpperCase()) return sort
                     if (a.name?.toUpperCase() > b.name?.toUpperCase()) return -sort
                     return 0
@@ -77,29 +83,9 @@ const PartnersList = () => {
     }
 
 
-    const handleSearchChange = (event) => {
-        const { value } = event.target;
-        setCurrentSearch(value);
-    }
-
-    const handleSearchSubmit = (event) => {
-        event.preventDefault();
-        searchPartners({ 
-            variables: { 
-                search: currentSearch 
-            }})
-            .then((res) => {
-                setSortedData(res.data.findPartnersBySearch)
-            }
-        )
 
 
-        
-    }
 
-    useEffect(() => {
-        setSortedData(partners)
-    }, [partners])
     
     console.log(sortedData)
 
@@ -109,11 +95,11 @@ const PartnersList = () => {
             {error && <div>{error.message}</div>}
             <div style={{display:"flex", alignItems:"center", justifyContent:"space-around", padding: "5px"}}>
                 
-                <Form onSubmit={handleSearchSubmit} style={{width: "100%", maxWidth: "300px", display: "flex"}}>
+                <Form onSubmit={(e) => {e.preventDefault()}} style={{width: "100%", maxWidth: "300px", display: "flex"}}>
                     
                         <InputGroup className="mb-3">
                         <FloatingLabel controlId="floatingInput" label="partner search">
-                        <Form.Control type="text" placeholder="name or email search" required onChange={handleSearchChange} />
+                        <Form.Control type="text" placeholder="name or email search" required onChange={(e) => setCurrentSearch(e.target.value)} />
                         </FloatingLabel>
                         <Form.Control id="search" type="submit" value="search"  style={{backgroundColor: "var(--alviesBlue)", maxWidth: "min-content"}} />
                         

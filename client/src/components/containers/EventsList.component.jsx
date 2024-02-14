@@ -1,6 +1,6 @@
 
-import React, { useEffect, useState } from "react"
-import { Button, Card, Modal } from "react-bootstrap";
+import { useEffect, useState } from "react"
+import { Button, Modal } from "react-bootstrap";
 import { EventForm } from "../forms";
 import { useQuery } from '@apollo/client';
 import { QUERY_EVENTS } from '../../util/queries';

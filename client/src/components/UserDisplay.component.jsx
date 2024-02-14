@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { UserForm } from './forms';
-import { Card, Button, Modal } from 'react-bootstrap';
+import { Card, Button } from 'react-bootstrap';
 
 
-const UserDisplay = ( { userData, admin } ) => {
+const UserDisplay = ( { userData } ) => {
     
     const [show, setShow] = useState(false);
 
@@ -24,7 +24,7 @@ const UserDisplay = ( { userData, admin } ) => {
                         {userData?.admin ? 'admin' : 'user'}
                     </Card.Text>
                     <Card.Text>
-                        {userData?.events.length} events
+                        {userData?.events?.length} events
                     </Card.Text>
 
                     <Button variant="primary" onClick={() => setShow(true)}>edit</Button>

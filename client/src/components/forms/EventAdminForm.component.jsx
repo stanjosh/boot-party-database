@@ -2,8 +2,14 @@
 import { Button, Form } from 'react-bootstrap';
 import { useForm } from '../../util/hooks';
 import { CopyToCalendar } from '../forms/buttons';
+import { useMutation } from '@apollo/client';
+import { UPDATE_EVENT } from '../../util/mutations';
 
 const EventAdminForm = ({ eventData }) => {
+    const [updateEvent, { loading: updateEventLoading, error: updateEventError }] = useMutation(UPDATE_EVENT);
+    const loading = updateEventLoading;
+    const error = updateEventError;
+
     const { formData, handleInputChange, handleSubmit } = useForm({
         eventLeadEmployee: eventData?.eventLeadEmployee ?? '',
         eventHelpers: eventData?.eventHelpers ?? '',
@@ -21,15 +27,10 @@ const EventAdminForm = ({ eventData }) => {
                     eventHelpers: formData.eventHelpers,
                     eventDisplay: formData.eventDisplay,
                   },
-                  
-                  
                 },
-  
-            
         })
         .then((res) => {
-          localStorage.setItem('event', JSON.stringify(res.data.updateEvent));
-          window.location.assign(`/party/${JSON.parse(localStorage.getItem('event'))._id}`);
+          console.log('Event created:', res.data);
         })
         .catch((err) => {
           console.error('Error creating event:', err);
@@ -40,7 +41,8 @@ const EventAdminForm = ({ eventData }) => {
 
     const { eventLeadEmployee, eventHelpers, eventDisplay } = formData;
 
-
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>Error! {error.message}</div>;
 
     return (
         <>
